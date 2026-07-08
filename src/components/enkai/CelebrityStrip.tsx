@@ -162,8 +162,7 @@ function FilmCard({
    ───────────────────────────────────────────── */
 
 export function CelebrityStrip() {
-  const marqueeRef = useRef<HTMLDivElement>(null);
-  const [paused, setPaused] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragStartX = useRef(0);
   const scrollLeft = useRef(0);
@@ -191,23 +190,20 @@ export function CelebrityStrip() {
     }, 1000);
   }, []);
 
-  // Duplicate the list for seamless infinite marquee
-  const loop = [...celebrities, ...celebrities];
-
-  // Drag handling
+  // Drag handling for manual scroll
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (!marqueeRef.current) return;
+    if (!scrollContainerRef.current) return;
     setIsDragging(true);
-    dragStartX.current = e.pageX - marqueeRef.current.offsetLeft;
-    scrollLeft.current = marqueeRef.current.scrollLeft;
+    dragStartX.current = e.pageX - scrollContainerRef.current.offsetLeft;
+    scrollLeft.current = scrollContainerRef.current.scrollLeft;
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !marqueeRef.current) return;
+    if (!isDragging || !scrollContainerRef.current) return;
     e.preventDefault();
-    const x = e.pageX - marqueeRef.current.offsetLeft;
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
     const walk = (x - dragStartX.current) * 1.5;
-    marqueeRef.current.scrollLeft = scrollLeft.current - walk;
+    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
   const handleMouseUp = () => {
@@ -280,35 +276,26 @@ export function CelebrityStrip() {
         </motion.h2>
       </div>
 
-      {/* Filmstrip marquee */}
+      {/* Filmstrip - static, draggable scroll */}
       <div
-        className="relative mt-14 overflow-hidden"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => {
-          setPaused(false);
-          setIsDragging(false);
-        }}
+        className="relative mt-14 overflow-x-auto overflow-y-hidden no-scrollbar"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
         style={{
           maskImage:
-            "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)",
+            "linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent)",
           WebkitMaskImage:
-            "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)",
+            "linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent)",
+          cursor: isDragging ? "grabbing" : "grab",
         }}
       >
         <div
-          ref={marqueeRef}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          className={`flex pl-6 ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
-          style={{
-            width: "max-content",
-            animation: "filmstripMarquee 35s linear infinite",
-            animationPlayState: paused ? "paused" : "running",
-          }}
+          ref={scrollContainerRef}
+          className="flex pl-6 pr-6"
         >
-          {loop.map((celeb, i) => (
+          {celebrities.map((celeb, i) => (
             <FilmCard
               key={`${celeb.name}-${i}`}
               celeb={celeb}
