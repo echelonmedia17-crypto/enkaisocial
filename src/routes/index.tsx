@@ -878,12 +878,50 @@ function ComparisonRow({
 
 /* ================= SERVICES ================= */
 const services = [
-  { icon: "◈", title: "Live Event Coverage", body: "Full-crew, multi-cam presence with a live edit bay on site." },
-  { icon: "❋", title: "Social Reels Production", body: "Scroll-first vertical storytelling, shot and cut for the algorithm." },
-  { icon: "✦", title: "Celebrity & Press Days", body: "Green-room to red-carpet, publishing pack ready before wrap." },
-  { icon: "◉", title: "Brand Storytelling", body: "Long-form films that live beyond the event — for websites and campaigns." },
-  { icon: "⊛", title: "Real-Time Publishing", body: "Copywriting, approvals and posting — inside minutes, not days." },
-  { icon: "✧", title: "Analytics & Reporting", body: "Same-day performance decks with reach, watch-time and sentiment." },
+  {
+    n: "01",
+    icon: "◈",
+    title: "Live Event Coverage",
+    body: "Full-crew, multi-cam presence with a live edit bay on site. From red carpets to backstage moments, we capture and publish while the event is still happening.",
+    featured: true,
+    bgImg: "https://images.pexels.com/photos/2747449/pexels-photo-2747449.jpeg?auto=compress&cs=tinysrgb&w=800",
+  },
+  {
+    n: "02",
+    icon: "❋",
+    title: "Social Reels Production",
+    body: "Scroll-first vertical storytelling, shot and cut for the algorithm.",
+    bgImg: "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+  {
+    n: "03",
+    icon: "✦",
+    title: "Celebrity & Press Days",
+    body: "Green-room to red-carpet, publishing pack ready before wrap.",
+    accentColor: "burgundy",
+    bgImg: "https://images.pexels.com/photos/1117210/pexels-photo-1117210.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+  {
+    n: "04",
+    icon: "◉",
+    title: "Brand Storytelling",
+    body: "Long-form films that live beyond the event — for websites and campaigns.",
+    bgImg: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+  {
+    n: "05",
+    icon: "⊛",
+    title: "Real-Time Publishing",
+    body: "Copywriting, approvals and posting — inside minutes, not days.",
+    bgImg: "https://images.pexels.com/photos/3850272/pexels-photo-3850272.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+  {
+    n: "06",
+    icon: "✧",
+    title: "Analytics & Reporting",
+    body: "Same-day performance decks with reach, watch-time and sentiment.",
+    bgImg: "https://images.pexels.com/photos/669612/pexels-photo-669612.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
 ];
 
 function Services() {
@@ -895,30 +933,187 @@ function Services() {
           kicker="What We Do"
           title={<>Premium <em className="italic text-parchment/60">services.</em></>}
         />
-        <div className="mt-20 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((s, i) => (
+
+        {/* Bento layout: featured card + 5 smaller cards */}
+        <div className="mt-20 grid gap-6 lg:grid-cols-[1.8fr_1fr_1fr] lg:grid-rows-2">
+          {/* Featured card - Live Event Coverage */}
+          <motion.article
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-60px" }}
+            transition={{ duration: 0.8, delay: 0 }}
+            className="group relative p-8 md:p-10 rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 row-span-2"
+            style={{
+              border: "1px solid rgba(212,175,55,0.2)",
+            }}
+          >
+            {/* Background image */}
+            <div
+              className="absolute inset-0 transition-all duration-500"
+              style={{
+                backgroundImage: `url(${services[0].bgImg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                opacity: 0.18,
+                filter: "blur(2px)",
+              }}
+            />
+            {/* Dark gradient overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "linear-gradient(135deg, rgba(1,42,74,0.92) 0%, rgba(1,34,60,0.85) 50%, rgba(0,0,0,0.9) 100%)",
+              }}
+            />
+
+            {/* Hover border glow */}
+            <div
+              className="absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-500 opacity-0 group-hover:opacity-100"
+              style={{
+                boxShadow: "inset 0 0 0 1px rgba(212,175,55,0.6), 0 16px 40px rgba(0,0,0,0.4)",
+              }}
+            />
+
+            {/* Card number */}
+            <span className="absolute top-6 right-6 font-ui text-[11px] text-gold/25 tracking-wider">
+              {services[0].n}
+            </span>
+
+            <div className="relative z-10">
+              {/* Icon with radial glow */}
+              <div
+                className="flex items-center justify-center h-[72px] w-[72px] rounded-full transition-all duration-500 group-hover:scale-110"
+                style={{
+                  background: "radial-gradient(circle, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.05) 50%, transparent 70%)",
+                  boxShadow: "0 0 20px rgba(212,175,55,0.15)",
+                }}
+              >
+                <div
+                  className="flex items-center justify-center h-12 w-12 rounded-full transition-all duration-500"
+                  style={{
+                    background: "rgba(212,175,55,0.12)",
+                    boxShadow: "inset 0 0 20px rgba(212,175,55,0.2), 0 0 32px rgba(212,175,55,0.35)",
+                  }}
+                >
+                  <span className="text-gold text-[28px] transition-all duration-500" style={{ textShadow: "0 0 16px rgba(212,175,55,0.5)" }}>
+                    {services[0].icon}
+                  </span>
+                </div>
+              </div>
+
+              <h3 className="font-heading text-3xl md:text-4xl text-parchment mt-8">{services[0].title}</h3>
+              <p className="justify-pretty mt-4 text-parchment/70 text-[15px] leading-relaxed max-w-md">
+                {services[0].body}
+              </p>
+
+              <span className="mt-8 inline-flex items-center gap-2 font-ui text-[11px] tracking-[0.3em] uppercase text-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                Enquire <span>→</span>
+              </span>
+            </div>
+          </motion.article>
+
+          {/* Remaining 5 cards in a staggered bento grid */}
+          {services.slice(1).map((s, i) => (
             <motion.article
               key={s.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, margin: "-60px" }}
-              transition={{ duration: 0.8, delay: i * 0.06 }}
-              className="group relative p-8 rounded-xl border border-gold/15 transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/40 hover:shadow-[0_0_40px_rgba(212,175,55,0.15)]"
+              transition={{ duration: 0.8, delay: (i + 1) * 0.06 }}
+              className="group relative p-6 md:p-7 rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2"
               style={{
-                background: "rgba(1,42,74,0.4)",
-                backdropFilter: "blur(12px)",
+                border: s.accentColor === "burgundy"
+                  ? "1px solid rgba(128,0,32,0.25)"
+                  : "1px solid rgba(212,175,55,0.2)",
               }}
             >
-              <div className="flex items-center justify-center h-14 w-14 rounded-full bg-gold/10 border border-gold/30 text-gold text-2xl transition-all duration-500 group-hover:bg-gold/20 group-hover:shadow-[0_0_28px_rgba(212,175,55,0.55)]">
-                {s.icon}
-              </div>
-              <h3 className="font-heading text-2xl text-parchment mt-6">{s.title}</h3>
-              <p className="justify-pretty mt-3 text-parchment/65 text-[14px]">
-                {s.body}
-              </p>
-              <span className="mt-6 inline-flex items-center gap-2 font-ui text-[11px] tracking-[0.3em] uppercase text-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                Enquire <span>→</span>
+              {/* Background image */}
+              <div
+                className="absolute inset-0 transition-all duration-500"
+                style={{
+                  backgroundImage: `url(${s.bgImg})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  opacity: 0.12,
+                  filter: "blur(3px)",
+                }}
+              />
+              {/* Dark overlay */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: "linear-gradient(180deg, rgba(1,42,74,0.88) 0%, rgba(0,0,0,0.92) 100%)",
+                }}
+              />
+
+              {/* Accent top border for celebrity card */}
+              {s.accentColor === "burgundy" && (
+                <div
+                  className="absolute top-0 left-0 right-0 h-[2px]"
+                  style={{ background: "linear-gradient(90deg, transparent, rgba(128,0,32,0.6), transparent)" }}
+                />
+              )}
+
+              {/* Hover border glow */}
+              <div
+                className="absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-500 opacity-0 group-hover:opacity-100"
+                style={{
+                  boxShadow: s.accentColor === "burgundy"
+                    ? "inset 0 0 0 1px rgba(128,0,32,0.6), 0 16px 40px rgba(0,0,0,0.4)"
+                    : "inset 0 0 0 1px rgba(212,175,55,0.6), 0 16px 40px rgba(0,0,0,0.4)",
+                }}
+              />
+
+              {/* Card number */}
+              <span className="absolute top-5 right-5 font-ui text-[10px] text-gold/25 tracking-wider">
+                {s.n}
               </span>
+
+              <div className="relative z-10">
+                {/* Icon with radial glow */}
+                <div
+                  className="flex items-center justify-center h-[64px] w-[64px] rounded-full transition-all duration-500 group-hover:scale-110"
+                  style={{
+                    background: "radial-gradient(circle, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.04) 50%, transparent 70%)",
+                    boxShadow: "0 0 20px rgba(212,175,55,0.15)",
+                  }}
+                >
+                  <div
+                    className="flex items-center justify-center h-10 w-10 rounded-full transition-all duration-500"
+                    style={{
+                      background: s.accentColor === "burgundy"
+                        ? "rgba(128,0,32,0.15)"
+                        : "rgba(212,175,55,0.1)",
+                      boxShadow: s.accentColor === "burgundy"
+                        ? "inset 0 0 16px rgba(128,0,32,0.25), 0 0 24px rgba(128,0,32,0.3)"
+                        : "inset 0 0 16px rgba(212,175,55,0.2), 0 0 24px rgba(212,175,55,0.3)",
+                    }}
+                  >
+                    <span
+                      className="text-[22px] transition-all duration-500"
+                      style={{
+                        color: s.accentColor === "burgundy" ? "#a11030" : "#d4af37",
+                        textShadow: s.accentColor === "burgundy"
+                          ? "0 0 12px rgba(128,0,32,0.5)"
+                          : "0 0 12px rgba(212,175,55,0.5)",
+                      }}
+                    >
+                      {s.icon}
+                    </span>
+                  </div>
+                </div>
+
+                <h3 className="font-heading text-xl md:text-2xl text-parchment mt-5">{s.title}</h3>
+                <p className="justify-pretty mt-2 text-parchment/65 text-[13px] leading-relaxed">
+                  {s.body}
+                </p>
+
+                <span className="mt-5 inline-flex items-center gap-2 font-ui text-[10px] tracking-[0.25em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ color: s.accentColor === "burgundy" ? "#a11030" : "#d4af37" }}
+                >
+                  Enquire <span>→</span>
+                </span>
+              </div>
             </motion.article>
           ))}
         </div>
