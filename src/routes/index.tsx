@@ -101,7 +101,7 @@ function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.3, delay: 2.7 }}
-          className="font-script text-4xl md:text-5xl gold-text gold-glow mt-8"
+          className="font-script text-4xl md:text-5xl gold-text gold-glow mt-8 leading-[1.4] py-2"
         >
           Where Every Event Goes Social
         </motion.p>

@@ -48,7 +48,7 @@ export function Footer() {
       <div className="border-t border-gold/10">
         <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-[11px] tracking-[0.2em] uppercase text-parchment/40">
           <span>© {new Date().getFullYear()} Enkai Social</span>
-          <span className="font-script text-lg gold-text normal-case tracking-normal">
+          <span className="font-script text-lg gold-text normal-case tracking-normal leading-[1.4] py-1">
             Where Every Event Goes Social
           </span>
           <span>Crafted with intent</span>

@@ -109,7 +109,7 @@ export function Loader() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
-              className="font-script text-2xl md:text-3xl gold-text gold-glow -mt-1"
+              className="font-script text-2xl md:text-3xl gold-text gold-glow -mt-1 leading-[1.4] py-2"
             >
               Where Every Event Goes Social.
             </motion.p>
