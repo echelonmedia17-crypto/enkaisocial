@@ -67,9 +67,6 @@ export function Navbar() {
               />
             </span>
           </motion.span>
-          <span className="hidden sm:inline font-heading text-lg tracking-[0.18em] text-parchment">
-            ENKAI<span className="text-gold"> · </span>SOCIAL
-          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-10">

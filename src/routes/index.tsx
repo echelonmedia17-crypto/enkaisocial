@@ -927,202 +927,415 @@ const services = [
 ];
 
 function Services() {
+  return <ServicesCinematic />;
+}
+
+function ServicesCinematic() {
+  // Lazy import to keep bundle small and avoid SSR issues
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+
+  useEffect(() => {
+    let ctx: any;
+    let st: any;
+    let gsap: any;
+    let ScrollTrigger: any;
+
+    const init = async () => {
+      const gsapMod = await import("gsap");
+      const stMod = await import("gsap/ScrollTrigger");
+      gsap = gsapMod.default;
+      ScrollTrigger = stMod.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+
+      const sectionEl = sectionRef.current;
+      const trackEl = trackRef.current;
+      if (!sectionEl || !trackEl) return;
+
+      // Cleanup any previous instances
+      if (st) st.kill();
+
+      const getCardWidth = () => {
+        const card0 = cardRefs.current[0];
+        if (!card0) return 1;
+        const rect = card0.getBoundingClientRect();
+        return rect.width;
+      };
+
+      const gap = () => {
+        // Match Tailwind gap via measured distance between card centers.
+        const c0 = cardRefs.current[0];
+        const c1 = cardRefs.current[1];
+        if (!c0 || !c1) return 24;
+        const r0 = c0.getBoundingClientRect();
+        const r1 = c1.getBoundingClientRect();
+        return Math.max(0, r1.left - r0.left) - r0.width;
+      };
+
+      const run = () => {
+        const w = getCardWidth();
+        const g = gap();
+        const step = w + g;
+        const total = (services.length - 1) * step;
+
+        // Allow enough room for the pin: translateX 0 -> -total.
+        // Height is controlled via a CSS variable set on the section.
+        const horizontalDistance = total;
+
+        ctx = gsap.context(() => {
+          st = ScrollTrigger.create({
+            trigger: sectionEl,
+            start: "top top",
+            end: () => `+=${Math.max(1, horizontalDistance) * 0.85}`,
+            scrub: true,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (self: any) => {
+              const p = self.progress; // 0..1
+              const seg = services.length - 1;
+              const f = p * seg;
+              const activeIndex = Math.max(0, Math.min(services.length - 1, Math.round(f)));
+
+              // Translate track based on progress. Keep it independent of card active math.
+              const x = -horizontalDistance * p;
+              gsap.set(trackEl, { x });
+
+              // Subtle depth + active/inactive styling
+              cardRefs.current.forEach((cardEl, i) => {
+                if (!cardEl) return;
+                const d = Math.abs(i - activeIndex);
+                const isActive = i === activeIndex;
+
+                // Opacity range 0.6-0.7 inactive.
+                const opacity = isActive ? 1 : 0.62 + Math.max(0, 1 - d) * 0.08;
+
+                const scale = isActive ? 1.03 : 1.0;
+                const brighten = isActive ? 1 : 0;
+
+                // Rotate slightly for depth.
+                const rotateY = isActive ? 0 : (i < activeIndex ? 6 : -6) * Math.min(1, d * 0.6);
+                const z = isActive ? 24 : 0;
+
+                gsap.set(cardEl, {
+                  opacity,
+                  scale,
+                  rotateY,
+                  transformPerspective: 900,
+                  z,
+                });
+
+                // Border + shadow + typography brightness
+                const border = cardEl.querySelector<HTMLElement>("[data-card-border]");
+                const glow = cardEl.querySelector<HTMLElement>("[data-card-glow]");
+                const title = cardEl.querySelector<HTMLElement>("[data-card-title]");
+                const num = cardEl.querySelector<HTMLElement>("[data-card-num]");
+                if (border) {
+                  border.style.opacity = isActive ? "1" : "0.45";
+                  border.style.boxShadow = isActive
+                    ? "inset 0 0 0 1px rgba(212,175,55,0.9), 0 18px 55px rgba(0,0,0,0.55)"
+                    : "inset 0 0 0 1px rgba(212,175,55,0.45)";
+                }
+                if (glow) {
+                  glow.style.opacity = isActive ? "1" : "0.35";
+                }
+                if (title) {
+                  title.style.color = isActive ? "#f4f1ea" : "rgba(244,241,234,0.78)";
+                  title.style.textShadow = isActive
+                    ? "0 0 18px rgba(212,175,55,0.22)"
+                    : "none";
+                }
+                if (num) {
+                  num.style.color = isActive ? "rgba(212,175,55,0.95)" : "rgba(212,175,55,0.4)";
+                }
+
+                // Dim enquire CTA like inactive state.
+                const enquire = cardEl.querySelector<HTMLElement>("[data-card-enquire]");
+                if (enquire) {
+                  enquire.style.opacity = isActive ? "1" : "0";
+                }
+              });
+            },
+            // Translate by card width in onUpdate.
+          });
+
+          // Initial: pin at start should show Service 01 fully.
+          gsap.set(trackEl, { x: 0 });
+          // Ensure first card is active visually immediately.
+          const first = cardRefs.current[0];
+          if (first) {
+            gsap.set(first, { opacity: 1, scale: 1.03, rotateY: 0 });
+            const border = first.querySelector<HTMLElement>("[data-card-border]");
+            const glow = first.querySelector<HTMLElement>("[data-card-glow]");
+            const title = first.querySelector<HTMLElement>("[data-card-title]");
+            const num = first.querySelector<HTMLElement>("[data-card-num]");
+            const enquire = first.querySelector<HTMLElement>("[data-card-enquire]");
+            if (border) {
+              border.style.opacity = "1";
+              border.style.boxShadow = "inset 0 0 0 1px rgba(212,175,55,0.9), 0 18px 55px rgba(0,0,0,0.55)";
+            }
+            if (glow) glow.style.opacity = "1";
+            if (title) {
+              title.style.color = "#f4f1ea";
+              title.style.textShadow = "0 0 18px rgba(212,175,55,0.22)";
+            }
+            if (num) num.style.color = "rgba(212,175,55,0.95)";
+            if (enquire) enquire.style.opacity = "1";
+          }
+        });
+
+        // Reset visuals when leaving viewport so it can replay.
+        ScrollTrigger.addEventListener("refreshInit", () => {
+          // no-op
+        });
+
+        ScrollTrigger.addEventListener("scrollEnd", () => {
+          // no-op
+        });
+
+        st && st.refresh();
+      };
+
+      // Run once, then re-run on resize.
+      run();
+      const onResize = () => {
+        // kill and recreate to recalc widths
+        st?.kill();
+        st = null;
+        ctx?.revert();
+        run();
+      };
+      window.addEventListener("resize", onResize);
+
+      // Replay on re-enter: onLeave->progress reset.
+      // easiest: use 'onLeaveBack' to reset track & styles.
+      if (st) {
+        st.vars.onLeaveBack = () => {
+          const trackEl2 = trackRef.current;
+          if (trackEl2) gsap.set(trackEl2, { x: 0 });
+          cardRefs.current.forEach((cardEl, i) => {
+            if (!cardEl) return;
+            const isActive = i === 0;
+            gsap.set(cardEl, { opacity: isActive ? 1 : 0.62, scale: isActive ? 1.03 : 1, rotateY: 0 });
+            const border = cardEl.querySelector<HTMLElement>("[data-card-border]");
+            const glow = cardEl.querySelector<HTMLElement>("[data-card-glow]");
+            const title = cardEl.querySelector<HTMLElement>("[data-card-title]");
+            const num = cardEl.querySelector<HTMLElement>("[data-card-num]");
+            const enquire = cardEl.querySelector<HTMLElement>("[data-card-enquire]");
+            if (border) {
+              border.style.opacity = isActive ? "1" : "0.45";
+            }
+            if (glow) glow.style.opacity = isActive ? "1" : "0.35";
+            if (title) {
+              title.style.color = isActive ? "#f4f1ea" : "rgba(244,241,234,0.78)";
+              title.style.textShadow = isActive ? "0 0 18px rgba(212,175,55,0.22)" : "none";
+            }
+            if (num) num.style.color = isActive ? "rgba(212,175,55,0.95)" : "rgba(212,175,55,0.4)";
+            if (enquire) enquire.style.opacity = isActive ? "1" : "0";
+          });
+        };
+      }
+    };
+
+    init();
+
+    return () => {
+      window.removeEventListener("resize", () => {});
+      ctx?.revert?.();
+      st?.kill?.();
+    };
+  }, []);
+
+  // Mobile: cards fill most viewport width.
+  const isMobile = typeof window !== "undefined" ? window.matchMedia("(max-width: 767px)").matches : false;
+
   return (
-    <section className="relative py-32 md:py-40 bg-navy">
+    <section
+      ref={sectionRef}
+      className="relative py-32 md:py-32 bg-navy overflow-hidden"
+    >
       <div className="absolute inset-0 radial-gold-glow opacity-40" />
-      <div className="relative mx-auto max-w-7xl px-6">
+      <div className="w-full px-6 md:px-10">
         <SectionHeading
           kicker="What We Do"
           title={<>Premium <em className="italic text-parchment/60">services.</em></>}
         />
+      </div>
 
-        {/* Bento layout: featured card + 5 smaller cards */}
-        <div className="mt-20 grid gap-6 lg:grid-cols-[1.8fr_1fr_1fr] lg:grid-rows-2">
-          {/* Featured card - Live Event Coverage */}
-          <motion.article
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-60px" }}
-            transition={{ duration: 0.8, delay: 0 }}
-            className="group relative p-8 md:p-10 rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 row-span-2"
-            style={{
-              border: "1px solid rgba(212,175,55,0.2)",
-            }}
+      {/* Sticky stage */}
+      <div className="relative mt-12">
+        <div
+          className="sticky top-[84px] md:top-[92px]"
+          style={{ willChange: "transform" }}
+        >
+          <div
+            className="mx-auto max-w-7xl px-6"
+            style={{ perspective: 900 }}
           >
-            {/* Background image */}
             <div
-              className="absolute inset-0 transition-all duration-500"
-              style={{
-                backgroundImage: `url(${services[0].bgImg})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                opacity: 0.18,
-                filter: "blur(2px)",
-              }}
-            />
-            {/* Dark gradient overlay */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: "linear-gradient(135deg, rgba(1,42,74,0.92) 0%, rgba(1,34,60,0.85) 50%, rgba(0,0,0,0.9) 100%)",
-              }}
-            />
-
-            {/* Hover border glow */}
-            <div
-              className="absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-500 opacity-0 group-hover:opacity-100"
-              style={{
-                boxShadow: "inset 0 0 0 1px rgba(212,175,55,0.6), 0 16px 40px rgba(0,0,0,0.4)",
-              }}
-            />
-
-            {/* Card number */}
-            <span className="absolute top-6 right-6 font-ui text-[11px] text-gold/25 tracking-wider">
-              {services[0].n}
-            </span>
-
-            <div className="relative z-10">
-              {/* Icon with radial glow */}
-              <div
-                className="flex items-center justify-center h-[72px] w-[72px] rounded-full transition-all duration-500 group-hover:scale-110"
-                style={{
-                  background: "radial-gradient(circle, rgba(212,175,55,0.15) 0%, rgba(212,175,55,0.05) 50%, transparent 70%)",
-                  boxShadow: "0 0 20px rgba(212,175,55,0.15)",
-                }}
-              >
-                <div
-                  className="flex items-center justify-center h-12 w-12 rounded-full transition-all duration-500"
-                  style={{
-                    background: "rgba(212,175,55,0.12)",
-                    boxShadow: "inset 0 0 20px rgba(212,175,55,0.2), 0 0 32px rgba(212,175,55,0.35)",
-                  }}
-                >
-                  <span className="text-gold text-[28px] transition-all duration-500" style={{ textShadow: "0 0 16px rgba(212,175,55,0.5)" }}>
-                    {services[0].icon}
-                  </span>
-                </div>
-              </div>
-
-              <h3 className="font-heading text-3xl md:text-4xl text-parchment mt-8">{services[0].title}</h3>
-              <p className="justify-pretty mt-4 text-parchment/70 text-[15px] leading-relaxed max-w-md">
-                {services[0].body}
-              </p>
-
-              <span className="mt-8 inline-flex items-center gap-2 font-ui text-[11px] tracking-[0.3em] uppercase text-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                Enquire <span>→</span>
-              </span>
-            </div>
-          </motion.article>
-
-          {/* Remaining 5 cards in a staggered bento grid */}
-          {services.slice(1).map((s, i) => (
-            <motion.article
-              key={s.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, margin: "-60px" }}
-              transition={{ duration: 0.8, delay: (i + 1) * 0.06 }}
-              className="group relative p-6 md:p-7 rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2"
-              style={{
-                border: s.accentColor === "burgundy"
-                  ? "1px solid rgba(128,0,32,0.25)"
-                  : "1px solid rgba(212,175,55,0.2)",
-              }}
+              className="relative overflow-hidden"
+              style={{ borderRadius: 16 }}
             >
-              {/* Background image */}
               <div
-                className="absolute inset-0 transition-all duration-500"
-                style={{
-                  backgroundImage: `url(${s.bgImg})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  opacity: 0.12,
-                  filter: "blur(3px)",
-                }}
-              />
-              {/* Dark overlay */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: "linear-gradient(180deg, rgba(1,42,74,0.88) 0%, rgba(0,0,0,0.92) 100%)",
-                }}
-              />
-
-              {/* Accent top border for celebrity card */}
-              {s.accentColor === "burgundy" && (
-                <div
-                  className="absolute top-0 left-0 right-0 h-[2px]"
-                  style={{ background: "linear-gradient(90deg, transparent, rgba(128,0,32,0.6), transparent)" }}
-                />
-              )}
-
-              {/* Hover border glow */}
-              <div
-                className="absolute inset-0 rounded-xl pointer-events-none transition-opacity duration-500 opacity-0 group-hover:opacity-100"
-                style={{
-                  boxShadow: s.accentColor === "burgundy"
-                    ? "inset 0 0 0 1px rgba(128,0,32,0.6), 0 16px 40px rgba(0,0,0,0.4)"
-                    : "inset 0 0 0 1px rgba(212,175,55,0.6), 0 16px 40px rgba(0,0,0,0.4)",
-                }}
-              />
-
-              {/* Card number */}
-              <span className="absolute top-5 right-5 font-ui text-[10px] text-gold/25 tracking-wider">
-                {s.n}
-              </span>
-
-              <div className="relative z-10">
-                {/* Icon with radial glow */}
-                <div
-                  className="flex items-center justify-center h-[64px] w-[64px] rounded-full transition-all duration-500 group-hover:scale-110"
-                  style={{
-                    background: "radial-gradient(circle, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.04) 50%, transparent 70%)",
-                    boxShadow: "0 0 20px rgba(212,175,55,0.15)",
-                  }}
-                >
+                ref={trackRef}
+                className="flex gap-6 md:gap-10 will-change-transform"
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                {services.map((s, i) => (
                   <div
-                    className="flex items-center justify-center h-10 w-10 rounded-full transition-all duration-500"
+                    key={s.n}
+                    ref={(el) => {
+                      cardRefs.current[i] = el;
+                    }}
+                    data-service-card
+                    className="service-card"
                     style={{
-                      background: s.accentColor === "burgundy"
-                        ? "rgba(128,0,32,0.15)"
-                        : "rgba(212,175,55,0.1)",
-                      boxShadow: s.accentColor === "burgundy"
-                        ? "inset 0 0 16px rgba(128,0,32,0.25), 0 0 24px rgba(128,0,32,0.3)"
-                        : "inset 0 0 16px rgba(212,175,55,0.2), 0 0 24px rgba(212,175,55,0.3)",
+                      width: isMobile ? "85vw" : "min(520px, 82vw)",
+                      maxWidth: isMobile ? "85vw" : "540px",
+                      flex: "0 0 auto",
+                      willChange: "transform, opacity",
+                      transformStyle: "preserve-3d",
                     }}
                   >
-                    <span
-                      className="text-[22px] transition-all duration-500"
+                    {/* Card */}
+                    <div
+                      className="relative h-full min-h-[360px] rounded-xl overflow-hidden"
                       style={{
-                        color: s.accentColor === "burgundy" ? "#a11030" : "#d4af37",
-                        textShadow: s.accentColor === "burgundy"
-                          ? "0 0 12px rgba(128,0,32,0.5)"
-                          : "0 0 12px rgba(212,175,55,0.5)",
+                        background: "rgba(1,34,60,0.35)",
+                        border: "1px solid rgba(212,175,55,0.18)",
+                        backdropFilter: "blur(18px)",
                       }}
                     >
-                      {s.icon}
-                    </span>
+                      {/* Real photo */}
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          backgroundImage: `url(${s.bgImg})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          filter: "saturate(1.05) contrast(1.05)",
+                          transform: "scale(1.02)",
+                        }}
+                      />
+                      {/* Blurred dark overlay */}
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          background:
+                            "linear-gradient(180deg, rgba(1,42,74,0.72) 0%, rgba(1,34,60,0.65) 45%, rgba(0,0,0,0.84) 100%)",
+                          backdropFilter: "blur(8px)",
+                        }}
+                      />
+
+                      {/* Active border/shadow layer */}
+                      <div
+                        data-card-border
+                        className="absolute inset-0 rounded-xl pointer-events-none"
+                        style={{
+                          opacity: i === 0 ? 1 : 0.45,
+                          boxShadow:
+                            i === 0
+                              ? "inset 0 0 0 1px rgba(212,175,55,0.9), 0 18px 55px rgba(0,0,0,0.55)"
+                              : "inset 0 0 0 1px rgba(212,175,55,0.45)",
+                          transition: "opacity 200ms ease",
+                        }}
+                      />
+
+                      <div
+                        data-card-glow
+                        className="absolute inset-0 rounded-xl pointer-events-none"
+                        style={{
+                          background:
+                            "radial-gradient(ellipse 420px 220px at 25% 10%, rgba(212,175,55,0.22), transparent 60%)",
+                          opacity: i === 0 ? 1 : 0.35,
+                          transition: "opacity 200ms ease",
+                        }}
+                      />
+
+                      <div className="relative z-10 p-7 md:p-10">
+                        <span
+                          data-card-num
+                          className="block font-ui text-[11px] tracking-wider"
+                          style={{ color: i === 0 ? "rgba(212,175,55,0.95)" : "rgba(212,175,55,0.4)" }}
+                        >
+                          {s.n}
+                        </span>
+
+                        <div className="mt-5 flex items-center gap-6">
+                          <div
+                            className="flex items-center justify-center h-[66px] w-[66px] rounded-full"
+                            style={{
+                              background:
+                                s.accentColor === "burgundy"
+                                  ? "rgba(128,0,32,0.15)"
+                                  : "rgba(212,175,55,0.10)",
+                              boxShadow:
+                                s.accentColor === "burgundy"
+                                  ? "inset 0 0 20px rgba(128,0,32,0.25), 0 0 26px rgba(128,0,32,0.25)"
+                                  : "inset 0 0 20px rgba(212,175,55,0.2), 0 0 26px rgba(212,175,55,0.25)",
+                            }}
+                          >
+                            <span
+                              className="text-[26px]"
+                              style={{
+                                color:
+                                  s.accentColor === "burgundy" ? "#a11030" : "#d4af37",
+                                textShadow:
+                                  s.accentColor === "burgundy"
+                                    ? "0 0 12px rgba(128,0,32,0.45)"
+                                    : "0 0 12px rgba(212,175,55,0.45)",
+                              }}
+                            >
+                              {s.icon}
+                            </span>
+                          </div>
+
+                          <h3
+                            data-card-title
+                            className="font-heading text-2xl md:text-3xl leading-[1.1]"
+                            style={{
+                              color: "#f4f1ea",
+                            }}
+                          >
+                            {s.title}
+                          </h3>
+                        </div>
+
+                        <p className="justify-pretty mt-4 text-[14px] md:text-[15px] leading-relaxed" style={{ color: i === 0 ? "rgba(244,241,234,0.78)" : "rgba(244,241,234,0.68)" }}>
+                          {s.body}
+                        </p>
+
+                        <span
+                          data-card-enquire
+                          className="mt-7 inline-flex items-center gap-2 font-ui text-[11px] tracking-[0.3em] uppercase"
+                          style={{
+                            color: s.accentColor === "burgundy" ? "#a11030" : "#d4af37",
+                            opacity: i === 0 ? 1 : 0,
+                            transition: "opacity 200ms ease",
+                          }}
+                        >
+                          Enquire <span>→</span>
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-
-                <h3 className="font-heading text-xl md:text-2xl text-parchment mt-5">{s.title}</h3>
-                <p className="justify-pretty mt-2 text-parchment/65 text-[13px] leading-relaxed">
-                  {s.body}
-                </p>
-
-                <span className="mt-5 inline-flex items-center gap-2 font-ui text-[10px] tracking-[0.25em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ color: s.accentColor === "burgundy" ? "#a11030" : "#d4af37" }}
-                >
-                  Enquire <span>→</span>
-                </span>
+                ))}
               </div>
-            </motion.article>
-          ))}
+            </div>
+
+            {/* Spacer so layout doesn't jump when pin starts */}
+            <div className="h-8 md:h-10" />
+          </div>
         </div>
       </div>
+
+      {/* Give scroll distance for pin+scrub (no extra background changes). */}
+      <div aria-hidden className="h-0" />
     </section>
   );
 }
+
 
 /* ================= INSIGHTS ================= */
 const stats = [
@@ -1217,14 +1430,14 @@ const reelSources: ReelItem[] = [
   {
     title: "Javed Ali & Sugandha Mishra · DAV United Fest",
     tag: "Reel",
-    url: "https://www.instagram.com/reel/DSywVRiEy5U/",
+    url: "https://www.instagram.com/reel/DSywVRiEy5U/?hl=en",
     thumbnail: reel1Thumb,
     offset: 0,
   },
   {
     title: "3 Days · Zero Delay · Bharat Mandapam",
     tag: "Reel",
-    url: "https://www.instagram.com/reel/DXiybhCj8KM/",
+    url: "https://www.instagram.com/reel/DXiybhCj8KM/?hl=en",
     thumbnail: reel2Thumb,
     offset: 30,
   },
@@ -1252,7 +1465,7 @@ function Reels() {
               along for a running feed of the events we're inside right now.
             </p>
             <div className="mt-10">
-              <MagneticButton as="a" href="https://instagram.com/enkaisocial">
+              <MagneticButton as="a" href="https://www.instagram.com/enkaisocial.in/?hl=en">
                 Follow @enkaisocial
               </MagneticButton>
             </div>
@@ -1371,7 +1584,7 @@ function Contact() {
               <span className="h-3 w-px bg-gold/30" />
               <a href="https://wa.me/" className="hover:text-gold transition-colors font-ui text-xs tracking-widest">WhatsApp</a>
               <span className="h-3 w-px bg-gold/30" />
-              <a href="https://instagram.com/enkaisocial" className="hover:text-gold transition-colors font-ui text-xs tracking-widest">Instagram</a>
+              <a href="https://www.instagram.com/enkaisocial.in/?hl=en" className="hover:text-gold transition-colors font-ui text-xs tracking-widest">Instagram</a>
             </div>
           </div>
         </motion.form>

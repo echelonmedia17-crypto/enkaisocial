@@ -40,7 +40,7 @@ export function Footer() {
           </h4>
           <ul className="space-y-3 text-sm">
             <li><a className="hover:text-gold" href="mailto:hello@enkaisocial.in">hello@enkaisocial.in</a></li>
-            <li><a className="hover:text-gold" href="https://instagram.com/enkaisocial">@enkaisocial</a></li>
+            <li><a className="hover:text-gold" href="https://www.instagram.com/enkaisocial.in/?hl=en">@enkaisocial</a></li>
             <li><a className="hover:text-gold" href="#">+91 · Delhi NCR</a></li>
           </ul>
         </div>
