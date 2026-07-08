@@ -327,7 +327,10 @@ function WhyEnkai() {
   const [activeIndex, setActiveIndex] = useState(-1);
 
   useEffect(() => {
-    if (!inView) return;
+    if (!inView) {
+      setActiveIndex(-1);
+      return;
+    }
     const timers: ReturnType<typeof setTimeout>[] = [];
     pillars.forEach((_, i) => {
       timers.push(
