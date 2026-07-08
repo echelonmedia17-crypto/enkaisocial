@@ -279,71 +279,185 @@ const pillars = [
     n: "01",
     title: "Real-Time Execution",
     body:
-      "Content leaves the venue as fast as the moment it captures — edited, captioned and published while the applause is still in the air.",
+      "We don't wait for the event to end. We capture, edit and publish content while the event is still happening.",
   },
   {
     n: "02",
     title: "Speed With Strategy",
     body:
-      "Pace never breaks the plan. Every reel, still and story is briefed, styled and sequenced to serve the larger narrative of the event.",
+      "Every piece of content is optimized for engagement, platform reach and audience impact.",
   },
   {
     n: "03",
     title: "Dedicated Media Team",
     body:
-      "A single embedded crew — producers, shooters, editors, publishers — deployed on ground, working as one, accountable to one clock.",
+      "A professional team of photographers, cinematographers, editors and content specialists covering every moment.",
   },
   {
     n: "04",
-    title: "Social-First Approach",
+    title: "Social-First Storytelling",
     body:
-      "We shoot for the feed first, the archive second. Aspect ratios, hooks and captions are baked into the shot list, not decided afterwards.",
+      "Every frame is designed specifically for Instagram, LinkedIn, YouTube Shorts and Reels.",
   },
   {
     n: "05",
     title: "Presence-Based Coverage",
     body:
-      "Being there matters. Our team lives inside the event — not covering it from the wings, but moving with the room, the artist and the audience.",
+      "We immerse ourselves in the event to capture authentic moments instead of staged content.",
   },
 ];
 
 const traits = ["Premium", "Present", "Dynamic", "Reliable", "Modern", "Elegant"];
 
+// Deterministic particle positions (avoid hydration mismatch)
+const TIMELINE_PARTICLES = Array.from({ length: 14 }, (_, i) => ({
+  left: (i * 7.3) % 100,
+  top: (i * 13.7) % 100,
+  delay: (i * 0.7) % 6,
+  duration: 8 + ((i * 1.3) % 6),
+  size: 1 + (i % 3),
+}));
+
+const NODE_STEP = 0.75; // seconds between nodes
+const LINE_DURATION = 1.2;
+
 function WhyEnkai() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const [activeIndex, setActiveIndex] = useState(-1);
+
+  useEffect(() => {
+    if (!inView) return;
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    pillars.forEach((_, i) => {
+      timers.push(
+        setTimeout(() => setActiveIndex(i), (LINE_DURATION + i * NODE_STEP) * 1000),
+      );
+    });
+    return () => timers.forEach(clearTimeout);
+  }, [inView]);
+
   return (
-    <section className="relative py-32 md:py-44 bg-navy-deep">
+    <section
+      ref={sectionRef}
+      className="relative py-32 md:py-44 bg-navy-deep overflow-hidden"
+    >
       <div className="absolute inset-0 radial-burgundy-glow opacity-40" />
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 900px 500px at 50% 50%, rgba(212,175,55,0.08), transparent 65%)",
+        }}
+      />
+      {/* Floating particles */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none">
+        {TIMELINE_PARTICLES.map((p, i) => (
+          <motion.span
+            key={i}
+            className="absolute rounded-full bg-gold/40"
+            style={{
+              left: `${p.left}%`,
+              top: `${p.top}%`,
+              width: p.size,
+              height: p.size,
+              boxShadow: "0 0 8px rgba(212,175,55,0.6)",
+            }}
+            animate={{ y: [-8, 8, -8], opacity: [0.2, 0.6, 0.2] }}
+            transition={{
+              duration: p.duration,
+              repeat: Infinity,
+              delay: p.delay,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
+
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeading
-          kicker="What Makes Us Different"
-          title={<>Why <em className="italic text-parchment/60">Enkai</em>.</>}
+          kicker="The Enkai Difference"
+          title={<>Why <em className="italic text-parchment/60">Enkai?</em></>}
         />
 
-        <div className="mt-20 grid gap-x-12 gap-y-20 md:grid-cols-2 lg:grid-cols-3">
-          {pillars.map((p, i) => (
+        {/* Desktop / tablet: horizontal timeline */}
+        <div className="mt-24 hidden md:block">
+          <div className="relative">
+            {/* Track (dim) */}
+            <div className="absolute left-0 right-0 top-[42px] h-px bg-gold/15" />
+            {/* Animated golden line */}
             <motion.div
-              key={p.n}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.8, delay: i * 0.08 }}
-              className="relative"
-            >
-              <span
-                aria-hidden
-                className="absolute -top-8 -left-4 font-heading text-[7rem] leading-none gold-text opacity-25 select-none pointer-events-none"
-              >
-                {p.n}
-              </span>
-              <div className="relative">
-                <span className="block h-0.5 w-8 bg-burgundy-bright mb-5" />
-                <h3 className="font-heading text-2xl text-parchment">{p.title}</h3>
-                <p className="justify-pretty mt-4 text-parchment/65 text-[15px] max-w-sm">
-                  {p.body}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+              initial={{ scaleX: 0 }}
+              animate={inView ? { scaleX: 1 } : {}}
+              transition={{ duration: LINE_DURATION, ease: [0.22, 1, 0.36, 1] }}
+              style={{ transformOrigin: "left" }}
+              className="absolute left-0 right-0 top-[42px] h-px bg-gradient-to-r from-gold via-gold to-gold/60"
+            />
+            {/* Shimmer */}
+            <motion.div
+              aria-hidden
+              initial={{ x: "-20%", opacity: 0 }}
+              animate={inView ? { x: "120%", opacity: [0, 1, 0] } : {}}
+              transition={{
+                duration: 3.5,
+                delay: LINE_DURATION,
+                repeat: Infinity,
+                repeatDelay: 2,
+                ease: "easeInOut",
+              }}
+              className="absolute top-[41px] h-[3px] w-24 rounded-full pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, rgba(212,175,55,0.9), transparent)",
+                filter: "blur(2px)",
+              }}
+            />
+
+            <div className="grid grid-cols-5 gap-6">
+              {pillars.map((p, i) => (
+                <TimelineNode
+                  key={p.n}
+                  index={i}
+                  n={p.n}
+                  title={p.title}
+                  body={p.body}
+                  inView={inView}
+                  activeIndex={activeIndex}
+                  orientation="horizontal"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile: vertical timeline */}
+        <div className="mt-16 md:hidden relative">
+          <div className="absolute left-[22px] top-0 bottom-0 w-px bg-gold/15" />
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={inView ? { scaleY: 1 } : {}}
+            transition={{
+              duration: LINE_DURATION + pillars.length * NODE_STEP * 0.4,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            style={{ transformOrigin: "top" }}
+            className="absolute left-[22px] top-0 bottom-0 w-px bg-gradient-to-b from-gold via-gold to-gold/40"
+          />
+          <div className="flex flex-col gap-14">
+            {pillars.map((p, i) => (
+              <TimelineNode
+                key={p.n}
+                index={i}
+                n={p.n}
+                title={p.title}
+                body={p.body}
+                inView={inView}
+                activeIndex={activeIndex}
+                orientation="vertical"
+              />
+            ))}
+          </div>
         </div>
 
         <div className="mt-24 flex flex-wrap items-center gap-3">
@@ -361,6 +475,141 @@ function WhyEnkai() {
         </div>
       </div>
     </section>
+  );
+}
+
+function TimelineNode({
+  index,
+  n,
+  title,
+  body,
+  inView,
+  activeIndex,
+  orientation,
+}: {
+  index: number;
+  n: string;
+  title: string;
+  body: string;
+  inView: boolean;
+  activeIndex: number;
+  orientation: "horizontal" | "vertical";
+}) {
+  const base = LINE_DURATION + index * NODE_STEP;
+  const revealed = activeIndex >= index;
+  const isActive = activeIndex === index;
+  const isHorizontal = orientation === "horizontal";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={inView ? { opacity: 1 } : {}}
+      transition={{ duration: 0.01, delay: base }}
+      className={
+        isHorizontal
+          ? "relative flex flex-col items-start"
+          : "relative pl-14"
+      }
+    >
+      {/* Node dot */}
+      <motion.div
+        initial={{ scale: 0.7, opacity: 0 }}
+        animate={inView ? { scale: 1, opacity: 1 } : {}}
+        transition={{
+          duration: 0.7,
+          delay: base,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        whileHover={{ scale: 1.15, y: -3 }}
+        className={
+          isHorizontal
+            ? "relative z-10 group cursor-default"
+            : "absolute left-0 top-1 z-10 group cursor-default"
+        }
+      >
+        {/* Outer ring */}
+        <motion.div
+          animate={
+            isActive
+              ? { scale: [1, 1.35, 1], opacity: [0.5, 0, 0.5] }
+              : { scale: 1, opacity: revealed ? 0.3 : 0 }
+          }
+          transition={
+            isActive
+              ? { duration: 2.4, repeat: Infinity, ease: "easeOut" }
+              : { duration: 0.6 }
+          }
+          className="absolute inset-0 rounded-full border border-gold"
+          style={{ boxShadow: "0 0 20px rgba(212,175,55,0.5)" }}
+        />
+        {/* Floating wrap */}
+        <motion.div
+          animate={isActive ? { y: [-2, 2, -2] } : { y: 0 }}
+          transition={
+            isActive
+              ? { duration: 4, repeat: Infinity, ease: "easeInOut" }
+              : { duration: 0.4 }
+          }
+          className={`relative grid place-items-center h-11 w-11 rounded-full border transition-colors duration-500 ${
+            revealed
+              ? "border-gold bg-navy-deep"
+              : "border-gold/20 bg-navy-deep"
+          }`}
+          style={{
+            boxShadow: revealed
+              ? isActive
+                ? "0 0 28px rgba(212,175,55,0.7), inset 0 0 12px rgba(212,175,55,0.15)"
+                : "0 0 12px rgba(212,175,55,0.25)"
+              : "none",
+          }}
+        >
+          <span
+            className={`font-ui text-[11px] tracking-[0.15em] transition-colors duration-500 ${
+              revealed ? "text-gold" : "text-parchment/30"
+            }`}
+          >
+            {n}
+          </span>
+        </motion.div>
+        {/* Hover glow */}
+        <div
+          aria-hidden
+          className="absolute -inset-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(212,175,55,0.35), transparent 70%)",
+          }}
+        />
+      </motion.div>
+
+      {/* Text */}
+      <div className={isHorizontal ? "mt-8 pr-4 group" : "group"}>
+        <motion.h3
+          initial={{ opacity: 0, y: 12 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{
+            duration: 0.7,
+            delay: base + 0.3,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="font-heading text-xl md:text-[22px] leading-snug text-parchment"
+        >
+          {title}
+        </motion.h3>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{
+            duration: 0.7,
+            delay: base + 0.5,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          className="justify-pretty mt-3 text-[13.5px] leading-relaxed text-parchment/60 group-hover:text-parchment/85 transition-colors duration-500"
+        >
+          {body}
+        </motion.p>
+      </div>
+    </motion.div>
   );
 }
 
