@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { MagneticButton } from "@/components/enkai/MagneticButton";
-import { CelebrityStrip } from "@/components/enkai/CelebrityStrip";
+
 
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
@@ -21,8 +21,8 @@ function Home() {
   return (
     <div id="home" className="relative overflow-hidden bg-navy text-parchment">
       <Hero />
-      <CelebrityStrip />
       <MissionVision />
+
       <WhyEnkai />
       <ChapterAbout />
       <PortfolioGlimpse />
