@@ -9,6 +9,8 @@ import hero3 from "@/assets/hero-3.jpg";
 import hero4 from "@/assets/hero-4.jpg";
 import portfolio1 from "@/assets/portfolio-1.jpg";
 import portfolio2 from "@/assets/portfolio-2.jpg";
+import reel1Thumb from "@/assets/reel-1.jpg";
+import reel2Thumb from "@/assets/reel-2.jpg";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -1000,11 +1002,35 @@ function Counter({
 }
 
 /* ================= REELS ================= */
-const reels = [
-  { title: "Backstage · Gala Night", tag: "Reel", offset: 0 },
-  { title: "Runway Walk", tag: "Reel", offset: 30 },
-  { title: "Live Keynote", tag: "Reel", offset: 60 },
-  { title: "Confetti Drop", tag: "Reel", offset: 20 },
+
+type ReelItem = {
+  title: string;
+  tag: string;
+  url: string;
+  thumbnail: string;
+  offset: number;
+};
+
+const reelSources: ReelItem[] = [
+  {
+    title: "Javed Ali & Sugandha Mishra · DAV United Fest",
+    tag: "Reel",
+    url: "https://www.instagram.com/reel/DSywVRiEy5U/",
+    thumbnail: reel1Thumb,
+    offset: 0,
+  },
+  {
+    title: "3 Days · Zero Delay · Bharat Mandapam",
+    tag: "Reel",
+    url: "https://www.instagram.com/reel/DXiybhCj8KM/",
+    thumbnail: reel2Thumb,
+    offset: 30,
+  },
+];
+
+const reels: ReelItem[] = [
+  ...reelSources,
+  ...reelSources.map((r, i) => ({ ...r, offset: [60, 20][i] })),
 ];
 
 function Reels() {
@@ -1032,13 +1058,21 @@ function Reels() {
 
           <div className="relative h-[560px]">
             {reels.map((r, i) => (
-              <motion.div
+              <motion.a
                 key={i}
+                href={r.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: false }}
                 transition={{ duration: 0.9, delay: i * 0.12 }}
-                className="absolute rounded-xl overflow-hidden border border-gold/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)] animate-float"
+                whileHover={{
+                  scale: 1.05,
+                  y: -8,
+                  boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(212,175,55,0.35)",
+                }}
+                className="absolute rounded-xl overflow-hidden border border-gold/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)] animate-float block cursor-pointer transition-shadow duration-300"
                 style={{
                   width: 180,
                   height: 320,
@@ -1049,8 +1083,9 @@ function Reels() {
                 }}
               >
                 <img
-                  src={heroImages[i % heroImages.length]}
-                  alt=""
+                  src={r.thumbnail}
+                  alt={r.title}
+                  loading="lazy"
                   className="h-full w-full object-cover"
                 />
                 <div
@@ -1068,7 +1103,7 @@ function Reels() {
                     {r.title}
                   </p>
                 </div>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </div>
