@@ -347,7 +347,7 @@ function WhyEnkai() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-32 md:py-44 bg-navy-deep overflow-hidden"
+      className="relative py-24 md:py-36 bg-navy-deep overflow-hidden"
     >
       <div className="absolute inset-0 radial-burgundy-glow opacity-40" />
       <div
@@ -389,7 +389,7 @@ function WhyEnkai() {
         />
 
         {/* Desktop / tablet: horizontal timeline */}
-        <div className="mt-24 hidden md:block">
+        <div className="mt-20 hidden md:block">
           <div className="relative">
             {/* Track (dim) */}
             <div className="absolute left-0 right-0 top-[42px] h-px bg-gold/15" />
@@ -467,18 +467,20 @@ function WhyEnkai() {
           </div>
         </div>
 
-        <div className="mt-24 flex flex-wrap items-center gap-3">
-          <span className="font-ui text-[11px] tracking-[0.4em] uppercase text-gold mr-2">
+        <div className="mt-16 flex flex-col items-center justify-center gap-4 text-center">
+          <div className="font-ui text-[11px] tracking-[0.4em] uppercase text-gold">
             Brand DNA —
-          </span>
-          {traits.map((t) => (
-            <span
-              key={t}
-              className="font-ui text-xs tracking-[0.2em] uppercase text-gold border border-gold/40 rounded-full px-4 py-2 hover:bg-gold/15 transition-colors cursor-default"
-            >
-              {t}
-            </span>
-          ))}
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {traits.map((t) => (
+              <span
+                key={t}
+                className="font-ui text-xs tracking-[0.2em] uppercase text-gold border border-gold/40 rounded-full px-4 py-2 hover:bg-gold/15 transition-colors cursor-default"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -623,7 +625,7 @@ function TimelineNode({
 /* ================= ABOUT / CHAPTER ================= */
 function ChapterAbout() {
   return (
-    <section id="about" className="relative py-40 md:py-56 bg-navy">
+    <section id="about" className="relative pt-24 pb-20 md:pt-32 md:pb-24 bg-navy">
       <div className="absolute inset-0 radial-gold-glow opacity-50" />
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <motion.p
