@@ -1,6 +1,11 @@
 import { useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
+import JavedAliImg from "../../assets/JavedAli.JPG";
+import TapseePannuImg from "../../assets/Tapsee pannu.png";
+import AnupamKherImg from "../../assets/Anupam Kher.JPG";
+import RekhaGuptaImg from "../../assets/Rekha Gupta.png";
+
 /* ─────────────────────────────────────────────
    DATA
    ───────────────────────────────────────────── */
@@ -17,36 +22,50 @@ const celebrities: Celebrity[] = [
   {
     name: "Javed Ali",
     event: "DAV United Fest",
-    year: "2024",
-    img: "https://images.pexels.com/photos/167632/pexels-photo-167632.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
+    year: "2025",
+    img: JavedAliImg,
     targetId: "glimpse-dav-jit",
   },
   {
     name: "Kumar Sanu",
-    event: "Karaoke Night",
-    year: "2024",
+    event: "AAGAAZ 4.0",
+    year: "2026",
     img: "https://images.pexels.com/photos/164465/pexels-photo-164465.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
     targetId: "glimpse-dav-jit",
   },
   {
     name: "Rekha Gupta",
-    event: "Leadership Summit",
-    year: "2024",
-    img: "https://images.pexels.com/photos/1181424/pexels-photo-1181424.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
+    event: "NAVKAR DIVAS",
+    year: "2025",
+    img: RekhaGuptaImg,
     targetId: "glimpse-boardroom",
   },
   {
     name: "Tapsee Pannu",
-    event: "Screen Awards",
-    year: "2023",
-    img: "https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
+    event: "DAV UNITED",
+    year: "2025",
+    img: TapseePannuImg,
     targetId: "glimpse-boardroom",
   },
   {
     name: "Anupam Kher",
-    event: "Keynote Address",
-    year: "2024",
-    img: "https://images.pexels.com/photos/1223824/pexels-photo-1223824.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
+    event: "DAV UNITED",
+    year: "2025",
+    img: AnupamKherImg,
+    targetId: "glimpse-boardroom",
+  },
+  {
+    name: "Sadhna Sargam",
+    event: "AAGAAZ 4.0",
+    year: "2026",
+    img: "https://images.pexels.com/photos/164465/pexels-photo-164465.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
+    targetId: "glimpse-boardroom",
+  },
+  {
+    name: "Baba Ramdev",
+    event: "",
+    year: "2026",
+    img: "https://images.pexels.com/photos/164465/pexels-photo-164465.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
     targetId: "glimpse-boardroom",
   },
 ];
@@ -78,12 +97,12 @@ function FilmCard({
       onMouseLeave={() => setHovered(false)}
       className="group relative shrink-0 cursor-pointer origin-bottom transition-all duration-300 ease-out"
       style={{
-        width: 240,
-        height: 360,
-        marginLeft: index === 0 ? 0 : -36, // 15% overlap
+        width: 200,
+        height: 260,
+        marginLeft: index === 0 ? 0 : -28,
         marginTop: offset,
         zIndex: hovered ? 50 : 10 + index,
-        transform: hovered ? "scale(1.06) translateY(-12px)" : "scale(1) translateY(0)",
+        transform: hovered ? "scale(1.06) translateY(-10px)" : "scale(1) translateY(0)",
       }}
     >
       {/* Card container with rounded corners */}
@@ -272,37 +291,36 @@ export function CelebrityStrip() {
           transition={{ duration: 0.8, delay: 0.15 }}
           className="mt-5 text-center font-heading text-3xl md:text-5xl text-parchment leading-[1.15]"
         >
-          Stars We've Shared The Stage With
+          Faces That Made It Unforgettable
         </motion.h2>
       </div>
 
       {/* Filmstrip - static, draggable scroll */}
-      <div
-        className="relative mt-14 overflow-x-auto overflow-y-hidden no-scrollbar"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        style={{
-          maskImage:
-            "linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent)",
-          WebkitMaskImage:
-            "linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent)",
-          cursor: isDragging ? "grabbing" : "grab",
-        }}
-      >
+      <div className="relative mt-14 mx-auto max-w-7xl overflow-hidden">
         <div
-          ref={scrollContainerRef}
-          className="flex pl-6 pr-6"
+          className="overflow-x-auto overflow-y-hidden no-scrollbar"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          style={{
+            maskImage:
+              "linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent)",
+            cursor: isDragging ? "grabbing" : "grab",
+          }}
         >
-          {celebrities.map((celeb, i) => (
-            <FilmCard
-              key={`${celeb.name}-${i}`}
-              celeb={celeb}
-              index={i}
-              onNavigate={scrollToTile}
-            />
-          ))}
+          <div ref={scrollContainerRef} className="flex px-6">
+            {celebrities.map((celeb, i) => (
+              <FilmCard
+                key={`${celeb.name}-${i}`}
+                celeb={celeb}
+                index={i}
+                onNavigate={scrollToTile}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
