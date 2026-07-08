@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 type Celebrity = {
   name: string;
   event: string;
+  year: string;
   img: string;
   targetId: string;
 };
@@ -16,40 +17,45 @@ const celebrities: Celebrity[] = [
   {
     name: "Javed Ali",
     event: "DAV United Fest",
-    img: "https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    year: "2024",
+    img: "https://images.pexels.com/photos/167632/pexels-photo-167632.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
+    targetId: "glimpse-dav-jit",
+  },
+  {
+    name: "Kumar Sanu",
+    event: "Karaoke Night",
+    year: "2024",
+    img: "https://images.pexels.com/photos/164465/pexels-photo-164465.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
     targetId: "glimpse-dav-jit",
   },
   {
     name: "Rekha Gupta",
     event: "Leadership Summit",
-    img: "https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    year: "2024",
+    img: "https://images.pexels.com/photos/1181424/pexels-photo-1181424.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
     targetId: "glimpse-boardroom",
   },
   {
     name: "Tapsee Pannu",
     event: "Screen Awards",
-    img: "https://images.pexels.com/photos/1844547/pexels-photo-1844547.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    year: "2023",
+    img: "https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
     targetId: "glimpse-boardroom",
   },
   {
     name: "Anupam Kher",
     event: "Keynote Address",
-    img: "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
+    year: "2024",
+    img: "https://images.pexels.com/photos/1223824/pexels-photo-1223824.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
     targetId: "glimpse-boardroom",
-  },
-  {
-    name: "Kumar Sanu",
-    event: "Karaoke Night",
-    img: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
-    targetId: "glimpse-dav-jit",
   },
 ];
 
 /* ─────────────────────────────────────────────
-   AVATAR
+   FILM CARD
    ───────────────────────────────────────────── */
 
-function Avatar({
+function FilmCard({
   celeb,
   index,
   onNavigate,
@@ -60,6 +66,9 @@ function Avatar({
 }) {
   const [hovered, setHovered] = useState(false);
 
+  // Stagger overlap: even-indexed cards sit slightly higher
+  const offset = index % 2 === 0 ? 0 : 24;
+
   return (
     <button
       type="button"
@@ -67,58 +76,97 @@ function Avatar({
       onClick={() => onNavigate(celeb.targetId)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="group flex flex-col items-center gap-4 shrink-0 cursor-pointer"
-      style={{ width: "180px" }}
+      className="group relative shrink-0 cursor-pointer origin-bottom transition-all duration-300 ease-out"
+      style={{
+        width: 240,
+        height: 360,
+        marginLeft: index === 0 ? 0 : -36, // 15% overlap
+        marginTop: offset,
+        zIndex: hovered ? 50 : 10 + index,
+        transform: hovered ? "scale(1.06) translateY(-12px)" : "scale(1) translateY(0)",
+      }}
     >
+      {/* Card container with rounded corners */}
       <div
-        className="celeb-avatar relative rounded-full overflow-hidden transition-all duration-[250ms] ease-out"
+        className="relative w-full h-full overflow-hidden rounded-lg transition-all duration-300"
         style={{
-          width: "90px",
-          height: "90px",
-          border: "2px solid rgba(212,175,55,0.6)",
-          filter: "grayscale(60%)",
-          animation: `celebBob 3.5s ease-in-out infinite`,
-          animationDelay: `${index * 0.4}s`,
-          ...(hovered && {
-            filter: "none",
-            transform: "scale(1.08)",
-            borderColor: "rgba(212,175,55,1)",
-            boxShadow: "0 0 24px rgba(212,175,55,0.4)",
-          }),
+          boxShadow: hovered
+            ? "0 12px 40px rgba(212,175,55,0.3), 0 8px 24px rgba(0,0,0,0.5)"
+            : "0 4px 20px rgba(0,0,0,0.4)",
         }}
       >
+        {/* Image with cinematic treatment */}
         <img
           src={celeb.img}
           alt={celeb.name}
           loading="lazy"
-          className="h-full w-full object-cover"
+          className="w-full h-full object-cover transition-all duration-500"
+          style={{
+            filter: hovered
+              ? "none"
+              : "grayscale(50%) contrast(1.1) brightness(0.75)",
+          }}
         />
-      </div>
-      <div
-        className="text-center transition-all duration-[250ms] ease-out"
-        style={{
-          opacity: hovered ? 1 : 0,
-          transform: hovered ? "translateY(0)" : "translateY(4px)",
-        }}
-      >
-        <p className="font-ui text-[13px] text-gold leading-tight">
-          {celeb.name}
-        </p>
-        <p className="font-ui text-[10px] text-parchment/50 leading-tight mt-0.5">
-          {celeb.event}
-        </p>
+
+        {/* Gradient scrim at bottom */}
+        <div
+          className="absolute inset-x-0 bottom-0 pointer-events-none transition-opacity duration-300"
+          style={{
+            height: "55%",
+            background:
+              "linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.6) 40%, transparent 90%)",
+          }}
+        />
+
+        {/* Text overlay */}
+        <div
+          className="absolute inset-x-0 bottom-0 p-5 transition-all duration-300"
+          style={{
+            transform: hovered ? "translateY(0)" : "translateY(4px)",
+          }}
+        >
+          <p
+            className="font-heading text-xl text-parchment leading-tight transition-all duration-300"
+            style={{
+              textShadow: "0 2px 8px rgba(0,0,0,0.8)",
+              ...(hovered && { color: "#f4f1ea" }),
+            }}
+          >
+            {celeb.name}
+          </p>
+          <p
+            className="font-ui text-[11px] text-parchment/60 mt-1 tracking-wide transition-all duration-300"
+            style={{
+              ...(hovered && { color: "rgba(244,241,234,0.85)" }),
+            }}
+          >
+            {celeb.event}, {celeb.year}
+          </p>
+        </div>
+
+        {/* Gold border glow on hover */}
+        <div
+          className="absolute inset-0 rounded-lg pointer-events-none transition-opacity duration-300"
+          style={{
+            opacity: hovered ? 1 : 0,
+            boxShadow: "inset 0 0 0 2px rgba(212,175,55,0.6)",
+          }}
+        />
       </div>
     </button>
   );
 }
 
 /* ─────────────────────────────────────────────
-   CELEBRITY STRIP
+   SPOTLIGHT SECTION
    ───────────────────────────────────────────── */
 
 export function CelebrityStrip() {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const [paused, setPaused] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartX = useRef(0);
+  const scrollLeft = useRef(0);
 
   const scrollToTile = useCallback((targetId: string) => {
     const el = document.getElementById(targetId);
@@ -146,37 +194,66 @@ export function CelebrityStrip() {
   // Duplicate the list for seamless infinite marquee
   const loop = [...celebrities, ...celebrities];
 
+  // Drag handling
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!marqueeRef.current) return;
+    setIsDragging(true);
+    dragStartX.current = e.pageX - marqueeRef.current.offsetLeft;
+    scrollLeft.current = marqueeRef.current.scrollLeft;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !marqueeRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - marqueeRef.current.offsetLeft;
+    const walk = (x - dragStartX.current) * 1.5;
+    marqueeRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
   return (
-    <section className="relative bg-navy overflow-hidden py-16 md:py-20">
-      {/* Radial gold glow behind avatars */}
+    <section className="relative bg-navy overflow-hidden py-20 md:py-28">
+      {/* Spotlight beam effect behind filmstrip */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none opacity-30"
         style={{
           background:
-            "radial-gradient(ellipse 900px 300px at 50% 50%, rgba(212,175,55,0.15), transparent 70%)",
+            "radial-gradient(ellipse 1200px 400px at 30% 60%, rgba(212,175,55,0.12), transparent 60%), radial-gradient(ellipse 800px 300px at 70% 40%, rgba(212,175,55,0.08), transparent 55%)",
+        }}
+      />
+
+      {/* Soft diagonal light shafts */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-20"
+        style={{
+          background:
+            "linear-gradient(115deg, transparent 20%, rgba(212,175,55,0.06) 35%, transparent 50%), linear-gradient(145deg, transparent 40%, rgba(212,175,55,0.04) 55%, transparent 70%)",
         }}
       />
 
       {/* Top vignette — blends into hero above */}
       <div
-        className="absolute inset-x-0 top-0 h-24 pointer-events-none"
+        className="absolute inset-x-0 top-0 h-32 pointer-events-none"
         style={{
           background:
-            "linear-gradient(180deg, rgba(1,34,60,0.8) 0%, transparent 100%)",
+            "linear-gradient(180deg, rgba(1,34,60,0.95) 0%, transparent 100%)",
         }}
       />
 
       {/* Bottom vignette — blends into next section below */}
       <div
-        className="absolute inset-x-0 bottom-0 h-24 pointer-events-none"
+        className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
         style={{
           background:
-            "linear-gradient(0deg, rgba(1,34,60,0.8) 0%, transparent 100%)",
+            "linear-gradient(0deg, rgba(1,34,60,0.95) 0%, transparent 100%)",
         }}
       />
 
       <div className="relative mx-auto max-w-7xl px-6">
-        {/* Eyebrow label */}
+        {/* Gold eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -184,47 +261,55 @@ export function CelebrityStrip() {
           transition={{ duration: 0.7 }}
           className="flex items-center justify-center gap-4"
         >
-          <span className="h-px w-8 bg-gold/30" />
-          <span className="font-ui text-[12px] tracking-[0.45em] uppercase text-parchment/50">
-            Trusted by India's Biggest Names
+          <span className="h-px w-10 bg-gold/40" />
+          <span className="font-ui text-[11px] tracking-[0.5em] uppercase text-gold">
+            In The Spotlight
           </span>
-          <span className="h-px w-8 bg-gold/30" />
+          <span className="h-px w-10 bg-gold/40" />
         </motion.div>
 
-        {/* Playfair Display sub-heading */}
+        {/* Playfair Display heading */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
           transition={{ duration: 0.8, delay: 0.15 }}
-          className="mt-5 text-center font-heading text-3xl md:text-4xl text-parchment leading-[1.2]"
+          className="mt-5 text-center font-heading text-3xl md:text-5xl text-parchment leading-[1.15]"
         >
-          The Faces Behind Our Biggest Moments
+          Stars We've Shared The Stage With
         </motion.h2>
       </div>
 
-      {/* Marquee */}
+      {/* Filmstrip marquee */}
       <div
         className="relative mt-14 overflow-hidden"
         onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
+        onMouseLeave={() => {
+          setPaused(false);
+          setIsDragging(false);
+        }}
         style={{
           maskImage:
-            "linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)",
+            "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)",
           WebkitMaskImage:
-            "linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)",
+            "linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent)",
         }}
       >
         <div
           ref={marqueeRef}
-          className="flex gap-12 w-max"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+          className={`flex pl-6 ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
           style={{
-            animation: "celebMarquee 30s linear infinite",
+            width: "max-content",
+            animation: "filmstripMarquee 35s linear infinite",
             animationPlayState: paused ? "paused" : "running",
           }}
         >
           {loop.map((celeb, i) => (
-            <Avatar
+            <FilmCard
               key={`${celeb.name}-${i}`}
               celeb={celeb}
               index={i}
