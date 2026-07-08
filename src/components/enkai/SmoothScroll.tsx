@@ -23,6 +23,7 @@ export function SmoothScroll() {
         smoothWheel: true,
         wheelMultiplier: 1,
       });
+      (window as any).__lenis = lenis;
 
       const tick = (time: number) => lenis.raf(time * 1000);
       gsap.ticker.add(tick);
@@ -32,6 +33,7 @@ export function SmoothScroll() {
       cleanup = () => {
         gsap.ticker.remove(tick);
         lenis.destroy();
+        delete (window as any).__lenis;
       };
     })();
 

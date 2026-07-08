@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { MagneticButton } from "@/components/enkai/MagneticButton";
+import { CelebrityStrip } from "@/components/enkai/CelebrityStrip";
 
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
@@ -20,6 +21,7 @@ function Home() {
   return (
     <div id="home" className="relative overflow-hidden bg-navy text-parchment">
       <Hero />
+      <CelebrityStrip />
       <MissionVision />
       <WhyEnkai />
       <ChapterAbout />
@@ -671,12 +673,14 @@ function ChapterAbout() {
 /* ================= PORTFOLIO GLIMPSE ================= */
 const glimpses = [
   {
+    id: "glimpse-dav-jit",
     img: portfolio1,
     tag: "College · Cultural Festival",
     title: "DAV & JIT Live",
     desc: "Two flagship campus festivals covered live end-to-end — stage, backstage and student feeds, publishing in the same breath.",
   },
   {
+    id: "glimpse-boardroom",
     img: portfolio2,
     tag: "Leadership · Summit",
     title: "The Boardroom Series",
@@ -704,11 +708,12 @@ function PortfolioGlimpse() {
           {glimpses.map((g, i) => (
             <motion.div
               key={g.title}
+              id={g.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, margin: "-80px" }}
               transition={{ duration: 1, delay: i * 0.15 }}
-              className="group relative overflow-hidden rounded-xl border border-white/5"
+              className="group relative overflow-hidden rounded-xl border border-white/5 scroll-mt-32"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
