@@ -16,31 +16,31 @@ const celebrities: Celebrity[] = [
   {
     name: "Javed Ali",
     event: "DAV United Fest",
-    img: "https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop",
+    img: "https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
     targetId: "glimpse-dav-jit",
   },
   {
     name: "Rekha Gupta",
     event: "Leadership Summit",
-    img: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop",
+    img: "https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
     targetId: "glimpse-boardroom",
   },
   {
     name: "Tapsee Pannu",
     event: "Screen Awards",
-    img: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop",
+    img: "https://images.pexels.com/photos/1844547/pexels-photo-1844547.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
     targetId: "glimpse-boardroom",
   },
   {
     name: "Anupam Kher",
     event: "Keynote Address",
-    img: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop",
+    img: "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
     targetId: "glimpse-boardroom",
   },
   {
     name: "Kumar Sanu",
     event: "Karaoke Night",
-    img: "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop",
+    img: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop",
     targetId: "glimpse-dav-jit",
   },
 ];
@@ -51,9 +51,11 @@ const celebrities: Celebrity[] = [
 
 function Avatar({
   celeb,
+  index,
   onNavigate,
 }: {
   celeb: Celebrity;
+  index: number;
   onNavigate: (targetId: string) => void;
 }) {
   const [hovered, setHovered] = useState(false);
@@ -65,21 +67,23 @@ function Avatar({
       onClick={() => onNavigate(celeb.targetId)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="group flex flex-col items-center gap-3 shrink-0 cursor-pointer"
-      style={{ width: "140px" }}
+      className="group flex flex-col items-center gap-4 shrink-0 cursor-pointer"
+      style={{ width: "180px" }}
     >
       <div
-        className="relative rounded-full overflow-hidden transition-all duration-[250ms] ease-out"
+        className="celeb-avatar relative rounded-full overflow-hidden transition-all duration-[250ms] ease-out"
         style={{
-          width: "100px",
-          height: "100px",
-          border: "1.5px solid rgba(212,175,55,0.4)",
+          width: "90px",
+          height: "90px",
+          border: "2px solid rgba(212,175,55,0.6)",
           filter: "grayscale(60%)",
+          animation: `celebBob 3.5s ease-in-out infinite`,
+          animationDelay: `${index * 0.4}s`,
           ...(hovered && {
             filter: "none",
             transform: "scale(1.08)",
             borderColor: "rgba(212,175,55,1)",
-            boxShadow: "0 0 30px rgba(212,175,55,0.25)",
+            boxShadow: "0 0 24px rgba(212,175,55,0.4)",
           }),
         }}
       >
@@ -143,13 +147,31 @@ export function CelebrityStrip() {
   const loop = [...celebrities, ...celebrities];
 
   return (
-    <section className="relative bg-navy py-20 md:py-24 overflow-hidden">
-      {/* Subtle gradient backdrop */}
+    <section className="relative bg-navy overflow-hidden py-16 md:py-20">
+      {/* Radial gold glow behind avatars */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 600px 200px at 50% 50%, rgba(212,175,55,0.06), transparent 70%)",
+            "radial-gradient(ellipse 900px 300px at 50% 50%, rgba(212,175,55,0.15), transparent 70%)",
+        }}
+      />
+
+      {/* Top vignette — blends into hero above */}
+      <div
+        className="absolute inset-x-0 top-0 h-24 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(1,34,60,0.8) 0%, transparent 100%)",
+        }}
+      />
+
+      {/* Bottom vignette — blends into next section below */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-24 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(0deg, rgba(1,34,60,0.8) 0%, transparent 100%)",
         }}
       />
 
@@ -160,19 +182,30 @@ export function CelebrityStrip() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
           transition={{ duration: 0.7 }}
-          className="flex items-center justify-center gap-3"
+          className="flex items-center justify-center gap-4"
         >
-          <span className="h-px w-6 bg-gold/30" />
-          <span className="font-ui text-[11px] tracking-[0.4em] uppercase text-parchment/50">
+          <span className="h-px w-8 bg-gold/30" />
+          <span className="font-ui text-[12px] tracking-[0.45em] uppercase text-parchment/50">
             Trusted by India's Biggest Names
           </span>
-          <span className="h-px w-6 bg-gold/30" />
+          <span className="h-px w-8 bg-gold/30" />
         </motion.div>
+
+        {/* Playfair Display sub-heading */}
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+          className="mt-5 text-center font-heading text-3xl md:text-4xl text-parchment leading-[1.2]"
+        >
+          The Faces Behind Our Biggest Moments
+        </motion.h2>
       </div>
 
       {/* Marquee */}
       <div
-        className="relative mt-12 overflow-hidden"
+        className="relative mt-14 overflow-hidden"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         style={{
@@ -184,7 +217,7 @@ export function CelebrityStrip() {
       >
         <div
           ref={marqueeRef}
-          className="flex gap-10 w-max"
+          className="flex gap-12 w-max"
           style={{
             animation: "celebMarquee 30s linear infinite",
             animationPlayState: paused ? "paused" : "running",
@@ -194,6 +227,7 @@ export function CelebrityStrip() {
             <Avatar
               key={`${celeb.name}-${i}`}
               celeb={celeb}
+              index={i}
               onNavigate={scrollToTile}
             />
           ))}
