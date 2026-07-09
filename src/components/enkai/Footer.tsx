@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import logo from "@/assets/logo.jpg";
 export function Footer() {
   return (
     <footer className="relative bg-black text-parchment/70">
@@ -6,9 +7,11 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-20 grid gap-12 md:grid-cols-4">
         <div className="md:col-span-2">
           <div className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-full border border-gold/50 text-gold font-heading">
-              E
-            </span>
+            <img
+              src= {logo}
+              alt="Enkai Social"
+              className="h-12 w-12 rounded-full border border-gold/40 object-cover"
+            />
             <span className="font-heading text-xl tracking-[0.18em] text-parchment">
               ENKAI · SOCIAL
             </span>
