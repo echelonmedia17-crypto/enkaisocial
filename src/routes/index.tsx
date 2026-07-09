@@ -322,8 +322,8 @@ const TIMELINE_PARTICLES = Array.from({ length: 14 }, (_, i) => ({
   size: 1 + (i % 3),
 }));
 
-const NODE_STEP = 0.75; // seconds between nodes
-const LINE_DURATION = 1.2;
+const NODE_STEP = 0.18; // seconds between nodes
+const LINE_DURATION = 0.7;
 
 function WhyEnkai() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -597,8 +597,8 @@ function TimelineNode({
           initial={{ opacity: 0, y: 12 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{
-            duration: 0.7,
-            delay: base + 0.3,
+            duration: 0.5,
+            delay: base + 0.08,
             ease: [0.22, 1, 0.36, 1],
           }}
           className="font-heading text-xl md:text-[22px] leading-snug text-parchment"
@@ -609,8 +609,8 @@ function TimelineNode({
           initial={{ opacity: 0, y: 10 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{
-            duration: 0.7,
-            delay: base + 0.5,
+            duration: 0.5,
+            delay: base + 0.16,
             ease: [0.22, 1, 0.36, 1],
           }}
           className="justify-pretty mt-3 text-[13.5px] leading-relaxed text-parchment/60 group-hover:text-parchment/85 transition-colors duration-500"
