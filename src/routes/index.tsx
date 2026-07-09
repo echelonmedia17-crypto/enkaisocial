@@ -1578,11 +1578,6 @@ function Contact() {
           </div>
           <div className="flex flex-wrap items-center gap-6 pt-4">
             <MagneticButton>Send Enquiry</MagneticButton>
-            <div className="flex items-center gap-4 text-parchment/60">
-              <a href="mailto:echelonmedia17@gmail.com" className="hover:text-gold transition-colors font-ui text-xs tracking-widest">Mail</a>
-              <span className="h-3 w-px bg-gold/30" />
-              <a href="https://wa.me/919910706037" className="hover:text-gold transition-colors font-ui text-xs tracking-widest">WhatsApp</a>
-            </div>
           </div>
         </motion.form>
       </div>
