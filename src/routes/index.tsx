@@ -12,6 +12,8 @@ import portfolio1 from "@/assets/portfolio-1.jpg";
 import portfolio2 from "@/assets/portfolio-2.jpg";
 import reel1Thumb from "@/assets/reel-1.jpg";
 import reel2Thumb from "@/assets/reel-2.jpg";
+import reel3Thumb from "@/assets/reel-3.jpg";
+import reel4Thumb from "@/assets/reel-4.jpg";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -58,9 +60,8 @@ function Hero() {
             <img
               src={src}
               alt=""
-              className={`h-full w-full object-cover ${
-                i === idx ? "scale-110" : "scale-100"
-              } transition-transform duration-[6000ms] ease-out`}
+              className={`h-full w-full object-cover ${i === idx ? "scale-110" : "scale-100"
+                } transition-transform duration-[6000ms] ease-out`}
             />
           </div>
         ))}
@@ -559,11 +560,10 @@ function TimelineNode({
               ? { duration: 4, repeat: Infinity, ease: "easeInOut" }
               : { duration: 0.4 }
           }
-          className={`relative grid place-items-center h-11 w-11 rounded-full border transition-colors duration-500 ${
-            revealed
-              ? "border-gold bg-navy-deep"
-              : "border-gold/20 bg-navy-deep"
-          }`}
+          className={`relative grid place-items-center h-11 w-11 rounded-full border transition-colors duration-500 ${revealed
+            ? "border-gold bg-navy-deep"
+            : "border-gold/20 bg-navy-deep"
+            }`}
           style={{
             boxShadow: revealed
               ? isActive
@@ -573,9 +573,8 @@ function TimelineNode({
           }}
         >
           <span
-            className={`font-ui text-[11px] tracking-[0.15em] transition-colors duration-500 ${
-              revealed ? "text-gold" : "text-parchment/30"
-            }`}
+            className={`font-ui text-[11px] tracking-[0.15em] transition-colors duration-500 ${revealed ? "text-gold" : "text-parchment/30"
+              }`}
           >
             {n}
           </span>
@@ -845,9 +844,8 @@ function ComparisonRow({
   const isEnkai = variant === "enkai";
   return (
     <div
-      className={`grid gap-6 px-6 md:px-10 py-8 md:grid-cols-[220px_1fr] items-center ${
-        isEnkai ? "bg-navy/50" : "bg-transparent"
-      }`}
+      className={`grid gap-6 px-6 md:px-10 py-8 md:grid-cols-[220px_1fr] items-center ${isEnkai ? "bg-navy/50" : "bg-transparent"
+        }`}
     >
       <div className="font-heading text-xl">
         <span className={isEnkai ? "text-parchment" : "text-parchment/50"}>
@@ -858,16 +856,14 @@ function ComparisonRow({
         {items.map((it, i) => (
           <div key={i} className="flex items-start gap-3">
             <span
-              className={`mt-2 h-2 w-2 shrink-0 rounded-full ${
-                isEnkai
-                  ? "bg-gold shadow-[0_0_10px_rgba(212,175,55,0.9)] animate-gold-pulse"
-                  : "bg-burgundy/70"
-              }`}
+              className={`mt-2 h-2 w-2 shrink-0 rounded-full ${isEnkai
+                ? "bg-gold shadow-[0_0_10px_rgba(212,175,55,0.9)] animate-gold-pulse"
+                : "bg-burgundy/70"
+                }`}
             />
             <span
-              className={`font-ui text-[13px] leading-relaxed ${
-                isEnkai ? "text-parchment" : "text-parchment/45"
-              }`}
+              className={`font-ui text-[13px] leading-relaxed ${isEnkai ? "text-parchment" : "text-parchment/45"
+                }`}
             >
               {it}
             </span>
@@ -1141,7 +1137,7 @@ function ServicesCinematic() {
     init();
 
     return () => {
-      window.removeEventListener("resize", () => {});
+      window.removeEventListener("resize", () => { });
       ctx?.revert?.();
       st?.kill?.();
     };
@@ -1418,25 +1414,38 @@ type ReelItem = {
 
 const reelSources: ReelItem[] = [
   {
-    title: "Javed Ali & Sugandha Mishra · DAV United Fest",
+    title: "Javed Ali · DAV United Fest",
     tag: "Reel",
     url: "https://www.instagram.com/reel/DSywVRiEy5U/?hl=en",
     thumbnail: reel1Thumb,
     offset: 0,
   },
   {
-    title: "3 Days · Zero Delay · Bharat Mandapam",
+    title: "3 Days · Bharat Mandapam",
     tag: "Reel",
     url: "https://www.instagram.com/reel/DXiybhCj8KM/?hl=en",
     thumbnail: reel2Thumb,
     offset: 30,
   },
+  {
+    title: "aagaaz4.0 · Bharat Mandapam",
+    tag: "Reel",
+    url: "https://www.instagram.com/p/DYyqjUVxjNp/?hl=en",
+    thumbnail: reel3Thumb,
+    offset: 30,
+  },
+  {
+    title: "aagaaz4.0 . Kumarsanu",
+    tag: "Reel",
+    url: "https://www.instagram.com/p/DYZe3wbTxVO/?hl=en",
+    thumbnail: reel4Thumb,
+    offset: 30,
+  },
+
+
 ];
 
-const reels: ReelItem[] = [
-  ...reelSources,
-  ...reelSources.map((r, i) => ({ ...r, offset: [60, 20][i] })),
-];
+const reels: ReelItem[] = reelSources.slice(0, 4);
 
 function Reels() {
   return (
@@ -1477,14 +1486,14 @@ function Reels() {
                   y: -8,
                   boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(212,175,55,0.35)",
                 }}
-                className="absolute rounded-xl overflow-hidden border border-gold/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)] animate-float block cursor-pointer transition-shadow duration-300"
+                className="absolute rounded-xl overflow-hidden border border-gold/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)] block cursor-pointer transition-all duration-500"
                 style={{
                   width: 180,
                   height: 320,
-                  left: `${(i * 24) % 100}%`,
-                  top: `${r.offset}px`,
-                  transform: `rotate(${i % 2 === 0 ? -3 : 3}deg)`,
-                  animationDelay: `${i * 0.6}s`,
+                  left: ["0px", "140px", "280px", "420px"][i],
+                  top: "20px",
+                  transform: `rotate(${[-2, 1, -1, 2][i]}deg)`,
+                  zIndex: i + 1,
                 }}
               >
                 <img
