@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 
 const links = [
@@ -12,6 +13,7 @@ const links = [
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const onHome = pathname === "/";
 
@@ -22,6 +24,13 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   const handleAnchor = (e: React.MouseEvent, href: string) => {
     if (!onHome) return;
     e.preventDefault();
@@ -30,18 +39,20 @@ export function Navbar() {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const closeMenu = () => setMenuOpen(false);
+
   const logoSize = scrolled ? 44 : 56;
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled
+        scrolled || menuOpen
           ? "bg-navy/70 backdrop-blur-xl py-3 border-b border-gold/10"
           : "bg-transparent py-5"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
-        <Link to="/" className="flex items-center gap-3 group">
+        <Link to="/" className="flex items-center gap-3 group" onClick={closeMenu}>
           <motion.span
             initial={{ opacity: 0, scale: 0.8, y: -8 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -114,7 +125,99 @@ export function Navbar() {
         >
           Let's Talk
         </a>
+
+        <button
+          onClick={() => setMenuOpen((v) => !v)}
+          className="md:hidden flex items-center justify-center w-11 h-11 -mr-2 text-parchment hover:text-gold transition-colors"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden overflow-hidden border-t border-gold/10"
+          >
+            <nav className="flex flex-col gap-1 px-6 py-6">
+              {links.map((l, i) => {
+                if (l.type === "route") {
+                  return (
+                    <motion.div
+                      key={l.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.05 * i + 0.05, duration: 0.3 }}
+                    >
+                      <Link
+                        to={l.href}
+                        onClick={closeMenu}
+                        className="block py-3 font-ui text-[15px] tracking-[0.15em] uppercase text-parchment/85 hover:text-gold transition-colors"
+                        activeProps={{ className: "text-gold" }}
+                      >
+                        {l.label}
+                      </Link>
+                    </motion.div>
+                  );
+                }
+                if (!onHome) {
+                  return (
+                    <motion.div
+                      key={l.label}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.05 * i + 0.05, duration: 0.3 }}
+                    >
+                      <Link
+                        to="/"
+                        hash={l.href.slice(1)}
+                        onClick={closeMenu}
+                        className="block py-3 font-ui text-[15px] tracking-[0.15em] uppercase text-parchment/85 hover:text-gold transition-colors"
+                      >
+                        {l.label}
+                      </Link>
+                    </motion.div>
+                  );
+                }
+                return (
+                  <motion.div
+                    key={l.label}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 * i + 0.05, duration: 0.3 }}
+                  >
+                    <a
+                      href={l.href}
+                      onClick={(e) => {
+                        handleAnchor(e, l.href);
+                        closeMenu();
+                      }}
+                      className="block py-3 font-ui text-[15px] tracking-[0.15em] uppercase text-parchment/85 hover:text-gold transition-colors"
+                    >
+                      {l.label}
+                    </a>
+                  </motion.div>
+                );
+              })}
+              <motion.a
+                href="mailto:hello@enkaisocial.in"
+                onClick={closeMenu}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 * links.length + 0.05, duration: 0.3 }}
+                className="mt-4 inline-flex items-center justify-center gap-2 font-ui text-[13px] tracking-[0.2em] uppercase text-gold border border-gold/40 px-4 py-3 hover:bg-gold/10 transition-colors"
+              >
+                Let's Talk
+              </motion.a>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
