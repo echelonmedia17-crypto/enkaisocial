@@ -851,21 +851,6 @@ function Portfolio() {
 
       {/* ─── Premium Lightbox ─── */}
       {selectedProject && (
-        <>
-        {/* Header (outside scroll container so it stays fixed) */}
-        <div
-          className="fixed inset-x-0 top-0 z-[950] [&_header]:bg-[var(--pf-bg)]/70 [&_header]:backdrop-blur-xl"
-          style={overlayThemeVars}
-        >
-          <Navbar />
-        </div>
-
-        {/* Scroll Progress Bar */}
-        <div
-          className="fixed left-0 top-0 z-[960] h-[2px] bg-[var(--amber)] transition-[width] duration-150"
-          style={{ width: `${scrollProgress}%`, ...overlayThemeVars }}
-        />
-
         <div
           ref={overlayRef}
           style={overlayThemeVars}
@@ -874,6 +859,18 @@ function Portfolio() {
           onClick={(e) => e.stopPropagation()}
           data-lenis-prevent
         >
+          {/* Scroll Progress Bar */}
+          <div
+            className="fixed left-0 top-0 z-[930] h-[2px] bg-[var(--amber)] transition-[width] duration-150"
+            style={{ width: `${scrollProgress}%` }}
+          />
+
+          {/* Header inside overlay */}
+          <div className="fixed inset-x-0 top-0 z-[950] [&_header]:bg-[var(--pf-bg)]/70 [&_header]:backdrop-blur-xl">
+            <Navbar />
+          </div>
+
+          {/* Close Trigger Button */}
           <button
             type="button"
             onClick={closeLightbox}
@@ -1162,7 +1159,6 @@ function Portfolio() {
             />
           ) : null}
         </div>
-        </>
       )}
     </div>
   );
