@@ -817,28 +817,26 @@ function Portfolio() {
 
       <div className="relative mx-auto max-w-7xl px-6">
         {/* Header */}
-        <div className="flex flex-wrap items-center justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-3">
-              <span className="h-px w-8 bg-burgundy-bright" />
-              <span className="font-ui text-[11px] tracking-[0.4em] uppercase text-burgundy-bright">
-                From Our Portfolio
-              </span>
-            </div>
-            <h1 className="mt-6 font-heading text-5xl md:text-7xl leading-[1.02] text-parchment max-w-4xl">
-              Every event we've been{" "}
-              <em className="italic text-parchment/60">inside.</em>
-            </h1>
+        <div className="flex flex-col items-center text-center">
+          <div className="flex items-center gap-3">
+            <span className="h-px w-8 bg-burgundy-bright" />
+            <span className="font-ui text-[11px] tracking-[0.4em] uppercase text-burgundy-bright">
+              From Our Portfolio
+            </span>
+            <span className="h-px w-8 bg-burgundy-bright" />
           </div>
+          <h1 className="mt-6 font-heading text-5xl md:text-7xl leading-[1.02] text-parchment max-w-4xl">
+            Every event we've been{" "}
+            <em className="italic text-parchment/60">inside.</em>
+          </h1>
+          <p className="justify-pretty mt-8 max-w-2xl text-parchment/70">
+            A living archive of the rooms we've stood in, the stages we've circled,
+            and the moments we've moved from the venue to the feed — in real time.
+          </p>
         </div>
 
-        <p className="justify-pretty mt-8 max-w-2xl text-parchment/70">
-          A living archive of the rooms we've stood in, the stages we've circled,
-          and the moments we've moved from the venue to the feed — in real time.
-        </p>
-
         {/* Tab Filters */}
-        <div className="flex flex-wrap gap-3 mt-12">
+        <div className="flex flex-wrap justify-center gap-3 mt-12">
           {TABS_ENKAI.map((tab) => (
             <button
               key={tab}
@@ -856,13 +854,6 @@ function Portfolio() {
 
         {/* Featured Projects */}
         <div className="mt-16 space-y-14">
-          <div className="font-heading text-[15px] font-bold uppercase tracking-[0.08em] text-parchment/90">
-            Featured Projects
-          </div>
-          <div className="mt-3 text-parchment/70 max-w-2xl leading-relaxed text-sm">
-            Selected live-event coverage by Enkai Social — galas, summits, festivals, launches and press days across India.
-          </div>
-
           <div className="mt-10 space-y-14">
             {ALL_PROJECTS_ENKAI.map((item, idx) => (
               <div key={item.name} className="mx-auto w-[90%] md:w-[95%]">
