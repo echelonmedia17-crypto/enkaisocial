@@ -38,7 +38,6 @@ import gsap from "gsap";
 
 import {
   ALL_PROJECTS_ENKAI,
-  TABS_ENKAI,
   GALLERY_PREVIEW_COUNT_ENKAI,
   type Project,
   type ProjectStat,
@@ -530,7 +529,7 @@ function PortfolioCard({
       />
 
       {/* Layout row (single card per row) */}
-      <div className="relative flex items-stretch" style={{ borderRadius: "20px" }}>
+      <div className="relative flex items-stretch h-[420px] md:h-[480px]" style={{ borderRadius: "20px" }}>
         {imageFirst ? (
           <>
             <div className={split70 ? "w-[70%]" : "w-[50%]"}>
@@ -559,7 +558,7 @@ function PortfolioCard({
             </div>
 
             <div className={split70 ? "w-[30%]" : "w-[50%]"}>
-              <div className="h-full p-6 md:p-8 flex flex-col justify-end">
+              <div className="h-full p-6 md:p-8 flex flex-col justify-end overflow-hidden">
                 <div className="flex flex-col gap-4">
                   <span className="font-ui text-[10px] tracking-[0.35em] uppercase text-gold/90">
                     {item.category}
@@ -572,7 +571,7 @@ function PortfolioCard({
                     <span className="text-parchment/30 text-[10px]">●</span>
                     <span className="font-ui text-[12px] text-parchment/60">{item.year}</span>
                   </div>
-                  <p className="text-parchment/70 text-sm leading-[1.6] justify-pretty">
+                  <p className="text-parchment/70 text-sm leading-[1.6] justify-pretty line-clamp-3">
                     {item.blurb}
                   </p>
                   <div className="mt-1 flex items-center">
@@ -588,7 +587,7 @@ function PortfolioCard({
         ) : (
           <>
             <div className={split70 ? "w-[30%]" : "w-[50%]"}>
-              <div className="h-full p-6 md:p-8 flex flex-col justify-end">
+              <div className="h-full p-6 md:p-8 flex flex-col justify-end overflow-hidden">
                 <div className="flex flex-col gap-4">
                   <span className="font-ui text-[10px] tracking-[0.35em] uppercase text-gold/90">
                     {item.category}
@@ -601,7 +600,7 @@ function PortfolioCard({
                     <span className="text-parchment/30 text-[10px]">●</span>
                     <span className="font-ui text-[12px] text-parchment/60">{item.year}</span>
                   </div>
-                  <p className="text-parchment/70 text-sm leading-[1.6] justify-pretty">
+                  <p className="text-parchment/70 text-sm leading-[1.6] justify-pretty line-clamp-3">
                     {item.blurb}
                   </p>
                   <div className="mt-1 flex items-center">
@@ -658,7 +657,6 @@ function PortfolioCard({
    MAIN PORTFOLIO SCREEN
    ───────────────────────────────────────────── */
 function Portfolio() {
-  const [activeTab, setActiveTab] = useState("All");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeLightbox, setActiveLightbox] = useState<string | null>(null);
@@ -668,9 +666,7 @@ function Portfolio() {
   const contentRef = useRef<HTMLDivElement | null>(null);
   const behindScenesRef = useRef<HTMLDivElement | null>(null);
 
-  const filteredProjects = activeTab === "All"
-    ? ALL_PROJECTS_ENKAI
-    : ALL_PROJECTS_ENKAI.filter((p) => p.category === activeTab);
+  const filteredProjects = ALL_PROJECTS_ENKAI;
 
   const openLightbox = (p: Project) => {
     if (typeof window !== "undefined") {
@@ -829,27 +825,6 @@ function Portfolio() {
             Every event we've been{" "}
             <em className="italic text-parchment/60">inside.</em>
           </h1>
-          <p className="justify-pretty mt-8 max-w-2xl text-parchment/70">
-            A living archive of the rooms we've stood in, the stages we've circled,
-            and the moments we've moved from the venue to the feed — in real time.
-          </p>
-        </div>
-
-        {/* Tab Filters */}
-        <div className="flex flex-wrap justify-center gap-3 mt-12">
-          {TABS_ENKAI.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2 rounded-full font-ui tracking-widest uppercase text-xs transition-all duration-300 ${
-                activeTab === tab
-                  ? "bg-gold text-navy font-semibold"
-                  : "bg-transparent text-parchment/80 border border-gold/40 hover:border-gold"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
         </div>
 
         {/* Featured Projects */}
