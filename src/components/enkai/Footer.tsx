@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react";
 export function Footer() {
   return (
     <footer className="relative bg-black text-parchment/70">
@@ -18,7 +19,21 @@ export function Footer() {
             amplified as it unfolds.
           </p>
           <p className="mt-8 font-ui text-[11px] tracking-[0.3em] uppercase text-gold/80">
-            A Subsidiary of Echelon Media
+            A Subsidiary of{" "}
+            <a
+              href="https://echelonmedia.in"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-parchment hover:text-gold transition-all duration-300 group"
+            >
+              <span>Echelon Media</span>
+
+              <ArrowUpRight
+                size={13}
+                strokeWidth={2}
+                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </a>
           </p>
         </div>
 
@@ -39,9 +54,10 @@ export function Footer() {
             Reach us
           </h4>
           <ul className="space-y-3 text-sm">
-            <li><a className="hover:text-gold" href="mailto:hello@enkaisocial.in">hello@enkaisocial.in</a></li>
+            <li><a className="hover:text-gold" href="mailto:echelonmedia17@gmail.com">echelonmedia17@gmail.com</a></li>
+            <li><a className="hover:text-gold" href="mailto:info@echelonmedia.in">info@echelonmedia.in</a></li>
+            <li><a className="hover:text-gold" href="tel:+919910706037">+91 99107 06037</a></li>
             <li><a className="hover:text-gold" href="https://www.instagram.com/enkaisocial.in/?hl=en">@enkaisocial</a></li>
-            <li><a className="hover:text-gold" href="#">+91 · Delhi NCR</a></li>
           </ul>
         </div>
       </div>

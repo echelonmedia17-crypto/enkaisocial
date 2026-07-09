@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageCircle, Mail } from "lucide-react";
 import logo from "@/assets/logo.jpg";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { SOCIAL_LINKS } from "@/lib/socialLinks";
+
 
 const links = [
   { label: "Home", href: "#home", type: "anchor" as const },
@@ -119,12 +127,39 @@ export function Navbar() {
           })}
         </nav>
 
-        <a
-          href="mailto:hello@enkaisocial.in"
-          className="hidden md:inline-flex items-center gap-2 font-ui text-[12px] tracking-[0.2em] uppercase text-gold border border-gold/40 px-4 py-2 hover:bg-gold/10 transition-colors"
-        >
-          Let's Talk
-        </a>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            asChild
+            className="hidden md:inline-flex items-center gap-2 font-ui text-[12px] tracking-[0.2em] uppercase text-gold border border-gold/40 px-4 py-2 hover:bg-gold/10 transition-colors"
+          >
+            <button type="button" aria-label="Let's Talk">
+              Let's Talk
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-44">
+            <DropdownMenuItem asChild>
+              <a
+                href={SOCIAL_LINKS.whatsapp}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2"
+              >
+                <MessageCircle size={16} />
+                WhatsApp
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <a
+                href="mailto:hello@enkaisocial.in"
+                className="flex items-center gap-2"
+              >
+                <Mail size={16} />
+                Mail
+              </a>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
 
         <button
           onClick={() => setMenuOpen((v) => !v)}
@@ -204,16 +239,48 @@ export function Navbar() {
                   </motion.div>
                 );
               })}
-              <motion.a
-                href="mailto:hello@enkaisocial.in"
-                onClick={closeMenu}
+              <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.05 * links.length + 0.05, duration: 0.3 }}
-                className="mt-4 inline-flex items-center justify-center gap-2 font-ui text-[13px] tracking-[0.2em] uppercase text-gold border border-gold/40 px-4 py-3 hover:bg-gold/10 transition-colors"
+                className="mt-4"
               >
-                Let's Talk
-              </motion.a>
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    asChild
+                    className="inline-flex items-center justify-center gap-2 font-ui text-[13px] tracking-[0.2em] uppercase text-gold border border-gold/40 px-4 py-3 hover:bg-gold/10 transition-colors"
+                  >
+                    <button type="button" aria-label="Let's Talk" onClick={closeMenu}>
+                      Let's Talk
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-44">
+                    <DropdownMenuItem asChild>
+                      <a
+                        href={SOCIAL_LINKS.whatsapp}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-2"
+                        onClick={closeMenu}
+                      >
+                        <MessageCircle size={16} />
+                        WhatsApp
+                      </a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <a
+                        href="mailto:hello@enkaisocial.in"
+                        className="flex items-center gap-2"
+                        onClick={closeMenu}
+                      >
+                        <Mail size={16} />
+                        Mail
+                      </a>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </motion.div>
+
             </nav>
           </motion.div>
         )}

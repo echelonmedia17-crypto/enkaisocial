@@ -1306,17 +1306,7 @@ function ServicesCinematic() {
                           {s.body}
                         </p>
 
-                        <span
-                          data-card-enquire
-                          className="mt-7 inline-flex items-center gap-2 font-ui text-[11px] tracking-[0.3em] uppercase"
-                          style={{
-                            color: s.accentColor === "burgundy" ? "#a11030" : "#d4af37",
-                            opacity: i === 0 ? 1 : 0,
-                            transition: "opacity 200ms ease",
-                          }}
-                        >
-                          Enquire <span>→</span>
-                        </span>
+
                       </div>
                     </div>
                   </div>
@@ -1580,11 +1570,9 @@ function Contact() {
           <div className="flex flex-wrap items-center gap-6 pt-4">
             <MagneticButton>Send Enquiry</MagneticButton>
             <div className="flex items-center gap-4 text-parchment/60">
-              <a href="mailto:hello@enkaisocial.in" className="hover:text-gold transition-colors font-ui text-xs tracking-widest">Email</a>
+              <a href="mailto:echelonmedia17@gmail.com" className="hover:text-gold transition-colors font-ui text-xs tracking-widest">Mail</a>
               <span className="h-3 w-px bg-gold/30" />
-              <a href="https://wa.me/" className="hover:text-gold transition-colors font-ui text-xs tracking-widest">WhatsApp</a>
-              <span className="h-3 w-px bg-gold/30" />
-              <a href="https://www.instagram.com/enkaisocial.in/?hl=en" className="hover:text-gold transition-colors font-ui text-xs tracking-widest">Instagram</a>
+              <a href="https://wa.me/919910706037" className="hover:text-gold transition-colors font-ui text-xs tracking-widest">WhatsApp</a>
             </div>
           </div>
         </motion.form>
