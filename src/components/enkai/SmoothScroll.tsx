@@ -6,7 +6,9 @@ export function SmoothScroll() {
     window.scrollTo(0, 0);
 
     let lenis: any;
-    let cleanup: (() => void) | undefined;
+    let isActive = true;
+    let gsapInstance: any;
+    let tickFn: any;
 
     (async () => {
       const [{ default: Lenis }, gsapMod, stMod] = await Promise.all([
@@ -14,34 +16,39 @@ export function SmoothScroll() {
         import("gsap"),
         import("gsap/ScrollTrigger"),
       ]);
+      
+      if (!isActive) return;
+
       const gsap = gsapMod.default;
       const ScrollTrigger = stMod.ScrollTrigger;
       gsap.registerPlugin(ScrollTrigger);
+      gsapInstance = gsap;
 
       lenis = new Lenis({
         duration: 1.15,
         smoothWheel: true,
         wheelMultiplier: 1,
       });
-(window as any).__lenis = lenis;
+      (window as any).__lenis = lenis;
       (window as any).__lenisStart = () => lenis?.start?.();
       (window as any).__lenisStop = () => lenis?.stop?.();
       (window as any).__lenisDestroy = () => lenis?.destroy?.();
 
-      const tick = (time: number) => lenis.raf(time * 1000);
-      gsap.ticker.add(tick);
+      tickFn = (time: number) => lenis.raf(time * 1000);
+      gsap.ticker.add(tickFn);
       gsap.ticker.lagSmoothing(0);
       lenis.on("scroll", ScrollTrigger.update);
-
-      cleanup = () => {
-        gsap.ticker.remove(tick);
-        lenis.destroy();
-        delete (window as any).__lenis;
-      };
     })();
 
     return () => {
-      cleanup?.();
+      isActive = false;
+      if (lenis) {
+        lenis.destroy();
+        delete (window as any).__lenis;
+      }
+      if (gsapInstance && tickFn) {
+        gsapInstance.ticker.remove(tickFn);
+      }
     };
   }, []);
 

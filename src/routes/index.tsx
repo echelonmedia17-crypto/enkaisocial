@@ -60,6 +60,8 @@ function Hero() {
             <img
               src={src}
               alt=""
+              loading={i === 0 ? "eager" : "lazy"}
+              fetchPriority={i === 0 ? "high" : "auto"}
               className={`h-full w-full object-cover ${i === idx ? "scale-110" : "scale-100"
                 } transition-transform duration-[6000ms] ease-out`}
             />
@@ -720,6 +722,7 @@ function PortfolioGlimpse() {
                 <img
                   src={g.img}
                   alt={g.title}
+                  loading="lazy"
                   className="h-full w-full object-cover transition-all duration-[900ms] ease-out"
                   style={{ filter: "grayscale(30%) brightness(0.75)" }}
                   onMouseEnter={(e) => (e.currentTarget.style.filter = "none")}
@@ -937,10 +940,15 @@ function ServicesCinematic() {
     let st: any;
     let gsap: any;
     let ScrollTrigger: any;
+    let isActive = true;
+    let onResize: (() => void) | undefined;
 
     const init = async () => {
       const gsapMod = await import("gsap");
       const stMod = await import("gsap/ScrollTrigger");
+      
+      if (!isActive) return;
+      
       gsap = gsapMod.default;
       ScrollTrigger = stMod.ScrollTrigger;
       gsap.registerPlugin(ScrollTrigger);
@@ -1002,17 +1010,16 @@ function ServicesCinematic() {
               cardRefs.current.forEach((cardEl, i) => {
                 if (!cardEl) return;
                 const d = Math.abs(i - activeIndex);
-                const isActive = i === activeIndex;
+                const isActiveCard = i === activeIndex;
 
                 // Opacity range 0.6-0.7 inactive.
-                const opacity = isActive ? 1 : 0.62 + Math.max(0, 1 - d) * 0.08;
+                const opacity = isActiveCard ? 1 : 0.62 + Math.max(0, 1 - d) * 0.08;
 
-                const scale = isActive ? 1.03 : 1.0;
-                const brighten = isActive ? 1 : 0;
+                const scale = isActiveCard ? 1.03 : 1.0;
 
                 // Rotate slightly for depth.
-                const rotateY = isActive ? 0 : (i < activeIndex ? 6 : -6) * Math.min(1, d * 0.6);
-                const z = isActive ? 24 : 0;
+                const rotateY = isActiveCard ? 0 : (i < activeIndex ? 6 : -6) * Math.min(1, d * 0.6);
+                const z = isActiveCard ? 24 : 0;
 
                 gsap.set(cardEl, {
                   opacity,
@@ -1028,32 +1035,31 @@ function ServicesCinematic() {
                 const title = cardEl.querySelector<HTMLElement>("[data-card-title]");
                 const num = cardEl.querySelector<HTMLElement>("[data-card-num]");
                 if (border) {
-                  border.style.opacity = isActive ? "1" : "0.45";
-                  border.style.boxShadow = isActive
+                  border.style.opacity = isActiveCard ? "1" : "0.45";
+                  border.style.boxShadow = isActiveCard
                     ? "inset 0 0 0 1px rgba(212,175,55,0.9), 0 18px 55px rgba(0,0,0,0.55)"
                     : "inset 0 0 0 1px rgba(212,175,55,0.45)";
                 }
                 if (glow) {
-                  glow.style.opacity = isActive ? "1" : "0.35";
+                  glow.style.opacity = isActiveCard ? "1" : "0.35";
                 }
                 if (title) {
-                  title.style.color = isActive ? "#f4f1ea" : "rgba(244,241,234,0.78)";
-                  title.style.textShadow = isActive
+                  title.style.color = isActiveCard ? "#f4f1ea" : "rgba(244,241,234,0.78)";
+                  title.style.textShadow = isActiveCard
                     ? "0 0 18px rgba(212,175,55,0.22)"
                     : "none";
                 }
                 if (num) {
-                  num.style.color = isActive ? "rgba(212,175,55,0.95)" : "rgba(212,175,55,0.4)";
+                  num.style.color = isActiveCard ? "rgba(212,175,55,0.95)" : "rgba(212,175,55,0.4)";
                 }
 
                 // Dim enquire CTA like inactive state.
                 const enquire = cardEl.querySelector<HTMLElement>("[data-card-enquire]");
                 if (enquire) {
-                  enquire.style.opacity = isActive ? "1" : "0";
+                  enquire.style.opacity = isActiveCard ? "1" : "0";
                 }
               });
             },
-            // Translate by card width in onUpdate.
           });
 
           // Initial: pin at start should show Service 01 fully.
@@ -1081,22 +1087,14 @@ function ServicesCinematic() {
           }
         });
 
-        // Reset visuals when leaving viewport so it can replay.
-        ScrollTrigger.addEventListener("refreshInit", () => {
-          // no-op
-        });
-
-        ScrollTrigger.addEventListener("scrollEnd", () => {
-          // no-op
-        });
-
         st && st.refresh();
       };
 
       // Run once, then re-run on resize.
       run();
-      const onResize = () => {
-        // kill and recreate to recalc widths
+      
+      onResize = () => {
+        if (!isActive) return;
         st?.kill();
         st = null;
         ctx?.revert();
@@ -1104,31 +1102,29 @@ function ServicesCinematic() {
       };
       window.addEventListener("resize", onResize);
 
-      // Replay on re-enter: onLeave->progress reset.
-      // easiest: use 'onLeaveBack' to reset track & styles.
       if (st) {
         st.vars.onLeaveBack = () => {
           const trackEl2 = trackRef.current;
           if (trackEl2) gsap.set(trackEl2, { x: 0 });
           cardRefs.current.forEach((cardEl, i) => {
             if (!cardEl) return;
-            const isActive = i === 0;
-            gsap.set(cardEl, { opacity: isActive ? 1 : 0.62, scale: isActive ? 1.03 : 1, rotateY: 0 });
+            const isActiveCard = i === 0;
+            gsap.set(cardEl, { opacity: isActiveCard ? 1 : 0.62, scale: isActiveCard ? 1.03 : 1, rotateY: 0 });
             const border = cardEl.querySelector<HTMLElement>("[data-card-border]");
             const glow = cardEl.querySelector<HTMLElement>("[data-card-glow]");
             const title = cardEl.querySelector<HTMLElement>("[data-card-title]");
             const num = cardEl.querySelector<HTMLElement>("[data-card-num]");
             const enquire = cardEl.querySelector<HTMLElement>("[data-card-enquire]");
             if (border) {
-              border.style.opacity = isActive ? "1" : "0.45";
+              border.style.opacity = isActiveCard ? "1" : "0.45";
             }
-            if (glow) glow.style.opacity = isActive ? "1" : "0.35";
+            if (glow) glow.style.opacity = isActiveCard ? "1" : "0.35";
             if (title) {
-              title.style.color = isActive ? "#f4f1ea" : "rgba(244,241,234,0.78)";
-              title.style.textShadow = isActive ? "0 0 18px rgba(212,175,55,0.22)" : "none";
+              title.style.color = isActiveCard ? "#f4f1ea" : "rgba(244,241,234,0.78)";
+              title.style.textShadow = isActiveCard ? "0 0 18px rgba(212,175,55,0.22)" : "none";
             }
-            if (num) num.style.color = isActive ? "rgba(212,175,55,0.95)" : "rgba(212,175,55,0.4)";
-            if (enquire) enquire.style.opacity = isActive ? "1" : "0";
+            if (num) num.style.color = isActiveCard ? "rgba(212,175,55,0.95)" : "rgba(212,175,55,0.4)";
+            if (enquire) enquire.style.opacity = isActiveCard ? "1" : "0";
           });
         };
       }
@@ -1137,7 +1133,10 @@ function ServicesCinematic() {
     init();
 
     return () => {
-      window.removeEventListener("resize", () => { });
+      isActive = false;
+      if (onResize) {
+        window.removeEventListener("resize", onResize);
+      }
       ctx?.revert?.();
       st?.kill?.();
     };
@@ -1204,12 +1203,12 @@ function ServicesCinematic() {
                       }}
                     >
                       {/* Real photo */}
-                      <div
-                        className="absolute inset-0"
+                      <img
+                        src={s.bgImg}
+                        alt=""
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover"
                         style={{
-                          backgroundImage: `url(${s.bgImg})`,
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
                           filter: "saturate(1.05) contrast(1.05)",
                           transform: "scale(1.02)",
                         }}
@@ -1531,7 +1530,12 @@ function Contact() {
   return (
     <section id="contact" className="relative py-32 md:py-40 bg-navy">
       <div className="absolute inset-0">
-        <img src={hero1} alt="" className="h-full w-full object-cover opacity-30 blur-md" />
+        <img
+          src={hero1}
+          alt=""
+          loading="lazy"
+          className="h-full w-full object-cover opacity-30 blur-md"
+        />
         <div
           className="absolute inset-0"
           style={{

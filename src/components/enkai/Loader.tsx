@@ -6,7 +6,21 @@ export function Loader() {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    const t = setTimeout(() => setShow(false), 3200);
+    if (typeof window !== "undefined") {
+      const hasSeen = sessionStorage.getItem("enkai_loader_seen");
+      if (hasSeen === "true") {
+        setShow(false);
+        return;
+      }
+    }
+
+    const t = setTimeout(() => {
+      setShow(false);
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("enkai_loader_seen", "true");
+      }
+    }, 1800);
+
     return () => clearTimeout(t);
   }, []);
 
