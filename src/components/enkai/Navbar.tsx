@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 
 const links = [
@@ -12,6 +13,7 @@ const links = [
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const onHome = pathname === "/";
 
@@ -28,6 +30,18 @@ export function Navbar() {
     const id = href.slice(1);
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const closeMobile = () => setMobileOpen(false);
+
+  const handleMobileAnchor = (href: string) => {
+    closeMobile();
+    if (!onHome) return;
+    const id = href.slice(1);
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
   };
 
   const logoSize = scrolled ? 44 : 56;
@@ -114,7 +128,75 @@ export function Navbar() {
         >
           Let's Talk
         </a>
+
+        <button
+          type="button"
+          onClick={() => setMobileOpen((v) => !v)}
+          className="md:hidden inline-flex h-10 w-10 items-center justify-center text-parchment"
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
+
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden overflow-hidden bg-navy/95 backdrop-blur-xl border-b border-gold/10"
+          >
+            <nav className="flex flex-col gap-1 px-6 py-6">
+              {links.map((l) => {
+                if (l.type === "route") {
+                  return (
+                    <Link
+                      key={l.label}
+                      to={l.href}
+                      onClick={closeMobile}
+                      className="font-ui text-sm tracking-[0.2em] uppercase text-parchment/80 hover:text-gold transition-colors py-3 border-b border-gold/5"
+                    >
+                      {l.label}
+                    </Link>
+                  );
+                }
+                if (!onHome) {
+                  return (
+                    <Link
+                      key={l.label}
+                      to="/"
+                      hash={l.href.slice(1)}
+                      onClick={closeMobile}
+                      className="font-ui text-sm tracking-[0.2em] uppercase text-parchment/80 hover:text-gold transition-colors py-3 border-b border-gold/5"
+                    >
+                      {l.label}
+                    </Link>
+                  );
+                }
+                return (
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    onClick={() => handleMobileAnchor(l.href)}
+                    className="font-ui text-sm tracking-[0.2em] uppercase text-parchment/80 hover:text-gold transition-colors py-3 border-b border-gold/5"
+                  >
+                    {l.label}
+                  </a>
+                );
+              })}
+              <a
+                href="mailto:hello@enkaisocial.in"
+                onClick={closeMobile}
+                className="mt-4 inline-flex items-center justify-center gap-2 font-ui text-[12px] tracking-[0.2em] uppercase text-gold border border-gold/40 px-4 py-3 hover:bg-gold/10 transition-colors"
+              >
+                Let's Talk
+              </a>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
