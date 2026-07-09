@@ -1328,7 +1328,7 @@ const stats = [
   { value: 50, suffix: "+", label: "Events Covered" },
   { value: 30, suffix: "+", label: "Personalities" },
   { value: 45, suffix: "M+", label: "Total Reach" },
-  { value: 18, suffix: "", label: "Cities Active" },
+  { value: 9, suffix: "", label: "Cities Active" },
 ];
 
 function Insights() {
