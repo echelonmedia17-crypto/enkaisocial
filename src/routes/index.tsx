@@ -1,15 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { motion, useInView } from "framer-motion";
 import { MagneticButton } from "@/components/enkai/MagneticButton";
+import { ALL_PROJECTS_ENKAI, type Project } from "./projectdata";
+
+// Lazy-load the heavy lightbox — only pulled when the user opens a project
+const ProjectLightbox = lazy(() =>
+  import("@/components/enkai/ProjectLightbox").then((m) => ({ default: m.ProjectLightbox }))
+);
 
 
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
 import hero3 from "@/assets/hero-3.jpg";
 import hero4 from "@/assets/hero-4.jpg";
-import portfolio1 from "@/assets/portfolio-1.jpg";
-import portfolio2 from "@/assets/portfolio-2.jpg";
+import hero5 from "@/assets/hero-5.jpg";
+import hero6 from "@/assets/hero-6.jpg";
 import reel1Thumb from "@/assets/reel-1.jpg";
 import reel2Thumb from "@/assets/reel-2.jpg";
 import reel3Thumb from "@/assets/reel-3.jpg";
@@ -20,6 +26,50 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  const openLightbox = (p: Project) => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("enkaiHomeScrollY", String(window.scrollY || 0));
+      sessionStorage.setItem("enkaiHomeRestorePending", "true");
+      window.history.pushState({ projectModalOpen: true }, "");
+    }
+    setSelectedProject(p);
+  };
+
+  const closeLightbox = () => {
+    setSelectedProject(null);
+    (window as any).__lenisStart?.();
+    if (typeof window !== "undefined" && window.history.state?.projectModalOpen) {
+      window.history.back();
+    }
+    const pendingRaw = sessionStorage.getItem("enkaiHomeRestorePending");
+    if (pendingRaw === "true") {
+      const raw = sessionStorage.getItem("enkaiHomeScrollY");
+      const value = raw == null ? 0 : Number(raw);
+      sessionStorage.setItem("enkaiHomeRestorePending", "false");
+      window.scrollTo({ top: Number.isFinite(value) ? value : 0, behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      if (selectedProject) {
+        setSelectedProject(null);
+        const pendingRaw = sessionStorage.getItem("enkaiHomeRestorePending");
+        if (pendingRaw === "true") {
+          const raw = sessionStorage.getItem("enkaiHomeScrollY");
+          const value = raw == null ? 0 : Number(raw);
+          sessionStorage.setItem("enkaiHomeRestorePending", "false");
+          window.scrollTo({ top: Number.isFinite(value) ? value : 0, behavior: "smooth" });
+        }
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [selectedProject]);
+
   return (
     <div id="home" className="relative overflow-hidden bg-navy text-parchment">
       <Hero />
@@ -27,46 +77,76 @@ function Home() {
 
       <WhyEnkai />
       <ChapterAbout />
-      <PortfolioGlimpse />
+      <PortfolioGlimpse onOpenProject={openLightbox} />
       <Process />
       <Services />
       <Insights />
       <Reels />
       <Contact />
+
+      {/* ─── Premium Lightbox — lazy loaded ─── */}
+      {selectedProject && (
+        <Suspense fallback={null}>
+          <ProjectLightbox
+            project={selectedProject}
+            allProjects={ALL_PROJECTS_ENKAI}
+            onClose={closeLightbox}
+            onSelectProject={setSelectedProject}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }
 
 /* ================= HERO ================= */
-const heroImages = [hero1, hero2, hero3, hero4];
+const heroImages = [hero1, hero2, hero3, hero4, hero5, hero6];
 
 function Hero() {
   const [idx, setIdx] = useState(0);
+  const [loaded, setLoaded] = useState<Set<number>>(new Set([0]));
+
   useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % heroImages.length), 5200);
+    const t = setInterval(() => {
+      setIdx((i) => {
+        const next = (i + 1) % heroImages.length;
+        setLoaded((prev) => {
+          if (prev.has(next)) return prev;
+          const s = new Set(prev);
+          s.add(next);
+          return s;
+        });
+        return next;
+      });
+    }, 5200);
     return () => clearInterval(t);
   }, []);
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
-      {/* Ken-Burns collage */}
+      {/* Ken-Burns slideshow — only mount seen/next frames */}
       <div className="absolute inset-0">
-        {heroImages.map((src, i) => (
-          <div
-            key={src}
-            className="absolute inset-0 transition-opacity duration-[1400ms] ease-out"
-            style={{ opacity: i === idx ? 1 : 0 }}
-          >
-            <img
-              src={src}
-              alt=""
-              loading={i === 0 ? "eager" : "lazy"}
-              fetchPriority={i === 0 ? "high" : "auto"}
-              className={`h-full w-full object-cover ${i === idx ? "scale-110" : "scale-100"
+        {heroImages.map((src, i) => {
+          if (!loaded.has(i)) return null;
+          return (
+            <div
+              key={src}
+              className="absolute inset-0 transition-opacity duration-[1400ms] ease-out"
+              style={{ opacity: i === idx ? 1 : 0 }}
+            >
+              <img
+                src={src}
+                alt=""
+                loading={i === 0 ? "eager" : "lazy"}
+                fetchPriority={i === 0 ? "high" : "auto"}
+                decoding={i === 0 ? "sync" : "async"}
+                className={`h-full w-full object-cover ${
+                  i === idx ? "scale-110" : "scale-100"
                 } transition-transform duration-[6000ms] ease-out`}
-            />
-          </div>
-        ))}
+              />
+            </div>
+          );
+        })}
         {/* gradient overlays */}
         <div
           className="absolute inset-0"
@@ -80,9 +160,9 @@ function Hero() {
 
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 2.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="flex items-center gap-4 mb-8"
         >
           <span className="h-px w-16 bg-gold/50" />
@@ -93,9 +173,9 @@ function Hero() {
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.3, delay: 2.4, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="font-heading text-5xl md:text-7xl lg:text-8xl leading-[1.02] text-parchment max-w-5xl"
         >
           Every event, <em className="italic text-parchment/70">told live</em>,<br />
@@ -103,18 +183,18 @@ function Hero() {
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.3, delay: 2.7 }}
+          transition={{ duration: 0.8, delay: 0.35 }}
           className="font-script text-4xl md:text-5xl gold-text gold-glow mt-8 leading-[1.4] py-2"
         >
           Where Every Event Goes Social
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 3 }}
+          transition={{ duration: 0.7, delay: 0.5 }}
           className="mt-12"
         >
           <MagneticButton as="a" href="#about">
@@ -126,7 +206,7 @@ function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 3.4, duration: 1 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
         >
           <span className="font-ui text-[10px] tracking-[0.4em] uppercase text-parchment/50">
@@ -674,24 +754,12 @@ function ChapterAbout() {
 }
 
 /* ================= PORTFOLIO GLIMPSE ================= */
-const glimpses = [
-  {
-    id: "glimpse-dav-jit",
-    img: portfolio1,
-    tag: "College · Cultural Festival",
-    title: "DAV & JIT Live",
-    desc: "Two flagship campus festivals covered live end-to-end — stage, backstage and student feeds, publishing in the same breath.",
-  },
-  {
-    id: "glimpse-boardroom",
-    img: portfolio2,
-    tag: "Leadership · Summit",
-    title: "The Boardroom Series",
-    desc: "Executive summits transformed into shareable social keynotes — soundbites, stills and reels landing before the session closes.",
-  },
-];
+function PortfolioGlimpse({ onOpenProject }: { onOpenProject: (p: Project) => void }) {
+  // Load DAV United Festival (ID 1) and Leadership Summit (ID 3) dynamically from project data
+  const glimpseProjects = [1, 3]
+    .map((id) => ALL_PROJECTS_ENKAI.find((p) => p.id === id))
+    .filter(Boolean) as Project[];
 
-function PortfolioGlimpse() {
   return (
     <section className="relative py-32 md:py-40 bg-navy-deep">
       <div className="relative mx-auto max-w-7xl px-6">
@@ -708,20 +776,20 @@ function PortfolioGlimpse() {
         </div>
 
         <div className="mt-16 grid gap-10 md:grid-cols-2">
-          {glimpses.map((g, i) => (
+          {glimpseProjects.map((p, i) => (
             <motion.div
-              key={g.title}
-              id={g.id}
+              key={p.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, margin: "-80px" }}
               transition={{ duration: 1, delay: i * 0.15 }}
-              className="group relative overflow-hidden rounded-xl border border-white/5 scroll-mt-32"
+              onClick={() => onOpenProject(p)}
+              className="group relative overflow-hidden rounded-xl border border-white/5 scroll-mt-32 cursor-pointer"
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
-                  src={g.img}
-                  alt={g.title}
+                  src={p.img}
+                  alt={p.name}
                   loading="lazy"
                   className="h-full w-full object-cover transition-all duration-[900ms] ease-out"
                   style={{ filter: "grayscale(30%) brightness(0.75)" }}
@@ -738,13 +806,13 @@ function PortfolioGlimpse() {
                 }}
               >
                 <p className="font-ui text-[10px] tracking-[0.35em] uppercase text-gold">
-                  {g.tag}
+                  {p.category}
                 </p>
                 <h3 className="font-heading text-2xl md:text-3xl text-parchment mt-2">
-                  {g.title}
+                  {p.name}
                 </h3>
                 <p className="justify-pretty mt-2 text-parchment/75 text-sm max-w-md opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  {g.desc}
+                  {p.blurb}
                 </p>
               </div>
             </motion.div>
