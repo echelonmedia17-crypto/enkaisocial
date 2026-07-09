@@ -1325,8 +1325,8 @@ function ServicesCinematic() {
 
 /* ================= INSIGHTS ================= */
 const stats = [
-  { value: 240, suffix: "+", label: "Events Covered" },
-  { value: 80, suffix: "+", label: "Personalities" },
+  { value: 50, suffix: "+", label: "Events Covered" },
+  { value: 30, suffix: "+", label: "Personalities" },
   { value: 45, suffix: "M+", label: "Total Reach" },
   { value: 18, suffix: "", label: "Cities Active" },
 ];
