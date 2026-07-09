@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Mail, Phone, Instagram, MapPin } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 export function Footer() {
   return (
@@ -8,7 +8,7 @@ export function Footer() {
         <div className="md:col-span-2">
           <div className="flex items-center gap-3">
             <img
-              src= {logo}
+              src={logo}
               alt="Enkai Social"
               className="h-12 w-12 rounded-full border border-gold/40 object-cover"
             />
@@ -16,12 +16,8 @@ export function Footer() {
               ENKAI · SOCIAL
             </span>
           </div>
-          <p className="justify-pretty mt-6 max-w-md text-sm text-parchment/60">
-            India's Real-Time Event Media Company. We transform every event into a
-            living, breathing, social-first experience — captured, published and
-            amplified as it unfolds.
-          </p>
-          <p className="mt-8 font-ui text-[11px] tracking-[0.3em] uppercase text-gold/80">
+          
+          <p className="mt-4 font-ui text-[11px] tracking-[0.3em] uppercase text-gold/80">
             A Subsidiary of{" "}
             <a
               href="https://echelonmedia.in"
@@ -56,11 +52,31 @@ export function Footer() {
           <h4 className="font-ui text-[11px] tracking-[0.3em] uppercase text-gold mb-4">
             Reach us
           </h4>
-          <ul className="space-y-3 text-sm">
-            <li><a className="hover:text-gold" href="mailto:echelonmedia17@gmail.com">echelonmedia17@gmail.com</a></li>
-            <li><a className="hover:text-gold" href="mailto:info@echelonmedia.in">info@echelonmedia.in</a></li>
-            <li><a className="hover:text-gold" href="tel:+919910706037">+91 99107 06037</a></li>
-            <li><a className="hover:text-gold" href="https://www.instagram.com/enkaisocial.in/?hl=en">@enkaisocial</a></li>
+          <ul className="space-y-4 text-sm">
+            <li>
+              <a className="hover:text-gold flex items-center gap-2" href="mailto:info@echelonmedia.in">
+                <Mail size={16} className="text-gold" />
+                info@echelonmedia.in
+              </a>
+            </li>
+            <li>
+              <a className="hover:text-gold flex items-center gap-2" href="tel:+919910706037">
+                <Phone size={16} className="text-gold" />
+                +91 99107 06037
+              </a>
+            </li>
+            <li>
+              <a className="hover:text-gold flex items-center gap-2" href="https://www.instagram.com/enkaisocial.in/?hl=en">
+                <Instagram size={16} className="text-gold" />
+                @enkaisocial.in
+              </a>
+            </li>
+            <li>
+              <div className="flex items-start gap-2">
+                <MapPin size={16} className="text-gold shrink-0 mt-0.5" />
+                <span>New Moti Nagar, New Delhi</span>
+              </div>
+            </li>
           </ul>
         </div>
       </div>

@@ -1,10 +1,15 @@
 import { useCallback, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
-import JavedAliImg from "../../assets/JavedAli.JPG";
-import TapseePannuImg from "../../assets/Tapsee pannu.png";
-import AnupamKherImg from "../../assets/Anupam Kher.JPG";
-import RekhaGuptaImg from "../../assets/Rekha Gupta.png";
+// import JavedAliImg from "../../assets/JavedAli.JPG";
+// import TapseePannuImg from "../../assets/Tapsee pannu.png";
+// import AnupamKherImg from "../../assets/Anupam Kher.JPG";
+// import RekhaGuptaImg from "../../assets/Rekha Gupta.png";
+
+const JavedAliImg = "";
+const TapseePannuImg = "";
+const AnupamKherImg = "";
+const RekhaGuptaImg = "";
 
 /* ─────────────────────────────────────────────
    DATA

@@ -362,7 +362,7 @@ function ProjectNavFooter({
         <button
           type="button"
           onClick={() => {
-            const currentIndex = filteredProjects.findIndex((project) => project.id === selectedProject.id);
+            const currentIndex = filteredProjects.findIndex((project: any) => project.id === selectedProject.id);
             const targetProject = filteredProjects[(currentIndex - 1 + filteredProjects.length) % filteredProjects.length];
             setSelectedProject(targetProject);
           }}
@@ -385,7 +385,7 @@ function ProjectNavFooter({
         <button
           type="button"
           onClick={() => {
-            const currentIndex = filteredProjects.findIndex((project) => project.id === selectedProject.id);
+            const currentIndex = filteredProjects.findIndex((project: any) => project.id === selectedProject.id);
             const targetProject = filteredProjects[(currentIndex + 1) % filteredProjects.length];
             setSelectedProject(targetProject);
           }}

@@ -71,18 +71,24 @@ function Home() {
   }, [selectedProject]);
 
   return (
-    <div id="home" className="relative overflow-hidden bg-navy text-parchment">
-      <Hero />
-      <MissionVision />
+    <div id="home" className="bg-navy text-parchment relative">
+      {/* Hero */}
+      <div className="relative h-[100svh] w-full z-0">
+        <Hero />
+      </div>
 
-      <WhyEnkai />
-      <ChapterAbout />
-      <PortfolioGlimpse onOpenProject={openLightbox} />
-      <Process />
-      <Services />
-      <Insights />
-      <Reels />
-      <Contact />
+      <div className="relative z-10 -mt-20 md:-mt-32">
+        {/* Seamless fade */}
+        <div className="h-20 md:h-32 bg-gradient-to-b from-transparent to-navy pointer-events-none" />
+        <div className="bg-navy">
+          <Insights />
+          <MissionVision />
+          <WhyEnkai />
+          <PortfolioGlimpse onOpenProject={openLightbox} />
+          <Process />
+          <Contact />
+        </div>
+      </div>
 
       {/* ─── Premium Lightbox — lazy loaded ─── */}
       {selectedProject && (
@@ -123,7 +129,7 @@ function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden">
+    <section className="relative h-full w-full overflow-hidden">
       {/* Ken-Burns slideshow — only mount seen/next frames */}
       <div className="absolute inset-0">
         {heroImages.map((src, i) => {
@@ -140,22 +146,22 @@ function Hero() {
                 loading={i === 0 ? "eager" : "lazy"}
                 fetchPriority={i === 0 ? "high" : "auto"}
                 decoding={i === 0 ? "sync" : "async"}
-                className={`h-full w-full object-cover ${
-                  i === idx ? "scale-110" : "scale-100"
-                } transition-transform duration-[6000ms] ease-out`}
+                className={`h-full w-full object-cover ${i === idx ? "scale-110" : "scale-100"
+                  } transition-transform duration-[6000ms] ease-out`}
               />
             </div>
           );
         })}
         {/* gradient overlays */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 z-0"
           style={{
             background:
               "linear-gradient(180deg, rgba(0,0,0,0.78) 0%, rgba(1,42,74,0.4) 45%, rgba(0,0,0,0.85) 100%)",
           }}
         />
-        <div className="absolute inset-0 radial-gold-glow opacity-70" />
+        <div className="absolute inset-0 radial-gold-glow opacity-70 z-0" />
+
       </div>
 
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 text-center">
@@ -167,7 +173,7 @@ function Hero() {
         >
           <span className="h-px w-16 bg-gold/50" />
           <span className="font-ui text-[11px] tracking-[0.5em] uppercase text-gold">
-            India's Real-Time Event Media Company
+            India's First Live Social Media Company
           </span>
           <span className="h-px w-16 bg-gold/50" />
         </motion.div>
@@ -176,20 +182,11 @@ function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="font-heading text-5xl md:text-7xl lg:text-8xl leading-[1.02] text-parchment max-w-5xl"
+          className="font-heading text-5xl md:text-6xl lg:text-7xl leading-[1.02] text-parchment max-w-5xl"
         >
-          Every event, <em className="italic text-parchment/70">told live</em>,<br />
-          the moment it happens.
+          From the venue to the feed, instantly
         </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.35 }}
-          className="font-script text-4xl md:text-5xl gold-text gold-glow mt-8 leading-[1.4] py-2"
-        >
-          Where Every Event Goes Social
-        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -197,7 +194,7 @@ function Hero() {
           transition={{ duration: 0.7, delay: 0.5 }}
           className="mt-12"
         >
-          <MagneticButton as="a" href="#about">
+          <MagneticButton as="a" href="/portfolio">
             Explore Our World
           </MagneticButton>
         </motion.div>
@@ -207,7 +204,7 @@ function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.8 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-20"
         >
           <span className="font-ui text-[10px] tracking-[0.4em] uppercase text-parchment/50">
             Scroll
@@ -221,6 +218,98 @@ function Hero() {
   );
 }
 
+
+/* ================= INSIGHTS ================= */
+const stats = [
+  { value: 25, suffix: "K+", label: "Peak Audience" },
+  { value: 30, suffix: "+", label: "Personalities" },
+  { value: 45, suffix: "M+", label: "Total Reach" },
+  { value: 9, suffix: "", label: "Cities Active" },
+];
+
+function Insights() {
+  return (
+    <section className="relative pt-4 pb-16 md:pt-8 md:pb-24 bg-navy z-20">
+      <div className="absolute inset-0 radial-gold-glow opacity-45 pointer-events-none" />
+
+      <div className="relative mx-auto max-w-7xl px-6 flex flex-col items-center">
+        {/* Subtle centered gold divider */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="mb-10 md:mb-14 h-px w-[60px] md:w-[80px] bg-gold/20"
+        />
+
+        <SectionHeading
+          kicker=""
+          title={<>The Legacy.</>}
+        />
+        <div className="mt-10 md:mt-12 w-full grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10">
+          {stats.map((s, i) => (
+            <Counter key={i} {...s} delay={i * 0.15} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Counter({
+  value,
+  suffix,
+  label,
+  delay,
+}: {
+  value: number;
+  suffix: string;
+  label: string;
+  delay: number;
+}) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(ref, { once: false, margin: "-100px" });
+  const [n, setN] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    const start = performance.now();
+    const duration = 1800;
+    let raf: number;
+    const tick = (t: number) => {
+      const p = Math.min((t - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setN(Math.floor(eased * value));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, value]);
+
+  return (
+    <div ref={ref} className="relative text-center">
+      <div className="absolute inset-0 -z-10 grid place-items-center">
+        <div className="h-40 w-40 rounded-full bg-gold/10 blur-3xl animate-gold-pulse" />
+      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.6, delay }}
+        className="font-heading text-5xl md:text-8xl gold-text leading-none"
+      >
+        {n}
+        {suffix}
+      </motion.div>
+      <div className="mt-4 h-px w-14 mx-auto bg-gold/40" />
+      <div className="mt-4 font-ui text-[11px] tracking-[0.35em] uppercase text-parchment/60">
+        {label}
+      </div>
+    </div>
+  );
+}
+
+
+
 /* ================= MISSION & VISION ================= */
 function MissionVision() {
   const ref = useRef(null);
@@ -229,11 +318,11 @@ function MissionVision() {
   const openDuration = 1.35;
 
   return (
-    <section ref={ref} className="relative py-32 md:py-40 bg-navy overflow-hidden">
+    <section ref={ref} className="relative py-12 md:py-20 bg-navy overflow-hidden">
       <div className="absolute inset-0 radial-gold-glow opacity-40" />
       <div className="relative mx-auto max-w-7xl px-6">
         <div
-          className="relative grid md:grid-cols-2"
+          className="relative grid grid-cols-1 md:grid-cols-2"
           style={{ perspective: "2000px", perspectiveOrigin: "center center" }}
         >
           {/* Spine */}
@@ -253,8 +342,8 @@ function MissionVision() {
             ease={bookEase}
             variant="navy"
             label="Our Mission"
-            title="To redefine event storytelling."
-            body="We exist to transform every event into a real-time digital experience — capturing moments, publishing instantly, and turning presence into reach. Speed is our craft; presence is our discipline; social is our stage."
+            title="To redefine event storytelling by transforming every event"
+            body="We make live social media coverage an essential part of modern events — ensuring every brand and community remains visible when attention matters most."
           />
           <BookCard
             side="right"
@@ -263,8 +352,8 @@ function MissionVision() {
             ease={bookEase}
             variant="burgundy"
             label="Our Vision"
-            title="India's most trusted Real-Time Event Media Company."
-            body="To become the definitive standard for live event coverage in India — a name every host, brand and personality reaches for when a moment must not just happen, but be seen, felt and shared as it unfolds."
+            title={<>To become India's most trusted live Event Media Company.</>}
+            body="A nationwide network powering live event storytelling for conferences, luxury events, educational institutions, and corporate brands across India"
           />
         </div>
       </div>
@@ -288,7 +377,7 @@ function BookCard({
   ease: readonly [number, number, number, number];
   variant: "navy" | "burgundy";
   label: string;
-  title: string;
+  title: React.ReactNode;
   body: string;
 }) {
   const bg = variant === "navy" ? "bg-navy-deep" : "bg-burgundy";
@@ -319,43 +408,45 @@ function BookCard({
           ? "-20px 30px 60px -20px rgba(0,0,0,0.5)"
           : "20px 30px 60px -20px rgba(0,0,0,0.5)",
       }}
-      className={`${bg} relative px-8 md:px-14 py-16 md:py-20 overflow-hidden`}
+      className={`${bg} relative px-8 md:px-16 py-12 md:py-24 overflow-hidden flex flex-col`}
     >
-      <div className="absolute top-0 right-0 h-32 w-32 opacity-20 pointer-events-none">
+      <div className="absolute top-0 right-0 h-40 w-40 opacity-20 pointer-events-none">
         <div className="absolute inset-0 radial-gold-glow" />
       </div>
 
-      <motion.div
-        initial={{ scaleX: 0 }}
-        animate={inView ? { scaleX: 1 } : {}}
-        transition={{ duration: 0.8, delay: contentDelay + 0.05, ease: [...ease] }}
-        style={{ transformOrigin: "left" }}
-        className="h-px w-16 bg-gold mb-6"
-      />
-      <motion.p
-        initial={{ opacity: 0, y: 8 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6, delay: contentDelay + 0.1 }}
-        className="font-ui text-[11px] tracking-[0.4em] uppercase text-gold mb-6"
-      >
-        {label}
-      </motion.p>
-      <motion.h2
-        initial={{ opacity: 0, y: 24 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, delay: contentDelay + 0.2, ease: [...ease] }}
-        className="font-heading text-3xl md:text-5xl leading-[1.05] text-parchment max-w-lg"
-      >
-        {title}
-      </motion.h2>
-      <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, delay: contentDelay + 0.32, ease: [...ease] }}
-        className="justify-pretty mt-8 text-parchment/75 max-w-lg text-[15px]"
-      >
-        {body}
-      </motion.p>
+      <div className="flex flex-col">
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={inView ? { scaleX: 1 } : {}}
+          transition={{ duration: 0.8, delay: contentDelay + 0.05, ease: [...ease] }}
+          style={{ transformOrigin: "left" }}
+          className="h-px w-16 bg-gold mb-8"
+        />
+        <motion.h2
+          initial={{ opacity: 0, y: 8 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: contentDelay + 0.1 }}
+          className="font-heading text-xl md:text-2xl tracking-[0.2em] uppercase text-gold mb-6"
+        >
+          {label}
+        </motion.h2>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: contentDelay + 0.2, ease: [...ease] }}
+          className="font-heading text-3xl md:text-4xl leading-[1.2] text-parchment max-w-sm md:max-w-md mb-8"
+        >
+          {title}
+        </motion.div>
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: contentDelay + 0.32, ease: [...ease] }}
+          className="justify-pretty text-parchment/75 text-[15px] md:text-base leading-relaxed max-w-sm md:max-w-md"
+        >
+          {body}
+        </motion.p>
+      </div>
     </motion.div>
   );
 }
@@ -364,33 +455,33 @@ function BookCard({
 const pillars = [
   {
     n: "01",
-    title: "Real-Time Execution",
+    title: "Live Execution",
     body:
-      "We don't wait for the event to end. We capture, edit and publish content while the event is still happening.",
+      "We don't wait until the lights go out. Our team captures, edits, and publishes your event as it unfolds, ensuring your audience experiences every highlight while the excitement is still at its peak.",
   },
   {
     n: "02",
-    title: "Speed With Strategy",
+    title: "Speed with Trends",
     body:
-      "Every piece of content is optimized for engagement, platform reach and audience impact.",
+      "Speed means nothing without relevance. We identify trending moments, adapt content instantly, and publish at the right time—helping your event stay visible, shareable, and ahead of the conversation.",
   },
   {
     n: "03",
-    title: "Dedicated Media Team",
+    title: "Production Team",
     body:
-      "A professional team of photographers, cinematographers, editors and content specialists covering every moment.",
+      "Every great event deserves an exceptional production team. Our photographers, cinematographers, editors, and content specialists work seamlessly behind the scenes to capture every defining moment with precision, creativity, and attention to detail.",
   },
   {
     n: "04",
-    title: "Social-First Storytelling",
+    title: "Emotion-Driven Storytelling",
     body:
-      "Every frame is designed specifically for Instagram, LinkedIn, YouTube Shorts and Reels.",
+      "People remember how an event made them feel. We capture genuine reactions, meaningful interactions, and unforgettable moments that create emotional connections—not just beautiful visuals.",
   },
   {
     n: "05",
-    title: "Presence-Based Coverage",
+    title: "Strategic Content Optimization",
     body:
-      "We immerse ourselves in the event to capture authentic moments instead of staged content.",
+      "Every piece of content is created with purpose. From framing and editing to timing and platform strategy, every post is optimized to maximize visibility, engagement, and long-term brand impact.",
   },
 ];
 
@@ -430,8 +521,11 @@ function WhyEnkai() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 md:py-36 bg-navy-deep overflow-hidden"
+      className="relative py-12 md:py-20 bg-navy-deep overflow-hidden"
     >
+      {/* Seamless transition from previous section (navy to navy-deep) */}
+      <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-navy to-transparent pointer-events-none z-10" />
+
       <div className="absolute inset-0 radial-burgundy-glow opacity-40" />
       <div
         aria-hidden
@@ -468,7 +562,7 @@ function WhyEnkai() {
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeading
           kicker="The Enkai Difference"
-          title={<>Why <em className="italic text-parchment/60">Enkai?</em></>}
+          title={<>Why Enkai?</>}
         />
 
         {/* Desktop / tablet: horizontal timeline */}
@@ -550,21 +644,6 @@ function WhyEnkai() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center justify-center gap-4 text-center">
-          <div className="font-ui text-[11px] tracking-[0.4em] uppercase text-gold">
-            Brand DNA —
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {traits.map((t) => (
-              <span
-                key={t}
-                className="font-ui text-xs tracking-[0.2em] uppercase text-gold border border-gold/40 rounded-full px-4 py-2 hover:bg-gold/15 transition-colors cursor-default"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
@@ -703,126 +782,97 @@ function TimelineNode({
   );
 }
 
-/* ================= ABOUT / CHAPTER ================= */
-function ChapterAbout() {
-  return (
-    <section id="about" className="relative pt-24 pb-20 md:pt-32 md:pb-24 bg-navy">
-      <div className="absolute inset-0 radial-gold-glow opacity-50" />
-      <div className="relative mx-auto max-w-4xl px-6 text-center">
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
-          transition={{ duration: 1 }}
-          className="font-ui text-[11px] tracking-[0.5em] uppercase text-burgundy-bright"
-        >
-          Chapter One
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{ duration: 1.1, delay: 0.15 }}
-          className="mt-6 font-heading text-5xl md:text-7xl leading-[1.05] text-parchment"
-        >
-          About <em className="italic text-parchment/50">Enkai Social</em>
-        </motion.h2>
-        <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: false }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="hairline-gold h-px w-40 mx-auto my-10 origin-left"
-        />
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
-          transition={{ duration: 1, delay: 0.55 }}
-          className="justify-pretty text-parchment/75 text-lg leading-[1.9] max-w-3xl mx-auto"
-        >
-          Enkai — from the Japanese <em>宴会</em>, a gathering, a banquet, a celebration
-          — is India's Real-Time Event Media Company. We stand at the intersection of
-          live production and social storytelling, embedded in the room while the room
-          is still alive. From gala nights and press days to campus festivals and
-          corporate summits, we translate presence into publishing, and moments into
-          motion — before the moment ends.
-        </motion.p>
-      </div>
-    </section>
-  );
-}
 
 /* ================= PORTFOLIO GLIMPSE ================= */
 function PortfolioGlimpse({ onOpenProject }: { onOpenProject: (p: Project) => void }) {
-  // Load DAV United Festival (ID 1) and Leadership Summit (ID 3) dynamically from project data
-  const glimpseProjects = [1, 3]
-    .map((id) => ALL_PROJECTS_ENKAI.find((p) => p.id === id))
-    .filter(Boolean) as Project[];
-
   return (
-    <section className="relative py-32 md:py-40 bg-navy-deep">
+    <section className="relative pt-12 pb-20 md:pt-16 md:pb-28 bg-navy-deep">
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
           <SectionHeading
-            kicker="Selected Work"
-            title={<>A <em className="italic text-parchment/60">glimpse</em> of the floor.</>}
+            kicker=""
+            title={<>A glimpse of the floor.</>}
             align="left"
           />
           <p className="justify-pretty text-parchment/60 max-w-md text-[15px]">
-            Two signature moments from our recent live coverage. The full archive —
-            events, personalities, campaigns — lives on the portfolio page.
+            Reels shot, cut and published while the moment was still happening. Follow
+            along for a running feed of the events we're inside right now.
           </p>
         </div>
 
-        <div className="mt-16 grid gap-10 md:grid-cols-2">
-          {glimpseProjects.map((p, i) => (
-            <motion.div
-              key={p.id}
-              initial={{ opacity: 0, y: 40 }}
+        {/* Mobile: 2×2 grid */}
+        <div className="mt-10 grid grid-cols-2 gap-4 md:hidden">
+          {reels.map((r, i) => (
+            <motion.a
+              key={i}
+              href={r.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, margin: "-80px" }}
-              transition={{ duration: 1, delay: i * 0.15 }}
-              onClick={() => onOpenProject(p)}
-              className="group relative overflow-hidden rounded-xl border border-white/5 scroll-mt-32 cursor-pointer"
+              viewport={{ once: false }}
+              transition={{ duration: 0.7, delay: i * 0.1 }}
+              className="relative rounded-xl overflow-hidden border border-gold/20 shadow-[0_12px_40px_rgba(0,0,0,0.5)] block aspect-[9/16]"
             >
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={p.img}
-                  alt={p.name}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-all duration-[900ms] ease-out"
-                  style={{ filter: "grayscale(30%) brightness(0.75)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.filter = "none")}
-                  onMouseLeave={(e) => (e.currentTarget.style.filter = "grayscale(30%) brightness(0.75)")}
-                />
-              </div>
-              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl ring-[1.5px] ring-gold shadow-[0_8px_40px_rgba(212,175,55,0.25)]" />
+              <img src={r.thumbnail} alt={r.title} loading="lazy" className="h-full w-full object-cover" />
               <div
-                className="absolute inset-x-0 bottom-0 p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
-                style={{
-                  background:
-                    "linear-gradient(180deg, transparent, rgba(1,34,60,0.85) 45%, rgba(0,0,0,0.9))",
-                }}
-              >
-                <p className="font-ui text-[10px] tracking-[0.35em] uppercase text-gold">
-                  {p.category}
-                </p>
-                <h3 className="font-heading text-2xl md:text-3xl text-parchment mt-2">
-                  {p.name}
-                </h3>
-                <p className="justify-pretty mt-2 text-parchment/75 text-sm max-w-md opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  {p.blurb}
-                </p>
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85))" }}
+              />
+              <div className="absolute bottom-2 left-2 right-2">
+                <p className="font-ui text-[8px] tracking-[0.25em] uppercase text-gold">{r.tag}</p>
+                <p className="font-heading text-xs text-parchment mt-0.5 line-clamp-2">{r.title}</p>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </div>
 
-        <div className="mt-16 flex justify-center">
+        {/* Desktop: fanned spread layout */}
+        <div className="mt-10 hidden md:flex justify-center">
+          <div className="relative h-[420px] w-full max-w-[700px] mx-auto">
+            {reels.map((r, i) => (
+              <motion.a
+                key={i}
+                href={r.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false }}
+                transition={{ duration: 0.9, delay: i * 0.12 }}
+                whileHover={{
+                  scale: 1.05,
+                  y: -8,
+                  boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(212,175,55,0.35)",
+                }}
+                className="absolute rounded-xl overflow-hidden border border-gold/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)] block cursor-pointer transition-all duration-500"
+                style={{
+                  width: 180,
+                  height: 320,
+                  left: ["0%", "25%", "50%", "75%"][i],
+                  transform: `translateX(-50%) rotate(${[-2, 1, -1, 2][i]}deg)`,
+                  top: "20px",
+                  zIndex: i + 1,
+                }}
+              >
+                <img src={r.thumbnail} alt={r.title} loading="lazy" className="h-full w-full object-cover" />
+                <div
+                  className="absolute inset-0"
+                  style={{ background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85))" }}
+                />
+                <div className="absolute bottom-3 left-3 right-3">
+                  <p className="font-ui text-[9px] tracking-[0.3em] uppercase text-gold">{r.tag}</p>
+                  <p className="font-heading text-sm text-parchment mt-1">{r.title}</p>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10 flex justify-center">
           <Link to="/portfolio" className="inline-block">
             <MagneticButton as="a" href="/portfolio">
-              View Full Portfolio
+              View Our Portfolio
             </MagneticButton>
           </Link>
         </div>
@@ -830,6 +880,7 @@ function PortfolioGlimpse({ onOpenProject }: { onOpenProject: (p: Project) => vo
     </section>
   );
 }
+
 
 /* ================= PROCESS ================= */
 const steps = [
@@ -842,37 +893,16 @@ const steps = [
 
 function Process() {
   return (
-    <section className="relative py-32 md:py-40 bg-black">
+    <section className="relative py-16 md:py-24 bg-navy">
+      {/* Seamless transition from previous section (navy-deep to navy) */}
+      <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-navy-deep to-transparent pointer-events-none z-10" />
+
       <div className="absolute inset-0 radial-burgundy-glow opacity-50" />
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeading
-          kicker="Method"
-          title={<>End-to-end <em className="italic text-parchment/60">live marketing.</em></>}
+          kicker=""
+          title={<>Why Brands Choose Enkai</>}
         />
-
-        <div className="mt-20 overflow-x-auto no-scrollbar">
-          <div className="flex gap-8 md:gap-16 min-w-max pr-6">
-            {steps.map((s, i) => (
-              <motion.div
-                key={s.n}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-40px" }}
-                transition={{ duration: 0.8, delay: i * 0.1 }}
-                className="w-[280px] md:w-[320px] shrink-0"
-              >
-                <div className="font-heading text-7xl md:text-8xl gold-text leading-none">
-                  {s.n}
-                </div>
-                <div className="mt-4 h-px w-16 bg-gold/50" />
-                <h3 className="font-heading text-2xl mt-6 text-parchment">{s.title}</h3>
-                <p className="font-ui text-sm text-parchment/60 mt-3 justify-pretty">
-                  {s.body}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
 
         {/* Traditional vs Enkai comparison */}
         <div className="mt-24 rounded-xl border border-gold/15 bg-white/[0.02] backdrop-blur-sm overflow-hidden">
@@ -891,10 +921,10 @@ function Process() {
             variant="enkai"
             label="The Enkai Way"
             items={[
-              "Capture, cut, caption — on site",
-              "Publish inside minutes",
-              "Live reels while the room is live",
-              "Real-time engagement, same-day report",
+              "Live-First Content Production",
+              "Publishing While the Event is Live",
+              "Emotion-Driven Storytelling",
+              "Strategic Social Amplification",
             ]}
           />
         </div>
@@ -915,11 +945,13 @@ function ComparisonRow({
   const isEnkai = variant === "enkai";
   return (
     <div
-      className={`grid gap-6 px-6 md:px-10 py-8 md:grid-cols-[220px_1fr] items-center ${isEnkai ? "bg-navy/50" : "bg-transparent"
+      className={`grid gap-6 px-6 md:px-10 py-10 md:grid-cols-[220px_1fr] items-center ${isEnkai 
+          ? "bg-gradient-to-r from-[#D4AF37] via-[#F9E596] to-[#D4AF37] shadow-[inset_0_0_20px_rgba(255,255,255,0.4)]" 
+          : "bg-burgundy py-8"
         }`}
     >
-      <div className="font-heading text-xl">
-        <span className={isEnkai ? "text-parchment" : "text-parchment/50"}>
+      <div className={`font-heading ${isEnkai ? "text-2xl md:text-3xl" : "text-xl"}`}>
+        <span className={isEnkai ? "text-navy-deep font-bold tracking-wide" : "text-parchment"}>
           {label}
         </span>
       </div>
@@ -928,13 +960,12 @@ function ComparisonRow({
           <div key={i} className="flex items-start gap-3">
             <span
               className={`mt-2 h-2 w-2 shrink-0 rounded-full ${isEnkai
-                ? "bg-gold shadow-[0_0_10px_rgba(212,175,55,0.9)] animate-gold-pulse"
-                : "bg-burgundy/70"
+                ? "bg-navy-deep"
+                : "bg-parchment/50"
                 }`}
             />
             <span
-              className={`font-ui text-[13px] leading-relaxed ${isEnkai ? "text-parchment" : "text-parchment/45"
-                }`}
+              className={`font-ui leading-relaxed ${isEnkai ? "text-[14px] md:text-[15px] text-navy-deep font-bold" : "text-[13px] text-parchment"}`}
             >
               {it}
             </span>
@@ -944,531 +975,6 @@ function ComparisonRow({
     </div>
   );
 }
-
-/* ================= SERVICES ================= */
-const services = [
-  {
-    n: "01",
-    icon: "◈",
-    title: "Live Event Coverage",
-    body: "Full-crew, multi-cam presence with a live edit bay on site. From red carpets to backstage moments, we capture and publish while the event is still happening.",
-    featured: true,
-    bgImg: "https://images.pexels.com/photos/2747449/pexels-photo-2747449.jpeg?auto=compress&cs=tinysrgb&w=800",
-  },
-  {
-    n: "02",
-    icon: "❋",
-    title: "Social Reels Production",
-    body: "Scroll-first vertical storytelling, shot and cut for the algorithm.",
-    bgImg: "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-  {
-    n: "03",
-    icon: "✦",
-    title: "Celebrity & Press Days",
-    body: "Green-room to red-carpet, publishing pack ready before wrap.",
-    accentColor: "burgundy",
-    bgImg: "https://images.pexels.com/photos/1117210/pexels-photo-1117210.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-  {
-    n: "04",
-    icon: "◉",
-    title: "Brand Storytelling",
-    body: "Long-form films that live beyond the event — for websites and campaigns.",
-    bgImg: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-  {
-    n: "05",
-    icon: "⊛",
-    title: "Real-Time Publishing",
-    body: "Copywriting, approvals and posting — inside minutes, not days.",
-    bgImg: "https://images.pexels.com/photos/3850272/pexels-photo-3850272.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-  {
-    n: "06",
-    icon: "✧",
-    title: "Analytics & Reporting",
-    body: "Same-day performance decks with reach, watch-time and sentiment.",
-    bgImg: "https://images.pexels.com/photos/669612/pexels-photo-669612.jpeg?auto=compress&cs=tinysrgb&w=600",
-  },
-];
-
-function Services() {
-  return <ServicesCinematic />;
-}
-
-function ServicesCinematic() {
-  // Lazy import to keep bundle small and avoid SSR issues
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const trackRef = useRef<HTMLDivElement | null>(null);
-  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
-
-  useEffect(() => {
-    let ctx: any;
-    let st: any;
-    let gsap: any;
-    let ScrollTrigger: any;
-    let isActive = true;
-    let onResize: (() => void) | undefined;
-
-    const init = async () => {
-      const gsapMod = await import("gsap");
-      const stMod = await import("gsap/ScrollTrigger");
-      
-      if (!isActive) return;
-      
-      gsap = gsapMod.default;
-      ScrollTrigger = stMod.ScrollTrigger;
-      gsap.registerPlugin(ScrollTrigger);
-
-      const sectionEl = sectionRef.current;
-      const trackEl = trackRef.current;
-      if (!sectionEl || !trackEl) return;
-
-      // Cleanup any previous instances
-      if (st) st.kill();
-
-      const getCardWidth = () => {
-        const card0 = cardRefs.current[0];
-        if (!card0) return 1;
-        const rect = card0.getBoundingClientRect();
-        return rect.width;
-      };
-
-      const gap = () => {
-        // Match Tailwind gap via measured distance between card centers.
-        const c0 = cardRefs.current[0];
-        const c1 = cardRefs.current[1];
-        if (!c0 || !c1) return 24;
-        const r0 = c0.getBoundingClientRect();
-        const r1 = c1.getBoundingClientRect();
-        return Math.max(0, r1.left - r0.left) - r0.width;
-      };
-
-      const run = () => {
-        const w = getCardWidth();
-        const g = gap();
-        const step = w + g;
-        const total = (services.length - 1) * step;
-
-        // Allow enough room for the pin: translateX 0 -> -total.
-        // Height is controlled via a CSS variable set on the section.
-        const horizontalDistance = total;
-
-        ctx = gsap.context(() => {
-          st = ScrollTrigger.create({
-            trigger: sectionEl,
-            start: "top top",
-            end: () => `+=${Math.max(1, horizontalDistance) * 0.85}`,
-            scrub: true,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onUpdate: (self: any) => {
-              const p = self.progress; // 0..1
-              const seg = services.length - 1;
-              const f = p * seg;
-              const activeIndex = Math.max(0, Math.min(services.length - 1, Math.round(f)));
-
-              // Translate track based on progress. Keep it independent of card active math.
-              const x = -horizontalDistance * p;
-              gsap.set(trackEl, { x });
-
-              // Subtle depth + active/inactive styling
-              cardRefs.current.forEach((cardEl, i) => {
-                if (!cardEl) return;
-                const d = Math.abs(i - activeIndex);
-                const isActiveCard = i === activeIndex;
-
-                // Opacity range 0.6-0.7 inactive.
-                const opacity = isActiveCard ? 1 : 0.62 + Math.max(0, 1 - d) * 0.08;
-
-                const scale = isActiveCard ? 1.03 : 1.0;
-
-                // Rotate slightly for depth.
-                const rotateY = isActiveCard ? 0 : (i < activeIndex ? 6 : -6) * Math.min(1, d * 0.6);
-                const z = isActiveCard ? 24 : 0;
-
-                gsap.set(cardEl, {
-                  opacity,
-                  scale,
-                  rotateY,
-                  transformPerspective: 900,
-                  z,
-                });
-
-                // Border + shadow + typography brightness
-                const border = cardEl.querySelector<HTMLElement>("[data-card-border]");
-                const glow = cardEl.querySelector<HTMLElement>("[data-card-glow]");
-                const title = cardEl.querySelector<HTMLElement>("[data-card-title]");
-                const num = cardEl.querySelector<HTMLElement>("[data-card-num]");
-                if (border) {
-                  border.style.opacity = isActiveCard ? "1" : "0.45";
-                  border.style.boxShadow = isActiveCard
-                    ? "inset 0 0 0 1px rgba(212,175,55,0.9), 0 18px 55px rgba(0,0,0,0.55)"
-                    : "inset 0 0 0 1px rgba(212,175,55,0.45)";
-                }
-                if (glow) {
-                  glow.style.opacity = isActiveCard ? "1" : "0.35";
-                }
-                if (title) {
-                  title.style.color = isActiveCard ? "#f4f1ea" : "rgba(244,241,234,0.78)";
-                  title.style.textShadow = isActiveCard
-                    ? "0 0 18px rgba(212,175,55,0.22)"
-                    : "none";
-                }
-                if (num) {
-                  num.style.color = isActiveCard ? "rgba(212,175,55,0.95)" : "rgba(212,175,55,0.4)";
-                }
-
-                // Dim enquire CTA like inactive state.
-                const enquire = cardEl.querySelector<HTMLElement>("[data-card-enquire]");
-                if (enquire) {
-                  enquire.style.opacity = isActiveCard ? "1" : "0";
-                }
-              });
-            },
-          });
-
-          // Initial: pin at start should show Service 01 fully.
-          gsap.set(trackEl, { x: 0 });
-          // Ensure first card is active visually immediately.
-          const first = cardRefs.current[0];
-          if (first) {
-            gsap.set(first, { opacity: 1, scale: 1.03, rotateY: 0 });
-            const border = first.querySelector<HTMLElement>("[data-card-border]");
-            const glow = first.querySelector<HTMLElement>("[data-card-glow]");
-            const title = first.querySelector<HTMLElement>("[data-card-title]");
-            const num = first.querySelector<HTMLElement>("[data-card-num]");
-            const enquire = first.querySelector<HTMLElement>("[data-card-enquire]");
-            if (border) {
-              border.style.opacity = "1";
-              border.style.boxShadow = "inset 0 0 0 1px rgba(212,175,55,0.9), 0 18px 55px rgba(0,0,0,0.55)";
-            }
-            if (glow) glow.style.opacity = "1";
-            if (title) {
-              title.style.color = "#f4f1ea";
-              title.style.textShadow = "0 0 18px rgba(212,175,55,0.22)";
-            }
-            if (num) num.style.color = "rgba(212,175,55,0.95)";
-            if (enquire) enquire.style.opacity = "1";
-          }
-        });
-
-        st && st.refresh();
-      };
-
-      // Run once, then re-run on resize.
-      run();
-      
-      onResize = () => {
-        if (!isActive) return;
-        st?.kill();
-        st = null;
-        ctx?.revert();
-        run();
-      };
-      window.addEventListener("resize", onResize);
-
-      if (st) {
-        st.vars.onLeaveBack = () => {
-          const trackEl2 = trackRef.current;
-          if (trackEl2) gsap.set(trackEl2, { x: 0 });
-          cardRefs.current.forEach((cardEl, i) => {
-            if (!cardEl) return;
-            const isActiveCard = i === 0;
-            gsap.set(cardEl, { opacity: isActiveCard ? 1 : 0.62, scale: isActiveCard ? 1.03 : 1, rotateY: 0 });
-            const border = cardEl.querySelector<HTMLElement>("[data-card-border]");
-            const glow = cardEl.querySelector<HTMLElement>("[data-card-glow]");
-            const title = cardEl.querySelector<HTMLElement>("[data-card-title]");
-            const num = cardEl.querySelector<HTMLElement>("[data-card-num]");
-            const enquire = cardEl.querySelector<HTMLElement>("[data-card-enquire]");
-            if (border) {
-              border.style.opacity = isActiveCard ? "1" : "0.45";
-            }
-            if (glow) glow.style.opacity = isActiveCard ? "1" : "0.35";
-            if (title) {
-              title.style.color = isActiveCard ? "#f4f1ea" : "rgba(244,241,234,0.78)";
-              title.style.textShadow = isActiveCard ? "0 0 18px rgba(212,175,55,0.22)" : "none";
-            }
-            if (num) num.style.color = isActiveCard ? "rgba(212,175,55,0.95)" : "rgba(212,175,55,0.4)";
-            if (enquire) enquire.style.opacity = isActiveCard ? "1" : "0";
-          });
-        };
-      }
-    };
-
-    init();
-
-    return () => {
-      isActive = false;
-      if (onResize) {
-        window.removeEventListener("resize", onResize);
-      }
-      ctx?.revert?.();
-      st?.kill?.();
-    };
-  }, []);
-
-  // Mobile: cards fill most viewport width.
-  const isMobile = typeof window !== "undefined" ? window.matchMedia("(max-width: 767px)").matches : false;
-
-  return (
-    <section
-      ref={sectionRef}
-      className="relative py-32 md:py-32 bg-navy overflow-hidden"
-    >
-      <div className="absolute inset-0 radial-gold-glow opacity-40" />
-      <div className="w-full px-6 md:px-10">
-        <SectionHeading
-          kicker="What We Do"
-          title={<>Premium <em className="italic text-parchment/60">services.</em></>}
-        />
-      </div>
-
-      {/* Sticky stage */}
-      <div className="relative mt-12">
-        <div
-          className="sticky top-[84px] md:top-[92px]"
-          style={{ willChange: "transform" }}
-        >
-          <div
-            className="mx-auto max-w-7xl px-6"
-            style={{ perspective: 900 }}
-          >
-            <div
-              className="relative overflow-hidden"
-              style={{ borderRadius: 16 }}
-            >
-              <div
-                ref={trackRef}
-                className="flex gap-6 md:gap-10 will-change-transform"
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                {services.map((s, i) => (
-                  <div
-                    key={s.n}
-                    ref={(el) => {
-                      cardRefs.current[i] = el;
-                    }}
-                    data-service-card
-                    className="service-card"
-                    style={{
-                      width: isMobile ? "85vw" : "min(520px, 82vw)",
-                      maxWidth: isMobile ? "85vw" : "540px",
-                      flex: "0 0 auto",
-                      willChange: "transform, opacity",
-                      transformStyle: "preserve-3d",
-                    }}
-                  >
-                    {/* Card */}
-                    <div
-                      className="relative h-full min-h-[360px] rounded-xl overflow-hidden"
-                      style={{
-                        background: "rgba(1,34,60,0.35)",
-                        border: "1px solid rgba(212,175,55,0.18)",
-                        backdropFilter: "blur(18px)",
-                      }}
-                    >
-                      {/* Real photo */}
-                      <img
-                        src={s.bgImg}
-                        alt=""
-                        loading="lazy"
-                        className="absolute inset-0 h-full w-full object-cover"
-                        style={{
-                          filter: "saturate(1.05) contrast(1.05)",
-                          transform: "scale(1.02)",
-                        }}
-                      />
-                      {/* Blurred dark overlay */}
-                      <div
-                        className="absolute inset-0"
-                        style={{
-                          background:
-                            "linear-gradient(180deg, rgba(1,42,74,0.72) 0%, rgba(1,34,60,0.65) 45%, rgba(0,0,0,0.84) 100%)",
-                          backdropFilter: "blur(8px)",
-                        }}
-                      />
-
-                      {/* Active border/shadow layer */}
-                      <div
-                        data-card-border
-                        className="absolute inset-0 rounded-xl pointer-events-none"
-                        style={{
-                          opacity: i === 0 ? 1 : 0.45,
-                          boxShadow:
-                            i === 0
-                              ? "inset 0 0 0 1px rgba(212,175,55,0.9), 0 18px 55px rgba(0,0,0,0.55)"
-                              : "inset 0 0 0 1px rgba(212,175,55,0.45)",
-                          transition: "opacity 200ms ease",
-                        }}
-                      />
-
-                      <div
-                        data-card-glow
-                        className="absolute inset-0 rounded-xl pointer-events-none"
-                        style={{
-                          background:
-                            "radial-gradient(ellipse 420px 220px at 25% 10%, rgba(212,175,55,0.22), transparent 60%)",
-                          opacity: i === 0 ? 1 : 0.35,
-                          transition: "opacity 200ms ease",
-                        }}
-                      />
-
-                      <div className="relative z-10 p-7 md:p-10">
-                        <span
-                          data-card-num
-                          className="block font-ui text-[11px] tracking-wider"
-                          style={{ color: i === 0 ? "rgba(212,175,55,0.95)" : "rgba(212,175,55,0.4)" }}
-                        >
-                          {s.n}
-                        </span>
-
-                        <div className="mt-5 flex items-center gap-6">
-                          <div
-                            className="flex items-center justify-center h-[66px] w-[66px] rounded-full"
-                            style={{
-                              background:
-                                s.accentColor === "burgundy"
-                                  ? "rgba(128,0,32,0.15)"
-                                  : "rgba(212,175,55,0.10)",
-                              boxShadow:
-                                s.accentColor === "burgundy"
-                                  ? "inset 0 0 20px rgba(128,0,32,0.25), 0 0 26px rgba(128,0,32,0.25)"
-                                  : "inset 0 0 20px rgba(212,175,55,0.2), 0 0 26px rgba(212,175,55,0.25)",
-                            }}
-                          >
-                            <span
-                              className="text-[26px]"
-                              style={{
-                                color:
-                                  s.accentColor === "burgundy" ? "#a11030" : "#d4af37",
-                                textShadow:
-                                  s.accentColor === "burgundy"
-                                    ? "0 0 12px rgba(128,0,32,0.45)"
-                                    : "0 0 12px rgba(212,175,55,0.45)",
-                              }}
-                            >
-                              {s.icon}
-                            </span>
-                          </div>
-
-                          <h3
-                            data-card-title
-                            className="font-heading text-2xl md:text-3xl leading-[1.1]"
-                            style={{
-                              color: "#f4f1ea",
-                            }}
-                          >
-                            {s.title}
-                          </h3>
-                        </div>
-
-                        <p className="justify-pretty mt-4 text-[14px] md:text-[15px] leading-relaxed" style={{ color: i === 0 ? "rgba(244,241,234,0.78)" : "rgba(244,241,234,0.68)" }}>
-                          {s.body}
-                        </p>
-
-
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Spacer so layout doesn't jump when pin starts */}
-            <div className="h-8 md:h-10" />
-          </div>
-        </div>
-      </div>
-
-      {/* Give scroll distance for pin+scrub (no extra background changes). */}
-      <div aria-hidden className="h-0" />
-    </section>
-  );
-}
-
-
-/* ================= INSIGHTS ================= */
-const stats = [
-  { value: 50, suffix: "+", label: "Events Covered" },
-  { value: 30, suffix: "+", label: "Personalities" },
-  { value: 45, suffix: "M+", label: "Total Reach" },
-  { value: 9, suffix: "", label: "Cities Active" },
-];
-
-function Insights() {
-  return (
-    <section className="relative py-32 md:py-40 bg-black">
-      <div className="absolute inset-0 radial-gold-glow opacity-45" />
-      <div className="relative mx-auto max-w-7xl px-6">
-        <SectionHeading
-          kicker="The Numbers"
-          title={<>Reach that <em className="italic text-parchment/60">shows up.</em></>}
-        />
-        <div className="mt-20 grid gap-y-16 md:gap-y-0 gap-x-6 md:grid-cols-4">
-          {stats.map((s, i) => (
-            <Counter key={i} {...s} delay={i * 0.15} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Counter({
-  value,
-  suffix,
-  label,
-  delay,
-}: {
-  value: number;
-  suffix: string;
-  label: string;
-  delay: number;
-}) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const inView = useInView(ref, { once: false, margin: "-100px" });
-  const [n, setN] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    const start = performance.now();
-    const duration = 1800;
-    let raf: number;
-    const tick = (t: number) => {
-      const p = Math.min((t - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setN(Math.floor(eased * value));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, value]);
-
-  return (
-    <div ref={ref} className="relative text-center">
-      <div className="absolute inset-0 -z-10 grid place-items-center">
-        <div className="h-40 w-40 rounded-full bg-gold/10 blur-3xl animate-gold-pulse" />
-      </div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.6, delay }}
-        className="font-heading text-7xl md:text-8xl gold-text leading-none"
-      >
-        {n}
-        {suffix}
-      </motion.div>
-      <div className="mt-4 h-px w-14 mx-auto bg-gold/40" />
-      <div className="mt-4 font-ui text-[11px] tracking-[0.35em] uppercase text-parchment/60">
-        {label}
-      </div>
-    </div>
-  );
-}
-
 /* ================= REELS ================= */
 
 type ReelItem = {
@@ -1514,89 +1020,12 @@ const reelSources: ReelItem[] = [
 
 const reels: ReelItem[] = reelSources.slice(0, 4);
 
-function Reels() {
-  return (
-    <section className="relative py-32 md:py-40 bg-navy-deep overflow-hidden">
-      <div className="absolute inset-0 radial-burgundy-glow opacity-40" />
-      <div className="relative mx-auto max-w-7xl px-6">
-        <div className="grid gap-16 lg:grid-cols-2 items-center">
-          <div>
-            <SectionHeading
-              kicker="From the Feed"
-              title={<>Live from <em className="italic text-parchment/60">@enkaisocial.</em></>}
-              align="left"
-            />
-            <p className="justify-pretty mt-6 max-w-md text-parchment/70">
-              Reels shot, cut and published while the moment was still happening. Follow
-              along for a running feed of the events we're inside right now.
-            </p>
-            <div className="mt-10">
-              <MagneticButton as="a" href="https://www.instagram.com/enkaisocial.in/?hl=en">
-                Follow @enkaisocial
-              </MagneticButton>
-            </div>
-          </div>
 
-          <div className="relative h-[560px]">
-            {reels.map((r, i) => (
-              <motion.a
-                key={i}
-                href={r.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false }}
-                transition={{ duration: 0.9, delay: i * 0.12 }}
-                whileHover={{
-                  scale: 1.05,
-                  y: -8,
-                  boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(212,175,55,0.35)",
-                }}
-                className="absolute rounded-xl overflow-hidden border border-gold/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)] block cursor-pointer transition-all duration-500"
-                style={{
-                  width: 180,
-                  height: 320,
-                  left: ["0px", "140px", "280px", "420px"][i],
-                  top: "20px",
-                  transform: `rotate(${[-2, 1, -1, 2][i]}deg)`,
-                  zIndex: i + 1,
-                }}
-              >
-                <img
-                  src={r.thumbnail}
-                  alt={r.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover"
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85))",
-                  }}
-                />
-                <div className="absolute bottom-3 left-3 right-3">
-                  <p className="font-ui text-[9px] tracking-[0.3em] uppercase text-gold">
-                    {r.tag}
-                  </p>
-                  <p className="font-heading text-sm text-parchment mt-1">
-                    {r.title}
-                  </p>
-                </div>
-              </motion.a>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ================= CONTACT ================= */
 function Contact() {
   return (
-    <section id="contact" className="relative py-32 md:py-40 bg-navy">
+    <section id="contact" className="relative pt-16 md:pt-24 pb-0 bg-navy">
       <div className="absolute inset-0">
         <img
           src={hero1}
@@ -1608,14 +1037,14 @@ function Contact() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(1,42,74,0.7), rgba(0,0,0,0.85))",
+              "linear-gradient(180deg, rgba(1,42,74,1) 0%, rgba(1,42,74,0.6) 25%, rgba(0,0,0,0.85) 100%)",
           }}
         />
       </div>
       <div className="relative mx-auto max-w-4xl px-6">
         <SectionHeading
           kicker="Let's Talk"
-          title={<>Bring us your <em className="italic text-parchment/60">next event.</em></>}
+          title={<>Bring us your next event.</>}
         />
 
         <motion.form
@@ -1650,6 +1079,9 @@ function Contact() {
           </div>
           <div className="flex flex-wrap items-center gap-6 pt-4">
             <MagneticButton>Send Enquiry</MagneticButton>
+            <MagneticButton as="a" href="https://wa.me/919910706037?text=Hello%20Enkai%20Social%2C%0A%0AI'd%20like%20to%20book%20a%20consultation%20regarding%20event%20coverage.%20Please%20let%20me%20know%20your%20availability.">
+              Book Consultation
+            </MagneticButton>
           </div>
         </motion.form>
       </div>
@@ -1693,18 +1125,6 @@ function SectionHeading({
   const alignCls = align === "center" ? "text-center items-center" : "text-left items-start";
   return (
     <div className={`flex flex-col gap-6 ${alignCls}`}>
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
-        transition={{ duration: 0.7 }}
-        className="flex items-center gap-3"
-      >
-        <span className="h-px w-8 bg-burgundy-bright" />
-        <span className="font-ui text-[11px] tracking-[0.4em] uppercase text-burgundy-bright">
-          {kicker}
-        </span>
-      </motion.div>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

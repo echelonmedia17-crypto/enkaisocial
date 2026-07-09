@@ -14,7 +14,7 @@ import { SOCIAL_LINKS } from "@/lib/socialLinks";
 
 const links = [
   { label: "Home", href: "#home", type: "anchor" as const },
-  { label: "About", href: "#about", type: "anchor" as const },
+  { label: "About", href: "/about", type: "route" as const },
   { label: "Portfolio", href: "/portfolio", type: "route" as const },
   { label: "Contact", href: "#contact", type: "anchor" as const },
 ];

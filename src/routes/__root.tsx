@@ -131,7 +131,10 @@ function RootComponent() {
       <main className="relative">
         <Outlet />
       </main>
-      <Footer />
+      {/* bg-navy covers any gap between page content and footer over the fixed Hero */}
+      <div className="relative z-10 bg-navy">
+        <Footer />
+      </div>
     </QueryClientProvider>
   );
 }

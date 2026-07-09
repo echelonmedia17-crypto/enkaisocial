@@ -19,19 +19,6 @@ export function MagneticButton({
 }: Props) {
   const ref = useRef<HTMLElement | null>(null);
 
-  const handleMove = (e: MouseEvent) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = e.clientX - (r.left + r.width / 2);
-    const y = e.clientY - (r.top + r.height / 2);
-    el.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
-  };
-  const handleLeave = () => {
-    const el = ref.current;
-    if (el) el.style.transform = "translate(0,0)";
-  };
-
   const base =
     "relative inline-flex items-center gap-3 px-8 py-4 font-ui text-sm tracking-[0.14em] uppercase transition-[transform,box-shadow,background,border-color] duration-500 ease-out will-change-transform";
   const styles =
@@ -55,8 +42,6 @@ export function MagneticButton({
       <a
         href={href}
         onClick={onClick}
-        onMouseMove={handleMove}
-        onMouseLeave={handleLeave}
         className="inline-block"
       >
         {inner}
@@ -66,8 +51,6 @@ export function MagneticButton({
   return (
     <button
       onClick={onClick}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
       className="inline-block"
       type="button"
     >

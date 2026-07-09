@@ -41,7 +41,6 @@ function PortfolioCard({
   onOpen: (i: number) => void;
 }) {
   const imageFirst = index % 2 === 0;
-  const split70 = index % 2 === 0;
 
   return (
     <motion.div
@@ -57,21 +56,18 @@ function PortfolioCard({
       style={{ borderRadius: "20px" }}
       onClick={() => onOpen(index)}
     >
-      {/* Gold border base (premium glass) */}
+      {/* Gold border */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-100"
+        className="absolute inset-0 pointer-events-none z-10"
         style={{
           borderRadius: "20px",
-          background: "rgba(255,255,255,0.03)",
           border: "1px solid rgba(212,175,55,0.28)",
           boxShadow: "inset 0 0 0 1px rgba(212,175,55,0.08)",
-          backdropFilter: "blur(14px)",
         }}
       />
-
       {/* Hover glow */}
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10"
         style={{
           borderRadius: "20px",
           border: "1px solid rgba(212,175,55,0.7)",
@@ -79,11 +75,39 @@ function PortfolioCard({
         }}
       />
 
-      {/* Layout row (single card per row) */}
-      <div className="relative flex items-stretch h-[420px] md:h-[480px]" style={{ borderRadius: "20px" }}>
+      {/* ── Mobile: stacked image + text overlay ── */}
+      <div className="md:hidden relative h-[280px]">
+        <img
+          src={item.img}
+          alt={item.name}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          style={{ filter: "brightness(0.72)" }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(180deg, transparent 30%, rgba(1,22,42,0.97) 100%)" }}
+        />
+        <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col gap-1.5">
+          <span className="font-ui text-[9px] tracking-[0.35em] uppercase text-gold/90">{item.category}</span>
+          <h3 className="font-heading text-parchment leading-[1.12] text-lg">{item.name}</h3>
+          <div className="flex items-center gap-2">
+            <span className="font-ui text-[11px] text-parchment/60">{item.location}</span>
+            <span className="text-parchment/30 text-[9px]">●</span>
+            <span className="font-ui text-[11px] text-parchment/60">{item.year}</span>
+          </div>
+          <button className="mt-1 inline-flex items-center gap-2 text-parchment/70 text-[10px] tracking-[0.25em] uppercase font-ui">
+            <span className="h-0.5 w-10 bg-gold/30" />
+            <span>View Project →</span>
+          </button>
+        </div>
+      </div>
+
+      {/* ── Desktop: side-by-side ── */}
+      <div className="hidden md:flex items-stretch h-[480px]" style={{ borderRadius: "20px" }}>
         {imageFirst ? (
           <>
-            <div className={split70 ? "w-[70%]" : "w-[50%]"}>
+            <div className="w-[70%]">
               <motion.div
                 className="relative h-full overflow-hidden"
                 initial={{ scale: 1.08 }}
@@ -98,73 +122,49 @@ function PortfolioCard({
                   className="h-full w-full object-cover transition-transform duration-[500ms] ease-out group-hover:scale-[1.04]"
                   style={{ filter: "brightness(0.78)" }}
                 />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, rgba(1,34,60,0.10) 0%, rgba(1,34,60,0.40) 55%, rgba(1,34,60,0.92) 100%)",
-                  }}
-                />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(1,34,60,0.10) 0%, rgba(1,34,60,0.40) 55%, rgba(1,34,60,0.92) 100%)" }} />
               </motion.div>
             </div>
-
-            <div className={split70 ? "w-[30%]" : "w-[50%]"}>
-              <div className="h-full p-6 md:p-8 flex flex-col justify-end overflow-hidden">
+            <div className="w-[30%]">
+              <div className="h-full p-8 flex flex-col justify-end overflow-hidden">
                 <div className="flex flex-col gap-4">
-                  <span className="font-ui text-[10px] tracking-[0.35em] uppercase text-gold/90">
-                    {item.category}
-                  </span>
-                  <h3 className="font-heading text-parchment leading-[1.12] text-xl md:text-3xl">
-                    {item.name}
-                  </h3>
+                  <span className="font-ui text-[10px] tracking-[0.35em] uppercase text-gold/90">{item.category}</span>
+                  <h3 className="font-heading text-parchment leading-[1.12] text-3xl">{item.name}</h3>
                   <div className="flex items-center gap-2">
                     <span className="font-ui text-[12px] text-parchment/60">{item.location}</span>
                     <span className="text-parchment/30 text-[10px]">●</span>
                     <span className="font-ui text-[12px] text-parchment/60">{item.year}</span>
                   </div>
-                  <p className="text-parchment/70 text-sm leading-[1.6] justify-pretty line-clamp-3">
-                    {item.blurb}
-                  </p>
-                  <div className="mt-1 flex items-center">
-                    <button className="ml-0 inline-flex items-center gap-2 text-parchment/80 text-xs tracking-[0.25em] uppercase font-ui hover:text-gold transition-colors duration-500">
-                      <span className="h-0.5 w-14 bg-gold/30" />
-                      <span>View Project →</span>
-                    </button>
-                  </div>
+                  <p className="text-parchment/70 text-sm leading-[1.6] justify-pretty line-clamp-3">{item.blurb}</p>
+                  <button className="ml-0 inline-flex items-center gap-2 text-parchment/80 text-xs tracking-[0.25em] uppercase font-ui hover:text-gold transition-colors duration-500">
+                    <span className="h-0.5 w-14 bg-gold/30" />
+                    <span>View Project →</span>
+                  </button>
                 </div>
               </div>
             </div>
           </>
         ) : (
           <>
-            <div className={split70 ? "w-[30%]" : "w-[50%]"}>
-              <div className="h-full p-6 md:p-8 flex flex-col justify-end overflow-hidden">
+            <div className="w-[30%]">
+              <div className="h-full p-8 flex flex-col justify-end overflow-hidden">
                 <div className="flex flex-col gap-4">
-                  <span className="font-ui text-[10px] tracking-[0.35em] uppercase text-gold/90">
-                    {item.category}
-                  </span>
-                  <h3 className="font-heading text-parchment leading-[1.12] text-xl md:text-3xl">
-                    {item.name}
-                  </h3>
+                  <span className="font-ui text-[10px] tracking-[0.35em] uppercase text-gold/90">{item.category}</span>
+                  <h3 className="font-heading text-parchment leading-[1.12] text-3xl">{item.name}</h3>
                   <div className="flex items-center gap-2">
                     <span className="font-ui text-[12px] text-parchment/60">{item.location}</span>
                     <span className="text-parchment/30 text-[10px]">●</span>
                     <span className="font-ui text-[12px] text-parchment/60">{item.year}</span>
                   </div>
-                  <p className="text-parchment/70 text-sm leading-[1.6] justify-pretty line-clamp-3">
-                    {item.blurb}
-                  </p>
-                  <div className="mt-1 flex items-center">
-                    <button className="ml-0 inline-flex items-center gap-2 text-parchment/80 text-xs tracking-[0.25em] uppercase font-ui hover:text-gold transition-colors duration-500">
-                      <span className="h-0.5 w-14 bg-gold/30" />
-                      <span>View Project →</span>
-                    </button>
-                  </div>
+                  <p className="text-parchment/70 text-sm leading-[1.6] justify-pretty line-clamp-3">{item.blurb}</p>
+                  <button className="ml-0 inline-flex items-center gap-2 text-parchment/80 text-xs tracking-[0.25em] uppercase font-ui hover:text-gold transition-colors duration-500">
+                    <span className="h-0.5 w-14 bg-gold/30" />
+                    <span>View Project →</span>
+                  </button>
                 </div>
               </div>
             </div>
-
-            <div className={split70 ? "w-[70%]" : "w-[50%]"}>
+            <div className="w-[70%]">
               <motion.div
                 className="relative h-full overflow-hidden"
                 initial={{ scale: 1.08 }}
@@ -179,30 +179,19 @@ function PortfolioCard({
                   className="h-full w-full object-cover transition-transform duration-[500ms] ease-out group-hover:scale-[1.04]"
                   style={{ filter: "brightness(0.78)" }}
                 />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, rgba(1,34,60,0.10) 0%, rgba(1,34,60,0.40) 55%, rgba(1,34,60,0.92) 100%)",
-                  }}
-                />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(1,34,60,0.10) 0%, rgba(1,34,60,0.40) 55%, rgba(1,34,60,0.92) 100%)" }} />
               </motion.div>
             </div>
           </>
         )}
       </div>
 
-      {/* Luxury shadow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          borderRadius: "20px",
-          boxShadow: "0 28px 80px rgba(0,0,0,0.55)",
-        }}
-      />
+      {/* Shadow */}
+      <div className="absolute inset-0 pointer-events-none" style={{ borderRadius: "20px", boxShadow: "0 28px 80px rgba(0,0,0,0.55)" }} />
     </motion.div>
   );
 }
+
 
 /* ─────────────────────────────────────────────
    MAIN PORTFOLIO SCREEN
