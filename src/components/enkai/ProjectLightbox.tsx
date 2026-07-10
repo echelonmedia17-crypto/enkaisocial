@@ -671,7 +671,7 @@ export function ProjectLightbox({
                   {project.stats.map((stat) => (
                     <div
                       key={`${stat.label}-${stat.number}`}
-                      className="flex-1 min-w-[110px] px-4 py-5 text-center"
+                      className="flex-1 min-w-[110px] px-6 py-6 text-center rounded-[10px] bg-[rgba(212,175,55,0.05)] hover:shadow-[0_0_12px_2px_rgba(212,175,55,0.6)] hover:border-[var(--amber)] transition-shadow duration-300"
                     >
                       <div className="font-heading text-[clamp(24px,3vw,34px)] font-black leading-none text-[var(--amber)]">
                         {stat.number}
