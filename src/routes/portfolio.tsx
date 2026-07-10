@@ -257,14 +257,7 @@ function Portfolio() {
       <div className="relative mx-auto max-w-7xl px-6">
         {/* Header */}
         <div className="flex flex-col items-center text-center">
-          <div className="flex items-center gap-3">
-            <span className="h-px w-8 bg-burgundy-bright" />
-            <span className="font-ui text-[11px] tracking-[0.4em] uppercase text-burgundy-bright">
-              From Our Portfolio
-            </span>
-            <span className="h-px w-8 bg-burgundy-bright" />
-          </div>
-          <h1 className="mt-6 font-heading text-5xl md:text-7xl leading-[1.02] text-parchment max-w-4xl">
+          <h1 className="font-heading text-5xl md:text-7xl leading-[1.02] text-parchment max-w-4xl">
             Every event we've been{" "}
             <em className="italic text-parchment/60">inside.</em>
           </h1>

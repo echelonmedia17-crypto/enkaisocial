@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail, Phone, Instagram, MapPin } from "lucide-react";
+import { ArrowUpRight, Mail, Phone, Instagram, MapPin, Facebook, Linkedin } from "lucide-react";
 import logo from "@/assets/logo.jpg";
 export function Footer() {
   return (
@@ -13,10 +13,10 @@ export function Footer() {
               className="h-12 w-12 rounded-full border border-gold/40 object-cover"
             />
             <span className="font-heading text-xl tracking-[0.18em] text-parchment">
-              ENKAI · SOCIAL
+              ENKAI SOCIAL
             </span>
           </div>
-          
+
           <p className="mt-4 font-ui text-[11px] tracking-[0.3em] uppercase text-gold/80">
             A Subsidiary of{" "}
             <a
@@ -69,6 +69,18 @@ export function Footer() {
               <a className="hover:text-gold flex items-center gap-2" href="https://www.instagram.com/enkaisocial.in/?hl=en">
                 <Instagram size={16} className="text-gold" />
                 @enkaisocial.in
+              </a>
+            </li>
+            <li>
+              <a className="hover:text-gold flex items-center gap-2" href="https://www.facebook.com/share/1J6MbSmfRe/" target="_blank" rel="noreferrer">
+                <Facebook size={16} className="text-gold" />
+                Enkai Social
+              </a>
+            </li>
+            <li>
+              <a className="hover:text-gold flex items-center gap-2" href="https://www.linkedin.com/showcase/enkai-social/about/?viewAsMember=true" target="_blank" rel="noreferrer">
+                <Linkedin size={16} className="text-gold" />
+                Enkai Social
               </a>
             </li>
             <li>
