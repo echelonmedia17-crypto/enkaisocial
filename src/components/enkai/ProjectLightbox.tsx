@@ -671,11 +671,11 @@ export function ProjectLightbox({
                   {project.stats.map((stat) => (
                     <div
                       key={`${stat.label}-${stat.number}`}
-                      className="flex-1 min-w-[110px] px-6 py-6 text-center rounded-[10px] bg-[rgba(212,175,55,0.05)] hover:shadow-[0_0_12px_2px_rgba(212,175,55,0.6)] hover:border-[var(--amber)] transition-shadow duration-300"
+                      className="flex-1 min-w-[110px] px-8 py-8 text-center rounded-[12px] bg-[rgba(212,175,55,0.07)] hover:shadow-[0_0_15px_5px_var(--amber)] hover:border-[var(--amber)] transition-shadow duration-300"
                     >
-                      <div className="font-heading text-[clamp(24px,3vw,34px)] font-black leading-none text-[var(--amber)]">
-                        {stat.number}
-                      </div>
+                      <div className="font-heading text-[clamp(28px,3.5vw,38px)] font-black leading-none text-[var(--amber)]">
+                         <AnimatedCounter value={stat.number} />
+                       </div>
                       <div className="mt-2 font-sans text-[9.5px] uppercase tracking-[0.14em] text-[var(--pf-fg-mute)]">
                         {stat.label}
                       </div>
