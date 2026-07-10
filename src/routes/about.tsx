@@ -54,7 +54,7 @@ function About() {
             viewport={{ once: true }}
             className="font-heading text-6xl md:text-7xl lg:text-8xl leading-[1.05] text-parchment"
           >
-            What is <br /> Enkai?
+            What is <br /> Enkai (宴会)? 
           </motion.h2>
 
           <motion.div
@@ -75,7 +75,8 @@ function About() {
         <Divider />
 
         {/* SECTION 2 — Why Social? (reversed) */}
-        <section className="grid md:grid-cols-2 gap-16 md:gap-24 items-start">
+        <section className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
+
           <motion.div
             custom={0}
             initial="hidden"
@@ -102,12 +103,16 @@ function About() {
           </motion.h2>
         </section>
 
-        <Divider />
+        <div className="mt-1">
+          <Divider />
+        </div>
+
 
       </div>
 
       {/* SECTION 3 — Enkai Social centerpiece */}
       <section className="relative py-24 md:py-32 overflow-hidden">
+
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -130,9 +135,9 @@ function About() {
             whileInView="visible"
             variants={fadeUp}
             viewport={{ once: true }}
-            className="font-heading text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-[1.02] text-parchment"
+            className="font-heading text-6xl sm:text-6xl md:text-6xl lg:text-6xl leading-[1.02] text-parchment"
           >
-            Enkai<br /> Social
+            Enkai Social
           </motion.h2>
 
           <motion.p
@@ -166,8 +171,9 @@ function About() {
             whileInView="visible"
             variants={fadeUp}
             viewport={{ once: true }}
-            className="font-heading text-3xl md:text-4xl lg:text-5xl text-parchment/60 leading-[1.2] max-w-3xl"
+            className="font-heading text-3xl md:text-3xl lg:text-3xl text-parchment/60 leading-[1.15] max-w-3xl mx-auto text-center"
           >
+
             Most events are remembered<br className="hidden md:block" /> by those who attended.
           </motion.p>
 
@@ -177,7 +183,7 @@ function About() {
             whileInView="visible"
             variants={fadeUp}
             viewport={{ once: true }}
-            className="mt-6 font-heading text-3xl md:text-4xl lg:text-5xl text-gold leading-[1.15] max-w-3xl"
+            className="mt-4 font-heading text-3xl md:text-4xl lg:text-5xl text-gold leading-[1.15] max-w-3xl mx-auto text-center"
           >
             Enkai Social makes them remembered by everyone.
           </motion.p>
@@ -188,10 +194,10 @@ function About() {
             whileInView="visible"
             variants={fadeUp}
             viewport={{ once: true }}
-            className="mt-10"
+            className="mt-6"
           >
-            <div className="h-px w-10 bg-gold/60 mb-8" />
-            <p className="text-parchment/60 text-[15px] leading-[1.9] max-w-[38ch]">
+            <div className="h-px w-10 bg-gold/60 mx-auto mb-6" />
+            <p className="text-parchment/60 text-[15px] leading-[1.9] max-w-[38ch] mx-auto text-center">
               We capture, create, publish and amplify every moment while it happens—helping brands increase visibility, engagement and lasting impact.
             </p>
           </motion.div>
