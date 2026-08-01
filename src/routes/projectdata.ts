@@ -12,6 +12,28 @@ import hero3 from "@/assets/hero-3.jpg";
 import hero4 from "@/assets/hero-4.jpg";
 import hero5 from "@/assets/hero-5.jpg";
 
+import aagaaz1 from "@/assets/Aagaaz/1.png";
+import aagaaz2 from "@/assets/Aagaaz/2.png";
+import aagaaz3 from "@/assets/Aagaaz/3.png";
+import aagaaz4 from "@/assets/Aagaaz/4.png";
+import aagaaz5 from "@/assets/Aagaaz/5.png";
+import aagaaz6 from "@/assets/Aagaaz/6.png";
+import aagaaz7 from "@/assets/Aagaaz/7.png";
+import aagaaz8 from "@/assets/Aagaaz/8.JPG";
+import aagaaz9 from "@/assets/Aagaaz/9.JPG";
+import aagaaz10 from "@/assets/Aagaaz/10.JPG";
+
+import dav1 from "@/assets/dav/1.png";
+import dav2 from "@/assets/dav/2.png";
+import dav3 from "@/assets/dav/3.png";
+import dav4 from "@/assets/dav/4.png";
+import dav5 from "@/assets/dav/5.JPG";
+import dav6 from "@/assets/dav/6.JPG";
+import dav7 from "@/assets/dav/7.JPG";
+import dav8 from "@/assets/dav/8.JPG";
+import dav9 from "@/assets/dav/9.JPG";
+
+
 export interface ProjectStat {
   number: string;
   label: string;
@@ -79,7 +101,7 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
     id: 1,
     name: "DAV United Festival",
     category: "Concerts",
-    img: portfolio1,
+    img: dav1,
     instagram: "https://www.instagram.com/dav.united.festival/",
     blurb: "A three-day festival that brought together over 50,000 attendees, 100+ speakers and performers, and participants from 23 Indian states and 10 countries. Enkai Social documented every defining moment through live coverage, premium visual storytelling, and real-time social media publishing.",
     description:
@@ -99,8 +121,8 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
       { number: "100+", label: "Speakers & Artists" },
       { number: "23", label: "States Represented" },
     ],
-    gallery: [portfolio1, pf5, hero1, pf2, pf6],
-    behindScenes: [hero1, pf2, pf6],
+    gallery: [dav1, dav2, dav3, dav4, dav5, dav6, dav7, dav8, dav9],
+    behindScenes: [dav2, dav3, dav4, dav5, dav6, dav7],
     impactText:
       "Our real-time content strategy and cinematic storytelling helped DAV United engage audiences far beyond the venue — creating a lasting digital footprint of the festival that continued to generate reach weeks after the event.",
     impactStats: [
@@ -130,7 +152,7 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
     id: 2,
     name: "Aagaaz 4.0",
     category: "Cultural Festival • 2025",
-    img: pf3,
+    img: aagaaz1,
     instagram: "https://www.instagram.com/enkai.social/",
     blurb: "A flagship cultural celebration captured and amplified in real time.",
     description:
@@ -151,8 +173,8 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
       { number: "30+", label: "Live Performances" },
       { number: "150+", label: "Content Assets Delivered" },
     ],
-    gallery: [pf3, hero3, pf5, portfolio1],
-    behindScenes: [hero3, pf5],
+    gallery: [aagaaz1, aagaaz2, aagaaz3, aagaaz4, aagaaz5, aagaaz6, aagaaz7, aagaaz8, aagaaz9, aagaaz10],
+    behindScenes: [aagaaz5, aagaaz6, aagaaz7, aagaaz8, aagaaz9, aagaaz10],
     impactText:
       "5M+ Estimated social impressions generated through real-time publishing across platforms. 500K+ Video views accumulated from reels, stories, and highlight content. 2 Hours Average turnaround from capture to live social publishing. 95% Audience engagement maintained throughout the live coverage period through continuous content distribution.",
     impactStats: [

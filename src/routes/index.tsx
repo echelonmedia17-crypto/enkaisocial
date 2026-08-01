@@ -21,6 +21,12 @@ import reel2Thumb from "@/assets/reel-2.jpg";
 import reel3Thumb from "@/assets/reel-3.jpg";
 import reel4Thumb from "@/assets/reel-4.jpg";
 
+import dav5 from "@/assets/dav/5.JPG";
+import dav6 from "@/assets/dav/6.JPG";
+import dav7 from "@/assets/dav/7.JPG";
+import dav8 from "@/assets/dav/8.JPG";
+
+
 export const Route = createFileRoute("/")({
   component: Home,
 });
@@ -124,7 +130,7 @@ function Hero() {
         });
         return next;
       });
-    }, 5200);
+    }, 3000);
     return () => clearInterval(t);
   }, []);
 
@@ -814,7 +820,7 @@ function PortfolioGlimpse({ onOpenProject }: { onOpenProject: (p: Project) => vo
               transition={{ duration: 0.7, delay: i * 0.1 }}
               className="relative rounded-xl overflow-hidden border border-gold/20 shadow-[0_12px_40px_rgba(0,0,0,0.5)] block aspect-[9/16]"
             >
-              <img src={r.thumbnail} alt={r.title} loading="lazy" className="h-full w-full object-cover" />
+              <img src={r.thumbnail} alt={r.title} loading="lazy" decoding="async" className="h-full w-full object-cover" />
               <div
                 className="absolute inset-0"
                 style={{ background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85))" }}
@@ -849,13 +855,13 @@ function PortfolioGlimpse({ onOpenProject }: { onOpenProject: (p: Project) => vo
                 style={{
                   width: 180,
                   height: 320,
-                  left: ["0%", "25%", "50%", "75%"][i],
-                  transform: `translateX(-50%) rotate(${[-2, 1, -1, 2][i]}deg)`,
+                  left: `${(i / reels.length) * 100}%`,
+                  transform: `translateX(-50%) rotate(${[-2, 1, -1, 2, -3, 2, -1, 3][i % 8]}deg)`,
                   top: "20px",
                   zIndex: i + 1,
                 }}
               >
-                <img src={r.thumbnail} alt={r.title} loading="lazy" className="h-full w-full object-cover" />
+                <img src={r.thumbnail} alt={r.title} loading="lazy" decoding="async" className="h-full w-full object-cover" />
                 <div
                   className="absolute inset-0"
                   style={{ background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85))" }}
@@ -987,6 +993,34 @@ type ReelItem = {
 
 const reelSources: ReelItem[] = [
   {
+    title: "Event Update",
+    tag: "Post",
+    url: "https://www.instagram.com/p/DavDBHlz38f/?hl=en",
+    thumbnail: "https://scontent.cdninstagram.com/v/t51.71878-15/746823894_1016179098002423_3890106697209438351_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=109&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=vSM1wUs_X7gQ7kNvwFOyRKX&_nc_oc=AdqFk3u84uTmg97H-3_uw2t2AfFs3aYBXFESoIvKo8RKemJm_BgQnzLCeiSHK-uC_YU&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=Gayzn_AtbQt6a-WaQ8OyrA&_nc_ss=7060f&oh=00_AQFvhTA3fKYhTsOsSRudQafnlLHraQahaQlwKw3QAcCUhQ&oe=6A73FE24",
+    offset: 0,
+  },
+  {
+    title: "A glimpse of the floor.",
+    tag: "Post",
+    url: "https://www.instagram.com/p/DaiTPvbTEtq/?hl=en",
+    thumbnail: "https://scontent.cdninstagram.com/v/t51.82787-15/741523642_18053208407549189_6727393174314448054_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=dOkVHM7CHfIQ7kNvwEW-BMq&_nc_oc=Adohc7-7gfqDTweWeuffEJKrZ9qf1BNY33Q9F0cAGaH4RN7Sd1QtrKdYPxjR3-0n9EA&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=BK_Uaad_MTsZZlbk0a3jWg&_nc_ss=7060f&oh=00_AQFSdRKFMBTCma9hDuR7kGkzUPWoGTvlnY2towbMKQfrRw&oe=6A7408E5",
+    offset: 30,
+  },
+  {
+    title: "Behind the Scenes",
+    tag: "Post",
+    url: "https://www.instagram.com/p/Dba4wkcTjvw/?hl=en",
+    thumbnail: "https://scontent.cdninstagram.com/v/t51.71878-15/761318800_1733069644428732_5222185736876007775_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=106&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=BQLH4EpH7MkQ7kNvwHJCE62&_nc_oc=AdqEdHq35M0LCoI-dGq4vKk49P2356POYORfJhIyaQ8DpJQbwzGdt0mybd_dIvA_5B0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=SOaI02ReGa8lQax9fpYUdA&_nc_ss=7060f&oh=00_AQEDxM3cgbYRki6WT5K5BpWJuxFiCrDB6kaU6iZmwwnG4A&oe=6A740780",
+    offset: 30,
+  },
+  {
+    title: "Live Updates",
+    tag: "Post",
+    url: "https://www.instagram.com/p/DakNfDuTZWP/?hl=en",
+    thumbnail: "https://scontent.cdninstagram.com/v/t51.71878-15/731632129_2440667243097779_5337127658648044562_n.jpg?stp=cmp1_dst-jpg_e35_s640x640_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=crRBdCdkJc4Q7kNvwFrpEwi&_nc_oc=Adoi5R54f7DWb2bguqvROn_9fCxFZM3ltQbGpgnH2_IOb-eVLWyoOWbMBiwOKOYHCtE&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=cDWokwInwJBbg7v159b4Lw&_nc_ss=7060f&oh=00_AQHqBoPWpRc6jbZLyIVEVhFP-yvnmnJse-RPAZoaHhx4rA&oe=6A740F7E",
+    offset: 30,
+  },
+  {
     title: "Javed Ali · DAV United Fest",
     tag: "Reel",
     url: "https://www.instagram.com/reel/DSywVRiEy5U/?hl=en",
@@ -1018,7 +1052,7 @@ const reelSources: ReelItem[] = [
 
 ];
 
-const reels: ReelItem[] = reelSources.slice(0, 4);
+const reels: ReelItem[] = reelSources.slice(0, 8);
 
 
 
@@ -1031,6 +1065,7 @@ function Contact() {
           src={hero1}
           alt=""
           loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover opacity-30 blur-md"
         />
         <div

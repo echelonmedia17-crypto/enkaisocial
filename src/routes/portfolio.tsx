@@ -81,6 +81,7 @@ function PortfolioCard({
           src={item.img}
           alt={item.name}
           loading="lazy"
+          decoding="async"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           style={{ filter: "brightness(0.72)" }}
         />
@@ -119,6 +120,7 @@ function PortfolioCard({
                   src={item.img}
                   alt={item.name}
                   loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover transition-transform duration-[500ms] ease-out group-hover:scale-[1.04]"
                   style={{ filter: "brightness(0.78)" }}
                 />
@@ -176,6 +178,7 @@ function PortfolioCard({
                   src={item.img}
                   alt={item.name}
                   loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover transition-transform duration-[500ms] ease-out group-hover:scale-[1.04]"
                   style={{ filter: "brightness(0.78)" }}
                 />
