@@ -618,19 +618,21 @@ export function ProjectLightbox({
                 </div>
               ) : null}
 
-              <div className="flex flex-wrap items-center gap-2.5">
-                <a
-                  href={project.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-[var(--pf-border)] bg-transparent px-4 py-2.5 font-sans text-[12.5px] font-semibold text-[var(--pf-fg)] transition-colors duration-300 hover:bg-[var(--amber)] hover:text-[var(--pf-bg)]"
-                >
-                  <Instagram className="h-4 w-4" />
-                  <span className="font-semibold text-[var(--pf-fg)]">@{getInstagramHandle(project.instagram)}</span>
-                  <span className="mx-2 text-[var(--amber)]">|</span>
-                  <span>View on Instagram ↗</span>
-                </a>
-              </div>
+              {project.instagram ? (
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <a
+                    href={project.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-[var(--pf-border)] bg-transparent px-4 py-2.5 font-sans text-[12.5px] font-semibold text-[var(--pf-fg)] transition-colors duration-300 hover:bg-[var(--amber)] hover:text-[var(--pf-bg)]"
+                  >
+                    <Instagram className="h-4 w-4" />
+                    <span className="font-semibold text-[var(--pf-fg)]">@{getInstagramHandle(project.instagram)}</span>
+                    <span className="mx-2 text-[var(--amber)]">|</span>
+                    <span>View on Instagram ↗</span>
+                  </a>
+                </div>
+              ) : null}
 
               <p className="max-w-xl font-sans text-[13px] leading-relaxed text-[var(--pf-fg-soft)] text-justify">
                 {project.description}

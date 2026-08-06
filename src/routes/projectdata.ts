@@ -76,6 +76,7 @@ import aagaaz7 from "@/assets/Aagaaz/7.png";
 import aagaaz8 from "@/assets/Aagaaz/8.JPG";
 import aagaaz9 from "@/assets/Aagaaz/9.JPG";
 import aagaaz10 from "@/assets/Aagaaz/10.JPG";
+import aagaazFront from "@/assets/Aagaaz/Afront.png";
 
 import dav1 from "@/assets/dav/1.png";
 import dav2 from "@/assets/dav/2.png";
@@ -86,6 +87,7 @@ import dav6 from "@/assets/dav/6.JPG";
 import dav7 from "@/assets/dav/7.JPG";
 import dav8 from "@/assets/dav/8.JPG";
 import dav9 from "@/assets/dav/9.JPG";
+import davFront from "@/assets/dav/DFront.png";
 
 export interface ProjectStat {
   number: string;
@@ -133,7 +135,7 @@ export interface Project {
   name: string;
   category: string;
   img: string;
-  instagram: string;
+  instagram?: string;
   blurb: string;
   description: string;
   highlights: string[];
@@ -154,7 +156,7 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
     id: 1,
     name: "DAV United Festival",
     category: "Concerts",
-    img: dav1,
+    img: davFront,
     instagram: "https://www.instagram.com/dav.united.festival/",
     blurb: "A three-day festival that brought together over 50,000 attendees, 100+ speakers and performers, and participants from 23 Indian states and 10 countries. Enkai Social documented every defining moment through live coverage, premium visual storytelling, and real-time social media publishing.",
     description:
@@ -205,8 +207,8 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
     id: 2,
     name: "Aagaaz 4.0",
     category: "Cultural Festival • 2025",
-    img: aagaaz1,
-    instagram: "https://www.instagram.com/enkai.social/",
+    img: aagaazFront,
+    instagram: "https://www.instagram.com/jito_northdelhi/",
     blurb: "A flagship cultural celebration captured and amplified in real time.",
     description:
       "Aagaaz 4.0 brought together thousands of attendees for two days of performances, competitions, celebrity appearances, and cultural celebrations. Enkai Social managed complete live media coverage, delivering premium visual storytelling through instant content creation, on-site editing, and strategic social amplification.",
@@ -257,7 +259,6 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
     name: "Navkar Divas – CM Event",
     category: "Corporate",
     img: navkarDivas,
-    instagram: "https://www.instagram.com/enkai.social/",
     blurb: "Celebrating Navkar Divas with a high‑impact corporate event.",
     description: "Navkar Divas 2025 was a flagship corporate celebration, featuring keynote speeches, cultural performances, and a vibrant exhibition. Enkai Social captured the event in real time, delivering premium visual storytelling across social platforms.",
     year: "2025",
@@ -290,14 +291,19 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
       "Social Media Strategy",
       "Cinematography"
     ],
-    testimonial: null
+    testimonial: {
+      quote:
+        "The professionalism and speed of the Enkai team were unmatched. They perfectly captured the essence of Navkar Divas and amplified our corporate message flawlessly.",
+      author: "Chief Event Coordinator",
+      designation: "Navkar Divas Organizing Team",
+    },
   },
   {
     id: 4,
     name: "JWIL – Yamuna Drive",
     category: "Community",
     img: jwilYamuna,
-    instagram: "https://www.instagram.com/enkai.social/",
+    instagram: "https://www.instagram.com/jwil.infra.ltd/",
     blurb: "A vibrant community drive by JWIL along the Yamuna banks.",
     description: "JWIL organized a clean‑up and cultural drive on the Yamuna riverfront, combining environmental activism with live performances. Enkai Social documented the event, delivering immersive stories that amplified the cause.",
     year: "2025",
@@ -329,14 +335,19 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
       "Community Storytelling",
       "Real‑time Editing"
     ],
-    testimonial: null
+    testimonial: {
+      quote:
+        "Enkai Social didn't just document our drive; they amplified our cause. The visual storytelling deeply resonated with the community and boosted our reach beyond expectations.",
+      author: "Director of CSR",
+      designation: "JWIL Infra Ltd.",
+    },
   },
   {
     id: 5,
     name: "JITO Christmas Party",
     category: "Celebration",
     img: jitoChristmas,
-    instagram: "https://www.instagram.com/enkai.social/",
+    instagram: "https://www.instagram.com/jito.youthnorthdelhi/",
     blurb: "A festive celebration captured with cinematic flair.",
     description: "JITO's annual Christmas party featured live performances, gala dinner, and high‑energy festivities. Enkai Social delivered premium visual content, from magical lighting to festive reels.",
     year: "2025",
@@ -368,7 +379,12 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
       "Real‑time Publishing",
       "Social Media Amplification"
     ],
-    testimonial: null
+    testimonial: {
+      quote:
+        "A truly magical night captured beautifully. The real-time content delivery kept the festive spirit alive online, making it one of our most engaging events to date.",
+      author: "Event Chairperson",
+      designation: "JITO Youth North Delhi",
+    },
   },
 ];
 
