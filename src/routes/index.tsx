@@ -16,6 +16,8 @@ import hero3 from "@/assets/hero-3.jpg";
 import hero4 from "@/assets/hero-4.jpg";
 import hero5 from "@/assets/hero-5.jpg";
 import hero6 from "@/assets/hero-6.jpg";
+import hero7 from "@/assets/hero-7.jpg";
+import hero8 from "@/assets/hero-8.jpg";
 import reel1Thumb from "@/assets/reel-1.jpg";
 import reel2Thumb from "@/assets/reel-2.jpg";
 import reel3Thumb from "@/assets/reel-3.jpg";
@@ -112,7 +114,7 @@ function Home() {
 }
 
 /* ================= HERO ================= */
-const heroImages = [hero1, hero2, hero3, hero4, hero5, hero6];
+const heroImages = [hero1, hero2, hero3, hero4, hero5, hero6, hero7, hero8];
 
 function Hero() {
   const [idx, setIdx] = useState(0);
