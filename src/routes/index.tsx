@@ -132,7 +132,7 @@ function Hero() {
         });
         return next;
       });
-    }, 3000);
+    }, 1500);
     return () => clearInterval(t);
   }, []);
 

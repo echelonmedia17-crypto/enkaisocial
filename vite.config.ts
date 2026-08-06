@@ -5,8 +5,17 @@
 //     error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import viteImagemin from "vite-plugin-imagemin";
 
 export default defineConfig({
+  plugins: [
+    viteImagemin({
+      mozjpeg: { quality: 80 },
+      optipng: { optimizationLevel: 5 },
+      webp: { quality: 80 },
+      avif: { quality: 50 },
+    }),
+  ],
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
