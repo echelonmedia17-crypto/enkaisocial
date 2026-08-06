@@ -669,16 +669,16 @@ export function ProjectLightbox({
               </div>
 
               {project.stats?.length ? (
-                <div className="flex flex-wrap overflow-hidden rounded-[14px] border border-[var(--pf-border)] bg-[var(--pf-panel)] divide-x divide-[var(--pf-border)]">
+                <div className="grid grid-cols-2 gap-px overflow-hidden rounded-[14px] border border-[var(--pf-border)] bg-[var(--pf-border)] sm:grid-cols-4">
                   {project.stats.map((stat) => (
                     <div
                       key={`${stat.label}-${stat.number}`}
-                      className="flex-1 min-w-[110px] px-8 py-8 text-center rounded-[12px] bg-[rgba(212,175,55,0.07)] hover:shadow-[0_0_15px_5px_var(--amber)] hover:border-[var(--amber)] transition-shadow duration-300"
+                      className="px-4 py-6 sm:px-6 sm:py-8 text-center bg-[var(--pf-panel)] hover:bg-[rgba(212,175,55,0.07)] transition-colors duration-300 group"
                     >
-                      <div className="font-heading text-[clamp(28px,3.5vw,38px)] font-black leading-none text-[var(--amber)]">
+                      <div className="font-heading text-[clamp(24px,3.5vw,38px)] font-black leading-none text-[var(--amber)] group-hover:scale-105 transition-transform duration-300">
                          <AnimatedCounter value={stat.number} />
                        </div>
-                      <div className="mt-2 font-sans text-[9.5px] uppercase tracking-[0.14em] text-[var(--pf-fg-mute)]">
+                      <div className="mt-2 font-sans text-[9px] sm:text-[9.5px] uppercase tracking-[0.14em] text-[var(--pf-fg-mute)]">
                         {stat.label}
                       </div>
                     </div>
@@ -798,7 +798,7 @@ export function ProjectLightbox({
                 ) : null}
 
                 {project.impactStats?.length ? (
-                  <div className="grid min-w-0 grid-cols-4 gap-2">
+                  <div className="grid min-w-0 grid-cols-2 gap-2 md:grid-cols-4">
                     {project.impactStats.slice(0, 5).map((stat) => (
                       <ImpactStatCard key={`${stat.label}-${stat.number}`} {...stat} />
                     ))}
