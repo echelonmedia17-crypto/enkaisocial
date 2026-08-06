@@ -54,9 +54,9 @@ export function Footer() {
           </h4>
           <ul className="space-y-4 text-sm">
             <li>
-              <a className="hover:text-gold flex items-center gap-2" href="mailto:info@echelonmedia.in">
+              <a className="hover:text-gold flex items-center gap-2" href="mailto:admin@enkaisocial.in">
                 <Mail size={16} className="text-gold" />
-                info@echelonmedia.in
+                admin@enkaisocial.in
               </a>
             </li>
             <li>

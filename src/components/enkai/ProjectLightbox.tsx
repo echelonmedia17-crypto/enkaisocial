@@ -179,14 +179,17 @@ function ProjectMedia({
           />
         </>
       ) : (
-        <img
-          src={src}
-          alt={alt}
-          loading={eager ? "eager" : "lazy"}
-          className={mediaClasses}
-          style={mediaStyle}
-          onLoad={handleImageLoad}
-        />
+        <picture>
+          <source srcSet={src.replace(/\\.(jpg|jpeg|png)(\\?.*)?$/i, ".webp$2")} type="image/webp" />
+          <img
+            src={src}
+            alt={alt}
+            loading={eager ? "eager" : "lazy"}
+            className={mediaClasses}
+            style={mediaStyle}
+            onLoad={handleImageLoad}
+          />
+        </picture>
       )}
 
       {showPlayBadge && videoSource && (
