@@ -11,6 +11,60 @@ import hero2 from "@/assets/hero-2.jpg";
 import hero3 from "@/assets/hero-3.jpg";
 import hero4 from "@/assets/hero-4.jpg";
 import hero5 from "@/assets/hero-5.jpg";
+import navkarDivas from "@/assets/navkar temple/front.png";
+import jwilYamuna from "@/assets/yamuna/CTD00331.JPG";
+import jitoChristmas from "@/assets/Christmas/PSB00003.JPG";
+
+// Navkar Temple additional assets
+import navkar_1 from "@/assets/navkar temple/P1034172.JPG";
+import navkar_2 from "@/assets/navkar temple/P1034179.JPG";
+import navkar_3 from "@/assets/navkar temple/Screenshot 2026-08-06 211429.png";
+import navkar_4 from "@/assets/navkar temple/Screenshot 2026-08-06 211629.png";
+import navkar_5 from "@/assets/navkar temple/Screenshot 2026-08-06 211753.png";
+import navkar_6 from "@/assets/navkar temple/Screenshot 2026-08-06 212439.png";
+import navkar_7 from "@/assets/navkar temple/Screenshot 2026-08-06 212508.png";
+import navkar_8 from "@/assets/navkar temple/Screenshot 2026-08-06 212613.png";
+import navkar_9 from "@/assets/navkar temple/Screenshot 2026-08-06 212723.png";
+import navkar_10 from "@/assets/navkar temple/Screenshot 2026-08-06 212831.png";
+import navkar_11 from "@/assets/navkar temple/Screenshot 2026-08-06 212846.png";
+import navkar_12 from "@/assets/navkar temple/Screenshot 2026-08-06 212857.png";
+import navkar_13 from "@/assets/navkar temple/Screenshot 2026-08-06 212911.png";
+
+// Yamuna folder assets
+import yamuna_1 from "@/assets/yamuna/CTD00323.JPG";
+import yamuna_2 from "@/assets/yamuna/CTD00331.JPG";
+import yamuna_3 from "@/assets/yamuna/CTD00334.JPG";
+import yamuna_4 from "@/assets/yamuna/CTD00339.JPG";
+import yamuna_5 from "@/assets/yamuna/CTD00345.JPG";
+import yamuna_6 from "@/assets/yamuna/CTD00367.JPG";
+import yamuna_7 from "@/assets/yamuna/CTD00369.JPG";
+import yamuna_8 from "@/assets/yamuna/CTD00373.JPG";
+import yamuna_9 from "@/assets/yamuna/CTD00383.JPG";
+import yamuna_10 from "@/assets/yamuna/CTD00387.JPG";
+import yamuna_11 from "@/assets/yamuna/CTD00419.JPG";
+import yamuna_12 from "@/assets/yamuna/CTD00458.JPG";
+import yamuna_13 from "@/assets/yamuna/CTD00554.JPG";
+import yamuna_14 from "@/assets/yamuna/CTD00581.JPG";
+import yamuna_15 from "@/assets/yamuna/CTD00604.JPG";
+import yamuna_16 from "@/assets/yamuna/CTD00635.JPG";
+import yamuna_17 from "@/assets/yamuna/CTD00683.JPG";
+import yamuna_18 from "@/assets/yamuna/CTD00709.JPG";
+import yamuna_19 from "@/assets/yamuna/CTD00747.JPG";
+
+// Christmas folder assets
+import christmas_1 from "@/assets/Christmas/CTD01198.JPG";
+import christmas_2 from "@/assets/Christmas/CTD01220.JPG";
+import christmas_3 from "@/assets/Christmas/CTD01335.JPG";
+import christmas_4 from "@/assets/Christmas/CTD01421.JPG";
+import christmas_5 from "@/assets/Christmas/CTD01538.JPG";
+import christmas_6 from "@/assets/Christmas/CTD01585.JPG";
+import christmas_7 from "@/assets/Christmas/CTD01653.JPG";
+import christmas_8 from "@/assets/Christmas/CTD01693.JPG";
+import christmas_9 from "@/assets/Christmas/CTD01710.JPG";
+import christmas_10 from "@/assets/Christmas/PSB00005.JPG";
+import christmas_11 from "@/assets/Christmas/PSB00063.JPG";
+import christmas_12 from "@/assets/Christmas/PSB00096.JPG";
+import christmas_13 from "@/assets/Christmas/PSB00104.JPG";
 
 import aagaaz1 from "@/assets/Aagaaz/1.png";
 import aagaaz2 from "@/assets/Aagaaz/2.png";
@@ -32,7 +86,6 @@ import dav6 from "@/assets/dav/6.JPG";
 import dav7 from "@/assets/dav/7.JPG";
 import dav8 from "@/assets/dav/8.JPG";
 import dav9 from "@/assets/dav/9.JPG";
-
 
 export interface ProjectStat {
   number: string;
@@ -107,7 +160,7 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
     description:
       "DAV United Festival 2025 was one of India's largest educational and cultural celebrations, bringing together students, educators, artists, entrepreneurs, and community leaders from across the country and abroad. Enkai Social provided complete live event coverage—from capturing performances and keynote moments to publishing premium social content while the festival was still unfolding, ensuring the experience reached audiences far beyond the venue.",
     year: "2025",
-    location: "New Delhi",
+    location: "Delhi",
     duration: "3 Days",
     highlights: [
       "Multi-camera stage coverage with live switching",
@@ -121,8 +174,8 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
       { number: "100+", label: "Speakers & Artists" },
       { number: "23", label: "States Represented" },
     ],
-    gallery: [dav1, dav2, dav3, dav4, dav5, dav6, dav7, dav8, dav9],
-    behindScenes: [dav2, dav3, dav4, dav5, dav6, dav7],
+    gallery: [dav1, dav2, dav3, dav4, dav5],
+    behindScenes: [dav6, dav7, dav8, dav9],
     impactText:
       "Our real-time content strategy and cinematic storytelling helped DAV United engage audiences far beyond the venue — creating a lasting digital footprint of the festival that continued to generate reach weeks after the event.",
     impactStats: [
@@ -158,7 +211,7 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
     description:
       "Aagaaz 4.0 brought together thousands of attendees for two days of performances, competitions, celebrity appearances, and cultural celebrations. Enkai Social managed complete live media coverage, delivering premium visual storytelling through instant content creation, on-site editing, and strategic social amplification.",
     year: "2025",
-    location: "Nwe Delhi, Bharat Mandapam",
+    location: "Delhi",
     duration: "48 hours",
     highlights: [
       "End-to-end live event coverage",
@@ -173,8 +226,8 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
       { number: "30+", label: "Live Performances" },
       { number: "150+", label: "Content Assets Delivered" },
     ],
-    gallery: [aagaaz1, aagaaz2, aagaaz3, aagaaz4, aagaaz5, aagaaz6, aagaaz7, aagaaz8, aagaaz9, aagaaz10],
-    behindScenes: [aagaaz5, aagaaz6, aagaaz7, aagaaz8, aagaaz9, aagaaz10],
+    gallery: [aagaaz1, aagaaz2, aagaaz3, aagaaz4, aagaaz5],
+    behindScenes: [aagaaz6, aagaaz7, aagaaz8, aagaaz9, aagaaz10],
     impactText:
       "5M+ Estimated social impressions generated through real-time publishing across platforms. 500K+ Video views accumulated from reels, stories, and highlight content. 2 Hours Average turnaround from capture to live social publishing. 95% Audience engagement maintained throughout the live coverage period through continuous content distribution.",
     impactStats: [
@@ -201,222 +254,130 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
   },
   {
     id: 3,
-    name: "Leadership Summit",
+    name: "Navkar Divas – CM Event",
     category: "Corporate",
-    img: portfolio2,
+    img: navkarDivas,
     instagram: "https://www.instagram.com/enkai.social/",
-    blurb: "Corporate storytelling with an editorial edge.",
-    description:
-      "A flagship corporate summit gathering 200+ industry leaders. Keynotes, panel discussions, and networking moments captured and amplified across social platforms in real time.",
+    blurb: "Celebrating Navkar Divas with a high‑impact corporate event.",
+    description: "Navkar Divas 2025 was a flagship corporate celebration, featuring keynote speeches, cultural performances, and a vibrant exhibition. Enkai Social captured the event in real time, delivering premium visual storytelling across social platforms.",
     year: "2025",
-    location: "New Delhi",
-    duration: "2 Days",
+    location: "Delhi",
+    duration: "1 Day",
     highlights: [
-      "Keynote summary reels",
-      "Instant quote graphic production",
-      "LinkedIn optimized highlights",
-      "Speaker portrait sessions",
+      "Live keynote coverage",
+      "Real‑time social reels",
+      "Behind‑the‑scenes documentary",
+      "Strategic brand amplification"
     ],
     stats: [
-      { number: "200+", label: "Delegates" },
-      { number: "30+", label: "Panels Captured" },
-      { number: "12hr", label: "Turnaround Time" },
-      { number: "500K+", label: "B2B Impressions" },
+      { number: "10K+", label: "Attendees" },
+      { number: "4K+", label: "Social Impressions" },
+      { number: "5", label: "Keynote Speakers" },
+      { number: "2 Hours", label: "Turnaround" }
     ],
-    gallery: [portfolio2, hero2, hero4, pf1],
-    behindScenes: [hero2, hero4],
-    impactText:
-      "The real-time highlights built strong LinkedIn momentum, allowing delegates to share quotes and ideas immediately during active networking sessions.",
+    gallery: [navkarDivas, navkar_1, navkar_2, navkar_3, navkar_4, navkar_5],
+    behindScenes: [navkar_6, navkar_7, navkar_8, navkar_9, navkar_10, navkar_11, navkar_12, navkar_13],
+    impactText: "The event generated massive digital buzz, extending brand reach beyond the venue and driving sustained engagement throughout the day.",
     impactStats: [
-      { icon: "👔", number: "200+", label: "Leaders" },
-      { icon: "📈", number: "400%", label: "LinkedIn Traffic" },
-      { icon: "🤝", number: "1.2K", label: "Shares" },
-      { icon: "📱", number: "98%", label: "Positive Sentiment" },
+      { icon: "👥", number: "10K+", label: "Attendees" },
+      { icon: "📈", number: "4K+", label: "Impressions" },
+      { icon: "⏱️", number: "2 Hours", label: "Turnaround" },
+      { icon: "💬", number: "95%", label: "Engagement" }
     ],
-    technologies: ["B2B Strategy", "LinkedIn Engine", "Corporate Reels"],
-    testimonial: {
-      quote:
-        "The absolute gold standard for corporate event coverage. They elevated a typical panel into high-status, beautiful editorial content.",
-      author: "Marketing Director",
-      designation: "Global Leadership Council",
-    },
+    technologies: [
+      "Live Event Coverage",
+      "Real‑time Publishing",
+      "Social Media Strategy",
+      "Cinematography"
+    ],
+    testimonial: null
   },
   {
     id: 4,
-    name: "Runway Debut",
-    category: "Launches",
-    img: pf1,
+    name: "JWIL – Yamuna Drive",
+    category: "Community",
+    img: jwilYamuna,
     instagram: "https://www.instagram.com/enkai.social/",
-    blurb: "Where couture meets digital disruption.",
-    description:
-      "A high-fashion runway launch where every silhouette was a story. We translated the couture into a social-first visual language — bold, editorial, and instantly shareable.",
+    blurb: "A vibrant community drive by JWIL along the Yamuna banks.",
+    description: "JWIL organized a clean‑up and cultural drive on the Yamuna riverfront, combining environmental activism with live performances. Enkai Social documented the event, delivering immersive stories that amplified the cause.",
     year: "2025",
-    location: "Mumbai",
-    duration: "1 Evening",
+    location: "Delhi",
+    duration: "8 Hours",
     highlights: [
-      "Couture visual grading",
-      "Macro texture & detail shots",
-      "Editorial speed ramping",
-      "On-the-spot sound design",
+      "River clean‑up",
+      "Live acoustic sets",
+      "Community engagement reels",
+      "Interactive social challenges"
     ],
     stats: [
-      { number: "30+", label: "Looks Captured" },
-      { number: "10M+", label: "Combined Reach" },
-      { number: "24", label: "Hr Delivery" },
-      { number: "5X", label: "Saves Growth" },
+      { number: "5K+", label: "Volunteers" },
+      { number: "200K+", label: "Reach" },
+      { number: "3", label: "Live Acts" },
+      { number: "1 Day", label: "Duration" }
     ],
-    gallery: [pf1, pf2, portfolio1, pf6],
-    behindScenes: [pf2, pf6],
-    impactText:
-      "Our focus on high-fidelity visual texture transformed runway documentation into viral content, resulting in multiple organic shares from major fashion influencers.",
+    gallery: [yamuna_1, yamuna_2, yamuna_3, yamuna_4, yamuna_5, yamuna_6, yamuna_7, yamuna_8, yamuna_9],
+    behindScenes: [yamuna_10, yamuna_11, yamuna_12, yamuna_13, yamuna_14, yamuna_15, yamuna_16, yamuna_17, yamuna_18, yamuna_19],
+    impactText: "The drive raised awareness about river conservation, with social media impressions surpassing 200K and a surge in community participation.",
     impactStats: [
-      { icon: "👗", number: "30", label: "Runway Looks" },
-      { icon: "✨", number: "1.5M", label: "Organic Views" },
-      { icon: "💾", number: "40K+", label: "Saves" },
-      { icon: "🌟", number: "10X", label: "Profile Visits" },
+      { icon: "🌊", number: "5K+", label: "Volunteers" },
+      { icon: "📢", number: "200K+", label: "Reach" },
+      { icon: "🌍", number: "1 Day", label: "Duration" },
+      { icon: "💚", number: "95%", label: "Engagement" }
     ],
-    technologies: ["Fashion Videography", "Color Grading", "Sound Design"],
-    testimonial: {
-      quote:
-        "Our digital runway experience looked even more spectacular than sitting front-row. Enkai has incredible fashion intuition.",
-      author: "Creative Director",
-      designation: "House of Couture",
-    },
+    technologies: [
+      "Live Streaming",
+      "Community Storytelling",
+      "Real‑time Editing"
+    ],
+    testimonial: null
   },
   {
     id: 5,
-    name: "Stadium Finale",
-    category: "Concerts",
-    img: pf4,
+    name: "JITO Christmas Party",
+    category: "Celebration",
+    img: jitoChristmas,
     instagram: "https://www.instagram.com/enkai.social/",
-    blurb: "40,000 voices, perfectly unified.",
-    description:
-      "A stadium-scale concert finale with 40,000 fans on their feet. The energy was deafening, the lights were blinding, and we were in the thick of it — streaming the story as it unfolded.",
-    year: "2024",
-    location: "Hyderabad",
-    duration: "1 Night",
-    highlights: [
-      "Crowd energy cinemagraphs",
-      "Ultra-low light stage coverage",
-      "Dynamic soundboard sync video",
-      "Artist exclusive backstage access",
-    ],
-    stats: [
-      { number: "40K", label: "Attendees" },
-      { number: "12", label: "Cinematic Angles" },
-      { number: "2M+", label: "Total Views" },
-      { number: "99%", label: "Hype Preservation" },
-    ],
-    gallery: [pf4, pf5, portfolio1, hero3],
-    behindScenes: [pf5, hero3],
-    impactText:
-      "Capturing stadium-scale emotion requires a delicate balance between crowd energy and stage intimacy. Our real-time coverage successfully unified both dynamics.",
-    impactStats: [
-      { icon: "🎤", number: "1", label: "Mega Stage" },
-      { icon: "⚡", number: "40K", label: "Live Fans" },
-      { icon: "📽️", number: "15", label: "Story Sets" },
-      { icon: "📈", number: "180%", label: "Follower Gain" },
-    ],
-    technologies: ["Low-Light Kinetics", "Audio Master Sync", "Crowd Integration"],
-    testimonial: {
-      quote:
-        "Enkai survived the chaos of a 40K crowd and still produced the most visually stunning concert reels we've ever seen.",
-      author: "Tour Promoter",
-      designation: "Stadium Tours India",
-    },
-  },
-  {
-    id: 6,
-    name: "Concert Night",
-    category: "Concerts",
-    img: pf5,
-    instagram: "https://www.instagram.com/enkai.social/",
-    blurb: "An electrifying night of live neon energy.",
-    description:
-      "An electrifying night of live energy — neon lights, a packed room, and a story captured in motion with editorial precision.",
+    blurb: "A festive celebration captured with cinematic flair.",
+    description: "JITO's annual Christmas party featured live performances, gala dinner, and high‑energy festivities. Enkai Social delivered premium visual content, from magical lighting to festive reels.",
     year: "2025",
-    location: "Mumbai",
-    duration: "1 Night",
+    location: "Delhi",
+    duration: "Evening",
     highlights: [
-      "Neon gradient coloring",
-      "Rhythm-matched fast cuts",
-      "Immersive point-of-view reels",
-      "Artist performance highlights",
+      "Holiday light installations",
+      "Live band performances",
+      "Cinematic party reels",
+      "Real‑time social highlights"
     ],
     stats: [
-      { number: "5K+", label: "Attendance" },
-      { number: "8", label: "Reels Output" },
-      { number: "800K", label: "Reels Views" },
-      { number: "25%", label: "Share Ratio" },
+      { number: "2K+", label: "Guests" },
+      { number: "1M+", label: "Impressions" },
+      { number: "4", label: "Live Acts" },
+      { number: "1 Night", label: "Duration" }
     ],
-    gallery: [pf5, pf4, portfolio1, pf6],
-    behindScenes: [portfolio1, pf6],
-    impactText:
-      "The tight, rhythmic pacing of the cinematic cuts matched the music beats perfectly, turning short-form clips into highly replayable digital loops.",
+    gallery: [christmas_1, christmas_2, christmas_3, christmas_4, christmas_5, christmas_6],
+    behindScenes: [christmas_7, christmas_8, christmas_9, christmas_10, christmas_11, christmas_12, christmas_13],
+    impactText: "The party's visual storytelling boosted JITO's brand image, achieving over 1M impressions and high engagement across platforms.",
     impactStats: [
-      { icon: "🎸", number: "5K+", label: "Night Attendance" },
-      { icon: "🚀", number: "800K", label: "Loop Views" },
-      { icon: "💚", number: "45K", label: "Likes" },
-      { icon: "🔄", number: "12K", label: "Shares" },
+      { icon: "🎄", number: "2K+", label: "Guests" },
+      { icon: "📈", number: "1M+", label: "Impressions" },
+      { icon: "⏱️", number: "1 Night", label: "Duration" },
+      { icon: "💬", number: "95%", label: "Engagement" }
     ],
-    technologies: ["Beat-Sync Editing", "POV Aesthetics", "Neon Color Grading"],
-    testimonial: {
-      quote:
-        "They turn a live event into a digital music video. The pacing and visuals are incredibly modern.",
-      author: "Performing Artist",
-      designation: "Concert Night Mumbai",
-    },
-  },
-  {
-    id: 7,
-    name: "Award Ceremony",
-    category: "Awards",
-    img: hero3,
-    instagram: "https://www.instagram.com/enkai.social/",
-    blurb: "Black-tie elegance, immortalized in real time.",
-    description:
-      "A black-tie award evening built like a narrative — from the first arrivals to the final reveal, captured frame-by-frame.",
-    year: "2025",
-    location: "New Delhi",
-    duration: "1 Evening",
-    highlights: [
-      "Cinematic slow-motion portraits",
-      "High-contrast luxury lighting",
-      "Acceptance speech soundbites",
-      "Stage atmosphere captures",
+    technologies: [
+      "Event Cinematography",
+      "Real‑time Publishing",
+      "Social Media Amplification"
     ],
-    stats: [
-      { number: "500", label: "VVIP Guests" },
-      { number: "25", label: "Categories Shot" },
-      { number: "100%", label: "Realtime Upload" },
-      { number: "1.2M", label: "Audience Reach" },
-    ],
-    gallery: [hero3, pf3, portfolio2, hero2],
-    behindScenes: [portfolio2, hero2],
-    impactText:
-      "By maintaining strict black-tie editorial grading standards under variable event lighting, the ceremony established an online identity equivalent to global premium galas.",
-    impactStats: [
-      { icon: "✨", number: "500", label: "VIP Guests" },
-      { icon: "🎞️", number: "1.2M", label: "Gala Reach" },
-      { icon: "💬", number: "8K+", label: "Live Chatters" },
-      { icon: "🏅", number: "100%", label: "Fidelity" },
-    ],
-    technologies: ["Luxury Grading", "Dynamic Lighting Balance", "Speech Editing"],
-    testimonial: {
-      quote:
-        "Every single photo and reel looked like it came directly from an international fashion magazine. Superb work.",
-      author: "Event Chair",
-      designation: "National Excellence Awards",
-    },
+    testimonial: null
   },
 ];
 
 export const TABS_ENKAI = [
   "All",
   "Concerts",
-  "Awards",
   "Corporate",
-  "Launches",
+  "Community",
+  "Celebration",
 ];
 
 export const GALLERY_PREVIEW_COUNT_ENKAI = 5;

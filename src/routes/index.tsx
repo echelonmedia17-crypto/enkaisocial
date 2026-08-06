@@ -951,9 +951,9 @@ function ComparisonRow({
   const isEnkai = variant === "enkai";
   return (
     <div
-      className={`grid gap-6 px-6 md:px-10 py-10 md:grid-cols-[220px_1fr] items-center ${isEnkai 
-          ? "bg-gradient-to-r from-[#D4AF37] via-[#F9E596] to-[#D4AF37] shadow-[inset_0_0_20px_rgba(255,255,255,0.4)]" 
-          : "bg-burgundy py-8"
+      className={`grid gap-6 px-6 md:px-10 py-10 md:grid-cols-[220px_1fr] items-center ${isEnkai
+        ? "bg-gradient-to-r from-[#D4AF37] via-[#F9E596] to-[#D4AF37] shadow-[inset_0_0_20px_rgba(255,255,255,0.4)]"
+        : "bg-burgundy py-8"
         }`}
     >
       <div className={`font-heading ${isEnkai ? "text-2xl md:text-3xl" : "text-xl"}`}>

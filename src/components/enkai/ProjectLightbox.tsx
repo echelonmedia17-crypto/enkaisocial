@@ -693,11 +693,11 @@ export function ProjectLightbox({
 
               <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
                 {displayedGallery.map((src, index) => {
-                  const isFeatured = !showFullGallery && index === 0;
+                  const isFeatured = index === 0;
 
                   return (
                     <ProjectMedia
-                      key={`${src}-${index}`}
+                      key={`${src}-gallery-${index}`}
                       src={src}
                       alt={`${project.name} gallery ${index + 1}`}
                       onClick={() => openGalleryLightbox(src)}

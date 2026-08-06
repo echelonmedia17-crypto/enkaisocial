@@ -53,11 +53,10 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled || menuOpen
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled || menuOpen
           ? "bg-navy/70 backdrop-blur-xl py-3 border-b border-gold/10"
           : "bg-transparent py-5"
-      }`}
+        }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
         <Link to="/" className="flex items-center gap-3 group" onClick={closeMenu}>

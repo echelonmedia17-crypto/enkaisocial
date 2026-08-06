@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 
 import {
@@ -194,7 +194,7 @@ function PortfolioCard({
     </motion.div>
   );
 }
-
+const MemoizedPortfolioCard = memo(PortfolioCard);
 
 /* ─────────────────────────────────────────────
    MAIN PORTFOLIO SCREEN
@@ -271,7 +271,7 @@ function Portfolio() {
           <div className="mt-10 space-y-14">
             {ALL_PROJECTS_ENKAI.map((item, idx) => (
               <div key={item.name} className="mx-auto w-[90%] md:w-[95%]">
-                <PortfolioCard item={item} index={idx} onOpen={() => openLightbox(item)} />
+                <MemoizedPortfolioCard item={item} index={idx} onOpen={() => openLightbox(item)} />
               </div>
             ))}
           </div>
