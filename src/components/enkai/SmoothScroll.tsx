@@ -1,22 +1,25 @@
 import { useEffect } from "react";
+import type Lenis from "lenis";
 
 export function SmoothScroll() {
   useEffect(() => {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     window.scrollTo(0, 0);
 
-    let lenis: any;
+    let lenis: Lenis | undefined;
     let isActive = true;
-    let gsapInstance: any;
-    let tickFn: any;
+    let gsapInstance: ReturnType<typeof import("gsap")> extends Promise<infer M>
+      ? M["default"]
+      : never;
+    let tickFn: ((time: number) => void) | undefined;
 
     (async () => {
-      const [{ default: Lenis }, gsapMod, stMod] = await Promise.all([
+      const [{ default: LenisClass }, gsapMod, stMod] = await Promise.all([
         import("lenis"),
         import("gsap"),
         import("gsap/ScrollTrigger"),
       ]);
-      
+
       if (!isActive) return;
 
       const gsap = gsapMod.default;
@@ -24,17 +27,17 @@ export function SmoothScroll() {
       gsap.registerPlugin(ScrollTrigger);
       gsapInstance = gsap;
 
-      lenis = new Lenis({
+      lenis = new LenisClass({
         duration: 1.15,
         smoothWheel: true,
         wheelMultiplier: 1,
       });
-      (window as any).__lenis = lenis;
-      (window as any).__lenisStart = () => lenis?.start?.();
-      (window as any).__lenisStop = () => lenis?.stop?.();
-      (window as any).__lenisDestroy = () => lenis?.destroy?.();
+      window.__lenis = lenis;
+      window.__lenisStart = () => lenis?.start?.();
+      window.__lenisStop = () => lenis?.stop?.();
+      window.__lenisDestroy = () => lenis?.destroy?.();
 
-      tickFn = (time: number) => lenis.raf(time * 1000);
+      tickFn = (time: number) => lenis!.raf(time * 1000);
       gsap.ticker.add(tickFn);
       gsap.ticker.lagSmoothing(0);
       lenis.on("scroll", ScrollTrigger.update);
@@ -44,7 +47,7 @@ export function SmoothScroll() {
       isActive = false;
       if (lenis) {
         lenis.destroy();
-        delete (window as any).__lenis;
+        window.__lenis = undefined;
       }
       if (gsapInstance && tickFn) {
         gsapInstance.ticker.remove(tickFn);

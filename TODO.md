@@ -3,4 +3,3 @@
 - [ ] Ensure both desktop and mobile menu (hamburger) version have the same dropdown.
 - [ ] Keep existing styling (gold border/button) and match dropdown UI.
 - [ ] Run typecheck/build to ensure no TS errors.
-

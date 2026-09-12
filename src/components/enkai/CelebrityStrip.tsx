@@ -126,9 +126,7 @@ function FilmCard({
           loading="lazy"
           className="w-full h-full object-cover transition-all duration-500"
           style={{
-            filter: hovered
-              ? "none"
-              : "grayscale(50%) contrast(1.1) brightness(0.75)",
+            filter: hovered ? "none" : "grayscale(50%) contrast(1.1) brightness(0.75)",
           }}
         />
 
@@ -195,7 +193,7 @@ export function CelebrityStrip() {
     const el = document.getElementById(targetId);
     if (!el) return;
 
-    const lenis = (window as any).__lenis;
+    const lenis = window.__lenis;
     if (lenis && typeof lenis.scrollTo === "function") {
       lenis.scrollTo(el, { offset: -120, duration: 1.5 });
     } else {
@@ -258,8 +256,7 @@ export function CelebrityStrip() {
       <div
         className="absolute inset-x-0 top-0 h-32 pointer-events-none"
         style={{
-          background:
-            "linear-gradient(180deg, rgba(1,34,60,0.95) 0%, transparent 100%)",
+          background: "linear-gradient(180deg, rgba(1,34,60,0.95) 0%, transparent 100%)",
         }}
       />
 
@@ -267,8 +264,7 @@ export function CelebrityStrip() {
       <div
         className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
         style={{
-          background:
-            "linear-gradient(0deg, rgba(1,34,60,0.95) 0%, transparent 100%)",
+          background: "linear-gradient(0deg, rgba(1,34,60,0.95) 0%, transparent 100%)",
         }}
       />
 
@@ -309,10 +305,8 @@ export function CelebrityStrip() {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
           style={{
-            maskImage:
-              "linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent)",
-            WebkitMaskImage:
-              "linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent)",
+            maskImage: "linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent)",
+            WebkitMaskImage: "linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent)",
             cursor: isDragging ? "grabbing" : "grab",
           }}
         >

@@ -17,7 +17,7 @@ export function MagneticButton({
   href,
   className = "",
 }: Props) {
-  const ref = useRef<HTMLElement | null>(null);
+  const ref = useRef<HTMLSpanElement | null>(null);
 
   const base =
     "relative inline-flex items-center gap-3 px-8 py-4 font-ui text-sm tracking-[0.14em] uppercase transition-[transform,box-shadow,background,border-color] duration-500 ease-out will-change-transform";
@@ -28,7 +28,7 @@ export function MagneticButton({
 
   const inner = (
     <span
-      ref={ref as any}
+      ref={ref}
       className={`${base} ${styles} ${className}`}
       style={{ willChange: "transform" }}
     >
@@ -39,21 +39,13 @@ export function MagneticButton({
 
   if (as === "a") {
     return (
-      <a
-        href={href}
-        onClick={onClick}
-        className="inline-block"
-      >
+      <a href={href} onClick={onClick} className="inline-block">
         {inner}
       </a>
     );
   }
   return (
-    <button
-      onClick={onClick}
-      className="inline-block"
-      type="button"
-    >
+    <button onClick={onClick} className="inline-block" type="button">
       {inner}
     </button>
   );

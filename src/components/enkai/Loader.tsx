@@ -26,8 +26,8 @@ export function Loader() {
 
   // Precomputed particle positions (deterministic — no hydration mismatch)
   const particles = Array.from({ length: 18 }, (_, i) => ({
-    left: ((i * 53) % 100),
-    top: ((i * 79) % 100),
+    left: (i * 53) % 100,
+    top: (i * 79) % 100,
     delay: (i % 6) * 0.4,
     duration: 6 + (i % 5),
     size: 2 + (i % 3),

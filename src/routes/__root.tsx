@@ -10,7 +10,6 @@ import { useEffect, type ReactNode } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import type { QueryClient } from "@tanstack/react-query";
 
-
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SmoothScroll } from "../components/enkai/SmoothScroll";
@@ -49,15 +48,23 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-navy px-4">
       <div className="max-w-md text-center">
         <h1 className="font-heading text-3xl text-parchment">Something interrupted the show</h1>
-        <p className="mt-3 text-sm text-parchment/60">Try again — we'll pick up where we left off.</p>
+        <p className="mt-3 text-sm text-parchment/60">
+          Try again — we'll pick up where we left off.
+        </p>
         <div className="mt-6 flex justify-center gap-3">
           <button
-            onClick={() => { router.invalidate(); reset(); }}
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
             className="px-6 py-3 font-ui text-xs tracking-[0.2em] uppercase text-white bg-burgundy border border-gold/40 hover:border-gold"
           >
             Try again
           </button>
-          <a href="/" className="px-6 py-3 font-ui text-xs tracking-[0.2em] uppercase text-gold border border-gold/40 hover:bg-gold/10">
+          <a
+            href="/"
+            className="px-6 py-3 font-ui text-xs tracking-[0.2em] uppercase text-gold border border-gold/40 hover:bg-gold/10"
+          >
             Go home
           </a>
         </div>

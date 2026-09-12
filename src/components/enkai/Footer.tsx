@@ -37,14 +37,28 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="font-ui text-[11px] tracking-[0.3em] uppercase text-gold mb-4">
-            Explore
-          </h4>
+          <h4 className="font-ui text-[11px] tracking-[0.3em] uppercase text-gold mb-4">Explore</h4>
           <ul className="space-y-3 text-sm">
-            <li><a className="hover:text-gold" href="#home">Home</a></li>
-            <li><a className="hover:text-gold" href="#about">About</a></li>
-            <li><a className="hover:text-gold" href="/portfolio">Portfolio</a></li>
-            <li><a className="hover:text-gold" href="#contact">Contact</a></li>
+            <li>
+              <a className="hover:text-gold" href="#home">
+                Home
+              </a>
+            </li>
+            <li>
+              <a className="hover:text-gold" href="#about">
+                About
+              </a>
+            </li>
+            <li>
+              <a className="hover:text-gold" href="/portfolio">
+                Portfolio
+              </a>
+            </li>
+            <li>
+              <a className="hover:text-gold" href="#contact">
+                Contact
+              </a>
+            </li>
           </ul>
         </div>
 
@@ -54,7 +68,10 @@ export function Footer() {
           </h4>
           <ul className="space-y-4 text-sm">
             <li>
-              <a className="hover:text-gold flex items-center gap-2" href="mailto:admin@enkaisocial.in">
+              <a
+                className="hover:text-gold flex items-center gap-2"
+                href="mailto:admin@enkaisocial.in"
+              >
                 <Mail size={16} className="text-gold" />
                 admin@enkaisocial.in
               </a>
@@ -66,19 +83,32 @@ export function Footer() {
               </a>
             </li>
             <li>
-              <a className="hover:text-gold flex items-center gap-2" href="https://www.instagram.com/enkaisocial.in/?hl=en">
+              <a
+                className="hover:text-gold flex items-center gap-2"
+                href="https://www.instagram.com/enkaisocial.in/?hl=en"
+              >
                 <Instagram size={16} className="text-gold" />
                 @enkaisocial.in
               </a>
             </li>
             <li>
-              <a className="hover:text-gold flex items-center gap-2" href="https://www.facebook.com/share/1J6MbSmfRe/" target="_blank" rel="noreferrer">
+              <a
+                className="hover:text-gold flex items-center gap-2"
+                href="https://www.facebook.com/share/1J6MbSmfRe/"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <Facebook size={16} className="text-gold" />
                 Enkai Social
               </a>
             </li>
             <li>
-              <a className="hover:text-gold flex items-center gap-2" href="https://www.linkedin.com/showcase/enkai-social/about/?viewAsMember=true" target="_blank" rel="noreferrer">
+              <a
+                className="hover:text-gold flex items-center gap-2"
+                href="https://www.linkedin.com/showcase/enkai-social/about/?viewAsMember=true"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <Linkedin size={16} className="text-gold" />
                 Enkai Social
               </a>

@@ -2,13 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { motion, useInView } from "framer-motion";
 import { MagneticButton } from "@/components/enkai/MagneticButton";
-import { ALL_PROJECTS_ENKAI, type Project } from "./projectdata";
+import { ALL_PROJECTS_ENKAI, type Project } from "./-projectdata";
 
 // Lazy-load the heavy lightbox — only pulled when the user opens a project
 const ProjectLightbox = lazy(() =>
-  import("@/components/enkai/ProjectLightbox").then((m) => ({ default: m.ProjectLightbox }))
+  import("@/components/enkai/ProjectLightbox").then((m) => ({ default: m.ProjectLightbox })),
 );
-
 
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
@@ -32,7 +31,6 @@ import dav6 from "@/assets/dav/6.JPG";
 import dav7 from "@/assets/dav/7.JPG";
 import dav8 from "@/assets/dav/8.JPG";
 
-
 export const Route = createFileRoute("/")({
   component: Home,
 });
@@ -51,7 +49,7 @@ function Home() {
 
   const closeLightbox = () => {
     setSelectedProject(null);
-    (window as any).__lenisStart?.();
+    window.__lenisStart?.();
     if (typeof window !== "undefined" && window.history.state?.projectModalOpen) {
       window.history.back();
     }
@@ -158,8 +156,9 @@ function Hero() {
                 loading={i === 0 ? "eager" : "lazy"}
                 fetchPriority={i === 0 ? "high" : "auto"}
                 decoding={i === 0 ? "sync" : "async"}
-                className={`h-full w-full object-cover ${i === idx ? "scale-110" : "scale-100"
-                  } transition-transform duration-[6000ms] ease-out`}
+                className={`h-full w-full object-cover ${
+                  i === idx ? "scale-110" : "scale-100"
+                } transition-transform duration-[6000ms] ease-out`}
               />
             </div>
           );
@@ -173,7 +172,6 @@ function Hero() {
           }}
         />
         <div className="absolute inset-0 radial-gold-glow opacity-70 z-0" />
-
       </div>
 
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-6 text-center">
@@ -198,7 +196,6 @@ function Hero() {
         >
           From the venue to the feed, instantly
         </motion.h1>
-
 
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -230,7 +227,6 @@ function Hero() {
   );
 }
 
-
 /* ================= INSIGHTS ================= */
 const stats = [
   { value: 25, suffix: "K+", label: "Peak Audience" },
@@ -254,10 +250,7 @@ function Insights() {
           className="mb-10 md:mb-14 h-px w-[60px] md:w-[80px] bg-gold/20"
         />
 
-        <SectionHeading
-          kicker=""
-          title={<>The Legacy.</>}
-        />
+        <SectionHeading kicker="" title={<>The Legacy.</>} />
         <div className="mt-10 md:mt-12 w-full grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10">
           {stats.map((s, i) => (
             <Counter key={i} {...s} delay={i * 0.15} />
@@ -319,8 +312,6 @@ function Counter({
     </div>
   );
 }
-
-
 
 /* ================= MISSION & VISION ================= */
 function MissionVision() {
@@ -404,9 +395,7 @@ function BookCard({
     scaleX: 0.6,
     opacity: 0.6,
   };
-  const animate = inView
-    ? { rotateY: isLeft ? -10 : 10, x: 0, scaleX: 1, opacity: 1 }
-    : {};
+  const animate = inView ? { rotateY: isLeft ? -10 : 10, x: 0, scaleX: 1, opacity: 1 } : {};
 
   return (
     <motion.div
@@ -468,32 +457,27 @@ const pillars = [
   {
     n: "01",
     title: "Live Execution",
-    body:
-      "We don't wait until the lights go out. Our team captures, edits, and publishes your event as it unfolds, ensuring your audience experiences every highlight while the excitement is still at its peak.",
+    body: "We don't wait until the lights go out. Our team captures, edits, and publishes your event as it unfolds, ensuring your audience experiences every highlight while the excitement is still at its peak.",
   },
   {
     n: "02",
     title: "Speed with Trends",
-    body:
-      "Speed means nothing without relevance. We identify trending moments, adapt content instantly, and publish at the right time—helping your event stay visible, shareable, and ahead of the conversation.",
+    body: "Speed means nothing without relevance. We identify trending moments, adapt content instantly, and publish at the right time—helping your event stay visible, shareable, and ahead of the conversation.",
   },
   {
     n: "03",
     title: "Production Team",
-    body:
-      "Every great event deserves an exceptional production team. Our photographers, cinematographers, editors, and content specialists work seamlessly behind the scenes to capture every defining moment with precision, creativity, and attention to detail.",
+    body: "Every great event deserves an exceptional production team. Our photographers, cinematographers, editors, and content specialists work seamlessly behind the scenes to capture every defining moment with precision, creativity, and attention to detail.",
   },
   {
     n: "04",
     title: "Emotion-Driven Storytelling",
-    body:
-      "People remember how an event made them feel. We capture genuine reactions, meaningful interactions, and unforgettable moments that create emotional connections—not just beautiful visuals.",
+    body: "People remember how an event made them feel. We capture genuine reactions, meaningful interactions, and unforgettable moments that create emotional connections—not just beautiful visuals.",
   },
   {
     n: "05",
     title: "Strategic Content Optimization",
-    body:
-      "Every piece of content is created with purpose. From framing and editing to timing and platform strategy, every post is optimized to maximize visibility, engagement, and long-term brand impact.",
+    body: "Every piece of content is created with purpose. From framing and editing to timing and platform strategy, every post is optimized to maximize visibility, engagement, and long-term brand impact.",
   },
 ];
 
@@ -523,18 +507,13 @@ function WhyEnkai() {
     }
     const timers: ReturnType<typeof setTimeout>[] = [];
     pillars.forEach((_, i) => {
-      timers.push(
-        setTimeout(() => setActiveIndex(i), (LINE_DURATION + i * NODE_STEP) * 1000),
-      );
+      timers.push(setTimeout(() => setActiveIndex(i), (LINE_DURATION + i * NODE_STEP) * 1000));
     });
     return () => timers.forEach(clearTimeout);
   }, [inView]);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative py-12 md:py-20 bg-navy-deep overflow-hidden"
-    >
+    <section ref={sectionRef} className="relative py-12 md:py-20 bg-navy-deep overflow-hidden">
       {/* Seamless transition from previous section (navy to navy-deep) */}
       <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-navy to-transparent pointer-events-none z-10" />
 
@@ -572,10 +551,7 @@ function WhyEnkai() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6">
-        <SectionHeading
-          kicker="The Enkai Difference"
-          title={<>Why Enkai?</>}
-        />
+        <SectionHeading kicker="The Enkai Difference" title={<>Why Enkai?</>} />
 
         {/* Desktop / tablet: horizontal timeline */}
         <div className="mt-20 hidden md:block">
@@ -655,7 +631,6 @@ function WhyEnkai() {
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );
@@ -688,11 +663,7 @@ function TimelineNode({
       initial={{ opacity: 0 }}
       animate={inView ? { opacity: 1 } : {}}
       transition={{ duration: 0.01, delay: base }}
-      className={
-        isHorizontal
-          ? "relative flex flex-col items-start"
-          : "relative pl-14"
-      }
+      className={isHorizontal ? "relative flex flex-col items-start" : "relative pl-14"}
     >
       {/* Node dot */}
       <motion.div
@@ -718,9 +689,7 @@ function TimelineNode({
               : { scale: 1, opacity: revealed ? 0.3 : 0 }
           }
           transition={
-            isActive
-              ? { duration: 2.4, repeat: Infinity, ease: "easeOut" }
-              : { duration: 0.6 }
+            isActive ? { duration: 2.4, repeat: Infinity, ease: "easeOut" } : { duration: 0.6 }
           }
           className="absolute inset-0 rounded-full border border-gold"
           style={{ boxShadow: "0 0 20px rgba(212,175,55,0.5)" }}
@@ -729,14 +698,11 @@ function TimelineNode({
         <motion.div
           animate={isActive ? { y: [-2, 2, -2] } : { y: 0 }}
           transition={
-            isActive
-              ? { duration: 4, repeat: Infinity, ease: "easeInOut" }
-              : { duration: 0.4 }
+            isActive ? { duration: 4, repeat: Infinity, ease: "easeInOut" } : { duration: 0.4 }
           }
-          className={`relative grid place-items-center h-11 w-11 rounded-full border transition-colors duration-500 ${revealed
-            ? "border-gold bg-navy-deep"
-            : "border-gold/20 bg-navy-deep"
-            }`}
+          className={`relative grid place-items-center h-11 w-11 rounded-full border transition-colors duration-500 ${
+            revealed ? "border-gold bg-navy-deep" : "border-gold/20 bg-navy-deep"
+          }`}
           style={{
             boxShadow: revealed
               ? isActive
@@ -746,8 +712,9 @@ function TimelineNode({
           }}
         >
           <span
-            className={`font-ui text-[11px] tracking-[0.15em] transition-colors duration-500 ${revealed ? "text-gold" : "text-parchment/30"
-              }`}
+            className={`font-ui text-[11px] tracking-[0.15em] transition-colors duration-500 ${
+              revealed ? "text-gold" : "text-parchment/30"
+            }`}
           >
             {n}
           </span>
@@ -757,8 +724,7 @@ function TimelineNode({
           aria-hidden
           className="absolute -inset-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{
-            background:
-              "radial-gradient(circle, rgba(212,175,55,0.35), transparent 70%)",
+            background: "radial-gradient(circle, rgba(212,175,55,0.35), transparent 70%)",
           }}
         />
       </motion.div>
@@ -794,21 +760,16 @@ function TimelineNode({
   );
 }
 
-
 /* ================= PORTFOLIO GLIMPSE ================= */
 function PortfolioGlimpse({ onOpenProject }: { onOpenProject: (p: Project) => void }) {
   return (
     <section className="relative pt-12 pb-20 md:pt-16 md:pb-28 bg-navy-deep">
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <SectionHeading
-            kicker=""
-            title={<>A glimpse of the floor.</>}
-            align="left"
-          />
+          <SectionHeading kicker="" title={<>A glimpse of the floor.</>} align="left" />
           <p className="justify-pretty text-parchment/60 max-w-md text-[15px]">
-            Reels shot, cut and published while the moment was still happening. Follow
-            along for a running feed of the events we're inside right now.
+            Reels shot, cut and published while the moment was still happening. Follow along for a
+            running feed of the events we're inside right now.
           </p>
         </div>
 
@@ -826,7 +787,13 @@ function PortfolioGlimpse({ onOpenProject }: { onOpenProject: (p: Project) => vo
               transition={{ duration: 0.7, delay: i * 0.1 }}
               className="relative rounded-xl overflow-hidden border border-gold/20 shadow-[0_12px_40px_rgba(0,0,0,0.5)] block aspect-[9/16]"
             >
-              <img src={r.thumbnail} alt={r.title} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+              <img
+                src={r.thumbnail}
+                alt={r.title}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
               <div
                 className="absolute inset-0"
                 style={{ background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85))" }}
@@ -867,10 +834,18 @@ function PortfolioGlimpse({ onOpenProject }: { onOpenProject: (p: Project) => vo
                   zIndex: i + 1,
                 }}
               >
-                <img src={r.thumbnail} alt={r.title} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                <img
+                  src={r.thumbnail}
+                  alt={r.title}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
                 <div
                   className="absolute inset-0"
-                  style={{ background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85))" }}
+                  style={{
+                    background: "linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85))",
+                  }}
                 />
                 <div className="absolute bottom-3 left-3 right-3">
                   <p className="font-ui text-[9px] tracking-[0.3em] uppercase text-gold">{r.tag}</p>
@@ -893,14 +868,33 @@ function PortfolioGlimpse({ onOpenProject }: { onOpenProject: (p: Project) => vo
   );
 }
 
-
 /* ================= PROCESS ================= */
 const steps = [
-  { n: "01", title: "Planning", body: "Brief, shot-list, publishing calendar — locked before day zero." },
-  { n: "02", title: "On-Ground Activation", body: "Crew deployed, gear staged, brand tone rehearsed with the client." },
-  { n: "03", title: "Real-Time Content Creation", body: "Reels, stories and stills cut in a live edit bay, on site." },
-  { n: "04", title: "Live Publishing", body: "Approvals and posts flow in minutes — not the next morning." },
-  { n: "05", title: "Engagement & Analytics", body: "Community managed live, performance reported same-day." },
+  {
+    n: "01",
+    title: "Planning",
+    body: "Brief, shot-list, publishing calendar — locked before day zero.",
+  },
+  {
+    n: "02",
+    title: "On-Ground Activation",
+    body: "Crew deployed, gear staged, brand tone rehearsed with the client.",
+  },
+  {
+    n: "03",
+    title: "Real-Time Content Creation",
+    body: "Reels, stories and stills cut in a live edit bay, on site.",
+  },
+  {
+    n: "04",
+    title: "Live Publishing",
+    body: "Approvals and posts flow in minutes — not the next morning.",
+  },
+  {
+    n: "05",
+    title: "Engagement & Analytics",
+    body: "Community managed live, performance reported same-day.",
+  },
 ];
 
 function Process() {
@@ -911,10 +905,7 @@ function Process() {
 
       <div className="absolute inset-0 radial-burgundy-glow opacity-50" />
       <div className="relative mx-auto max-w-7xl px-6">
-        <SectionHeading
-          kicker=""
-          title={<>Why Brands Choose Enkai</>}
-        />
+        <SectionHeading kicker="" title={<>Why Brands Choose Enkai</>} />
 
         {/* Traditional vs Enkai comparison */}
         <div className="mt-24 rounded-xl border border-gold/15 bg-white/[0.02] backdrop-blur-sm overflow-hidden">
@@ -957,10 +948,11 @@ function ComparisonRow({
   const isEnkai = variant === "enkai";
   return (
     <div
-      className={`grid gap-6 px-6 md:px-10 py-10 md:grid-cols-[220px_1fr] items-center ${isEnkai
-        ? "bg-gradient-to-r from-[#D4AF37] via-[#F9E596] to-[#D4AF37] shadow-[inset_0_0_20px_rgba(255,255,255,0.4)]"
-        : "bg-burgundy py-8"
-        }`}
+      className={`grid gap-6 px-6 md:px-10 py-10 md:grid-cols-[220px_1fr] items-center ${
+        isEnkai
+          ? "bg-gradient-to-r from-[#D4AF37] via-[#F9E596] to-[#D4AF37] shadow-[inset_0_0_20px_rgba(255,255,255,0.4)]"
+          : "bg-burgundy py-8"
+      }`}
     >
       <div className={`font-heading ${isEnkai ? "text-2xl md:text-3xl" : "text-xl"}`}>
         <span className={isEnkai ? "text-navy-deep font-bold tracking-wide" : "text-parchment"}>
@@ -971,10 +963,9 @@ function ComparisonRow({
         {items.map((it, i) => (
           <div key={i} className="flex items-start gap-3">
             <span
-              className={`mt-2 h-2 w-2 shrink-0 rounded-full ${isEnkai
-                ? "bg-navy-deep"
-                : "bg-parchment/50"
-                }`}
+              className={`mt-2 h-2 w-2 shrink-0 rounded-full ${
+                isEnkai ? "bg-navy-deep" : "bg-parchment/50"
+              }`}
             />
             <span
               className={`font-ui leading-relaxed ${isEnkai ? "text-[14px] md:text-[15px] text-navy-deep font-bold" : "text-[13px] text-parchment"}`}
@@ -1054,13 +1045,9 @@ const reelSources: ReelItem[] = [
     thumbnail: reel4Thumb,
     offset: 30,
   },
-
-
 ];
 
 const reels: ReelItem[] = reelSources.slice(0, 8);
-
-
 
 /* ================= CONTACT ================= */
 function Contact() {
@@ -1083,10 +1070,7 @@ function Contact() {
         />
       </div>
       <div className="relative mx-auto max-w-4xl px-6">
-        <SectionHeading
-          kicker="Let's Talk"
-          title={<>Bring us your next event.</>}
-        />
+        <SectionHeading kicker="Let's Talk" title={<>Bring us your next event.</>} />
 
         <motion.form
           initial={{ opacity: 0, y: 30 }}
@@ -1120,7 +1104,10 @@ function Contact() {
           </div>
           <div className="flex flex-wrap items-center gap-6 pt-4">
             <MagneticButton>Send Enquiry</MagneticButton>
-            <MagneticButton as="a" href="https://wa.me/919910706037?text=Hello%20Enkai%20Social%2C%0A%0AI'd%20like%20to%20book%20a%20consultation%20regarding%20event%20coverage.%20Please%20let%20me%20know%20your%20availability.">
+            <MagneticButton
+              as="a"
+              href="https://wa.me/919910706037?text=Hello%20Enkai%20Social%2C%0A%0AI'd%20like%20to%20book%20a%20consultation%20regarding%20event%20coverage.%20Please%20let%20me%20know%20your%20availability."
+            >
               Book Consultation
             </MagneticButton>
           </div>
@@ -1141,9 +1128,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="font-ui text-[11px] tracking-[0.3em] uppercase text-gold">
-        {label}
-      </label>
+      <label className="font-ui text-[11px] tracking-[0.3em] uppercase text-gold">{label}</label>
       <input
         type={type}
         placeholder={placeholder}

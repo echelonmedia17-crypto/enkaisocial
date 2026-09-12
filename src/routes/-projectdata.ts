@@ -158,7 +158,8 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
     category: "Concerts",
     img: davFront,
     instagram: "https://www.instagram.com/dav.united.festival/",
-    blurb: "A three-day festival that brought together over 50,000 attendees, 100+ speakers and performers, and participants from 23 Indian states and 10 countries. Enkai Social documented every defining moment through live coverage, premium visual storytelling, and real-time social media publishing.",
+    blurb:
+      "A three-day festival that brought together over 50,000 attendees, 100+ speakers and performers, and participants from 23 Indian states and 10 countries. Enkai Social documented every defining moment through live coverage, premium visual storytelling, and real-time social media publishing.",
     description:
       "DAV United Festival 2025 was one of India's largest educational and cultural celebrations, bringing together students, educators, artists, entrepreneurs, and community leaders from across the country and abroad. Enkai Social provided complete live event coverage—from capturing performances and keynote moments to publishing premium social content while the festival was still unfolding, ensuring the experience reached audiences far beyond the venue.",
     year: "2025",
@@ -260,7 +261,8 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
     category: "Corporate",
     img: navkarDivas,
     blurb: "Celebrating Navkar Divas with a high‑impact corporate event.",
-    description: "Navkar Divas 2025 was a flagship corporate celebration, featuring keynote speeches, cultural performances, and a vibrant exhibition. Enkai Social captured the event in real time, delivering premium visual storytelling across social platforms.",
+    description:
+      "Navkar Divas 2025 was a flagship corporate celebration, featuring keynote speeches, cultural performances, and a vibrant exhibition. Enkai Social captured the event in real time, delivering premium visual storytelling across social platforms.",
     year: "2025",
     location: "Delhi",
     duration: "1 Day",
@@ -268,28 +270,38 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
       "Live keynote coverage",
       "Real‑time social reels",
       "Behind‑the‑scenes documentary",
-      "Strategic brand amplification"
+      "Strategic brand amplification",
     ],
     stats: [
       { number: "10K+", label: "Attendees" },
       { number: "4K+", label: "Social Impressions" },
       { number: "5", label: "Keynote Speakers" },
-      { number: "2 Hours", label: "Turnaround" }
+      { number: "2 Hours", label: "Turnaround" },
     ],
     gallery: [navkarDivas, navkar_1, navkar_2, navkar_3, navkar_4, navkar_5],
-    behindScenes: [navkar_6, navkar_7, navkar_8, navkar_9, navkar_10, navkar_11, navkar_12, navkar_13],
-    impactText: "The event generated massive digital buzz, extending brand reach beyond the venue and driving sustained engagement throughout the day.",
+    behindScenes: [
+      navkar_6,
+      navkar_7,
+      navkar_8,
+      navkar_9,
+      navkar_10,
+      navkar_11,
+      navkar_12,
+      navkar_13,
+    ],
+    impactText:
+      "The event generated massive digital buzz, extending brand reach beyond the venue and driving sustained engagement throughout the day.",
     impactStats: [
       { icon: "👥", number: "10K+", label: "Attendees" },
       { icon: "📈", number: "4K+", label: "Impressions" },
       { icon: "⏱️", number: "2 Hours", label: "Turnaround" },
-      { icon: "💬", number: "95%", label: "Engagement" }
+      { icon: "💬", number: "95%", label: "Engagement" },
     ],
     technologies: [
       "Live Event Coverage",
       "Real‑time Publishing",
       "Social Media Strategy",
-      "Cinematography"
+      "Cinematography",
     ],
     testimonial: {
       quote:
@@ -305,7 +317,8 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
     img: jwilYamuna,
     instagram: "https://www.instagram.com/jwil.infra.ltd/",
     blurb: "A vibrant community drive by JWIL along the Yamuna banks.",
-    description: "JWIL organized a clean‑up and cultural drive on the Yamuna riverfront, combining environmental activism with live performances. Enkai Social documented the event, delivering immersive stories that amplified the cause.",
+    description:
+      "JWIL organized a clean‑up and cultural drive on the Yamuna riverfront, combining environmental activism with live performances. Enkai Social documented the event, delivering immersive stories that amplified the cause.",
     year: "2025",
     location: "Delhi",
     duration: "8 Hours",
@@ -313,28 +326,46 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
       "River clean‑up",
       "Live acoustic sets",
       "Community engagement reels",
-      "Interactive social challenges"
+      "Interactive social challenges",
     ],
     stats: [
       { number: "5K+", label: "Volunteers" },
       { number: "200K+", label: "Reach" },
       { number: "3", label: "Live Acts" },
-      { number: "1 Day", label: "Duration" }
+      { number: "1 Day", label: "Duration" },
     ],
-    gallery: [yamuna_1, yamuna_2, yamuna_3, yamuna_4, yamuna_5, yamuna_6, yamuna_7, yamuna_8, yamuna_9],
-    behindScenes: [yamuna_10, yamuna_11, yamuna_12, yamuna_13, yamuna_14, yamuna_15, yamuna_16, yamuna_17, yamuna_18, yamuna_19],
-    impactText: "The drive raised awareness about river conservation, with social media impressions surpassing 200K and a surge in community participation.",
+    gallery: [
+      yamuna_1,
+      yamuna_2,
+      yamuna_3,
+      yamuna_4,
+      yamuna_5,
+      yamuna_6,
+      yamuna_7,
+      yamuna_8,
+      yamuna_9,
+    ],
+    behindScenes: [
+      yamuna_10,
+      yamuna_11,
+      yamuna_12,
+      yamuna_13,
+      yamuna_14,
+      yamuna_15,
+      yamuna_16,
+      yamuna_17,
+      yamuna_18,
+      yamuna_19,
+    ],
+    impactText:
+      "The drive raised awareness about river conservation, with social media impressions surpassing 200K and a surge in community participation.",
     impactStats: [
       { icon: "🌊", number: "5K+", label: "Volunteers" },
       { icon: "📢", number: "200K+", label: "Reach" },
       { icon: "🌍", number: "1 Day", label: "Duration" },
-      { icon: "💚", number: "95%", label: "Engagement" }
+      { icon: "💚", number: "95%", label: "Engagement" },
     ],
-    technologies: [
-      "Live Streaming",
-      "Community Storytelling",
-      "Real‑time Editing"
-    ],
+    technologies: ["Live Streaming", "Community Storytelling", "Real‑time Editing"],
     testimonial: {
       quote:
         "Enkai Social didn't just document our drive; they amplified our cause. The visual storytelling deeply resonated with the community and boosted our reach beyond expectations.",
@@ -349,7 +380,8 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
     img: jitoChristmas,
     instagram: "https://www.instagram.com/jito.youthnorthdelhi/",
     blurb: "A festive celebration captured with cinematic flair.",
-    description: "JITO's annual Christmas party featured live performances, gala dinner, and high‑energy festivities. Enkai Social delivered premium visual content, from magical lighting to festive reels.",
+    description:
+      "JITO's annual Christmas party featured live performances, gala dinner, and high‑energy festivities. Enkai Social delivered premium visual content, from magical lighting to festive reels.",
     year: "2025",
     location: "Delhi",
     duration: "Evening",
@@ -357,28 +389,33 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
       "Holiday light installations",
       "Live band performances",
       "Cinematic party reels",
-      "Real‑time social highlights"
+      "Real‑time social highlights",
     ],
     stats: [
       { number: "2K+", label: "Guests" },
       { number: "1M+", label: "Impressions" },
       { number: "4", label: "Live Acts" },
-      { number: "1 Night", label: "Duration" }
+      { number: "1 Night", label: "Duration" },
     ],
     gallery: [christmas_1, christmas_2, christmas_3, christmas_4, christmas_5, christmas_6],
-    behindScenes: [christmas_7, christmas_8, christmas_9, christmas_10, christmas_11, christmas_12, christmas_13],
-    impactText: "The party's visual storytelling boosted JITO's brand image, achieving over 1M impressions and high engagement across platforms.",
+    behindScenes: [
+      christmas_7,
+      christmas_8,
+      christmas_9,
+      christmas_10,
+      christmas_11,
+      christmas_12,
+      christmas_13,
+    ],
+    impactText:
+      "The party's visual storytelling boosted JITO's brand image, achieving over 1M impressions and high engagement across platforms.",
     impactStats: [
       { icon: "🎄", number: "2K+", label: "Guests" },
       { icon: "📈", number: "1M+", label: "Impressions" },
       { icon: "⏱️", number: "1 Night", label: "Duration" },
-      { icon: "💬", number: "95%", label: "Engagement" }
+      { icon: "💬", number: "95%", label: "Engagement" },
     ],
-    technologies: [
-      "Event Cinematography",
-      "Real‑time Publishing",
-      "Social Media Amplification"
-    ],
+    technologies: ["Event Cinematography", "Real‑time Publishing", "Social Media Amplification"],
     testimonial: {
       quote:
         "A truly magical night captured beautifully. The real-time content delivery kept the festive spirit alive online, making it one of our most engaging events to date.",
@@ -388,12 +425,6 @@ export const ALL_PROJECTS_ENKAI: Project[] = [
   },
 ];
 
-export const TABS_ENKAI = [
-  "All",
-  "Concerts",
-  "Corporate",
-  "Community",
-  "Celebration",
-];
+export const TABS_ENKAI = ["All", "Concerts", "Corporate", "Community", "Celebration"];
 
 export const GALLERY_PREVIEW_COUNT_ENKAI = 5;

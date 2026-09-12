@@ -41,7 +41,6 @@ function About() {
       {/* Global background glow */}
       <div className="absolute inset-0 radial-gold-glow opacity-20 pointer-events-none" />
       <div className="relative mx-auto max-w-7xl px-6">
-
         <Divider />
 
         {/* SECTION 1 — What is Enkai? */}
@@ -54,7 +53,7 @@ function About() {
             viewport={{ once: true }}
             className="font-heading text-6xl md:text-7xl lg:text-8xl leading-[1.05] text-parchment"
           >
-            What is <br /> Enkai (宴会)? 
+            What is <br /> Enkai (宴会)?
           </motion.h2>
 
           <motion.div
@@ -67,7 +66,8 @@ function About() {
           >
             <div className="h-px w-10 bg-gold/60" />
             <p className="text-parchment/75 text-lg leading-[1.85] max-w-[38ch] text-justify">
-              Enkai represents presence, moments, and meaningful experiences. It's about being where stories unfold and preserving them with purpose.
+              Enkai represents presence, moments, and meaningful experiences. It's about being where
+              stories unfold and preserving them with purpose.
             </p>
           </motion.div>
         </section>
@@ -76,7 +76,6 @@ function About() {
 
         {/* SECTION 2 — Why Social? (reversed) */}
         <section className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
-
           <motion.div
             custom={0}
             initial="hidden"
@@ -87,7 +86,8 @@ function About() {
           >
             <div className="h-px w-10 bg-gold/60" />
             <p className="text-parchment/75 text-lg leading-[1.85] max-w-[38ch] text-justify">
-              Today, every event lives beyond the venue. Social is where moments become conversations, memories become content, and experiences reach the world.
+              Today, every event lives beyond the venue. Social is where moments become
+              conversations, memories become content, and experiences reach the world.
             </p>
           </motion.div>
 
@@ -99,20 +99,18 @@ function About() {
             viewport={{ once: true }}
             className="font-heading text-6xl md:text-7xl lg:text-8xl leading-[1.05] text-parchment md:order-2 md:text-right"
           >
-            Why<br /> Social?
+            Why
+            <br /> Social?
           </motion.h2>
         </section>
 
         <div className="mt-1">
           <Divider />
         </div>
-
-
       </div>
 
       {/* SECTION 3 — Enkai Social centerpiece */}
       <section className="relative py-24 md:py-32 overflow-hidden">
-
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -148,7 +146,8 @@ function About() {
             viewport={{ once: true }}
             className="mt-14 text-parchment/65 text-lg leading-[1.85] max-w-[45ch] mx-auto text-center"
           >
-            Transforming live events into premium digital stories through cinematic content, instant publishing, and strategic social amplification.
+            Transforming live events into premium digital stories through cinematic content, instant
+            publishing, and strategic social amplification.
           </motion.p>
 
           <motion.div
@@ -162,7 +161,6 @@ function About() {
       </section>
 
       <div className="relative mx-auto max-w-7xl px-6">
-
         {/* SECTION 4 — Premium quote block */}
         <section className="py-16 md:py-24 text-center">
           <motion.p
@@ -173,8 +171,8 @@ function About() {
             viewport={{ once: true }}
             className="font-heading text-3xl md:text-3xl lg:text-3xl text-parchment/60 leading-[1.15] max-w-3xl mx-auto text-center"
           >
-
-            Most events are remembered<br className="hidden md:block" /> by those who attended.
+            Most events are remembered
+            <br className="hidden md:block" /> by those who attended.
           </motion.p>
 
           <motion.p
@@ -198,11 +196,11 @@ function About() {
           >
             <div className="h-px w-10 bg-gold/60 mx-auto mb-6" />
             <p className="text-parchment/60 text-[15px] leading-[1.9] max-w-[38ch] mx-auto text-center">
-              We capture, create, publish and amplify every moment while it happens—helping brands increase visibility, engagement and lasting impact.
+              We capture, create, publish and amplify every moment while it happens—helping brands
+              increase visibility, engagement and lasting impact.
             </p>
           </motion.div>
         </section>
-
       </div>
 
       {/* CLOSING */}

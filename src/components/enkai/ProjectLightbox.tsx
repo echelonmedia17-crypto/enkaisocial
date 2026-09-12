@@ -37,7 +37,7 @@ import {
   type ProjectImpactStat,
   type ProjectHighlightIcon,
   GALLERY_PREVIEW_COUNT_ENKAI,
-} from "../../routes/projectdata";
+} from "../../routes/-projectdata";
 import { Navbar } from "./Navbar";
 
 /* ─────────────────────────────────────────────
@@ -180,7 +180,10 @@ function ProjectMedia({
         </>
       ) : (
         <picture>
-          <source srcSet={src.replace(/\\.(jpg|jpeg|png)(\\?.*)?$/i, ".webp$2")} type="image/webp" />
+          <source
+            srcSet={src.replace(/\\.(jpg|jpeg|png)(\\?.*)?$/i, ".webp$2")}
+            type="image/webp"
+          />
           <img
             src={src}
             alt={alt}
@@ -202,21 +205,11 @@ function ProjectMedia({
     </>
   );
 
-  const sharedClasses = [
-    "relative block overflow-hidden",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const sharedClasses = ["relative block overflow-hidden", className].filter(Boolean).join(" ");
 
   if (onClick) {
     return (
-      <button
-        type="button"
-        onClick={onClick}
-        className={sharedClasses}
-        style={wrapperStyle}
-      >
+      <button type="button" onClick={onClick} className={sharedClasses} style={wrapperStyle}>
         {inner}
       </button>
     );
@@ -269,7 +262,7 @@ function AnimatedCounter({ value }: { value: string }) {
         requestAnimationFrame(step);
         observer.disconnect();
       },
-      { threshold: 0.45 }
+      { threshold: 0.45 },
     );
 
     observer.observe(element);
@@ -318,13 +311,7 @@ const HIGHLIGHT_ICON_MAP: Record<ProjectHighlightIcon, LucideIcon> = {
   handshake: Handshake,
 };
 
-function HighlightIcon({
-  icon,
-  className,
-}: {
-  icon: ProjectHighlightIcon;
-  className?: string;
-}) {
+function HighlightIcon({ icon, className }: { icon: ProjectHighlightIcon; className?: string }) {
   const Icon = HIGHLIGHT_ICON_MAP[icon] ?? Target;
   return <Icon className={className} />;
 }
@@ -358,15 +345,20 @@ function ProjectNavFooter({
   filteredProjects: Project[];
   setSelectedProject: (p: Project) => void;
   closeLightbox: () => void;
-} & any) {
+}) {
   return (
     <section className="mt-10 border-t border-[var(--pf-border)] pt-5">
       <div className="flex items-center justify-between gap-4">
         <button
           type="button"
           onClick={() => {
-            const currentIndex = filteredProjects.findIndex((project: any) => project.id === selectedProject.id);
-            const targetProject = filteredProjects[(currentIndex - 1 + filteredProjects.length) % filteredProjects.length];
+            const currentIndex = filteredProjects.findIndex(
+              (project: Project) => project.id === selectedProject.id,
+            );
+            const targetProject =
+              filteredProjects[
+                (currentIndex - 1 + filteredProjects.length) % filteredProjects.length
+              ];
             setSelectedProject(targetProject);
           }}
           className="font-sans text-[13px] font-semibold text-[var(--amber)] transition-colors duration-300 hover:text-[var(--pf-fg)]"
@@ -381,14 +373,21 @@ function ProjectNavFooter({
           className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[var(--pf-border)] text-[var(--amber)] transition-colors duration-300 hover:bg-[var(--amber)] hover:text-[var(--pf-bg)]"
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M4 4h7v7H4V4Zm9 0h7v7h-7V4ZM4 13h7v7H4v-7Zm9 0h7v7h-7v-7Z" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            <path
+              d="M4 4h7v7H4V4Zm9 0h7v7h-7V4ZM4 13h7v7H4v-7Zm9 0h7v7h-7v-7Z"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </button>
 
         <button
           type="button"
           onClick={() => {
-            const currentIndex = filteredProjects.findIndex((project: any) => project.id === selectedProject.id);
+            const currentIndex = filteredProjects.findIndex(
+              (project: Project) => project.id === selectedProject.id,
+            );
             const targetProject = filteredProjects[(currentIndex + 1) % filteredProjects.length];
             setSelectedProject(targetProject);
           }}
@@ -401,15 +400,7 @@ function ProjectNavFooter({
   );
 }
 
-function MediaModal({
-  src,
-  alt,
-  onClose,
-}: {
-  src: string;
-  alt: string;
-  onClose: () => void;
-}) {
+function MediaModal({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
   return (
     <div
       className="fixed inset-0 z-[980] flex items-center justify-center px-4 py-8"
@@ -425,10 +416,7 @@ function MediaModal({
         <X className="h-4 w-4" />
       </button>
 
-      <div
-        className="max-h-[85vh] max-w-[92vw]"
-        onClick={(event) => event.stopPropagation()}
-      >
+      <div className="max-h-[85vh] max-w-[92vw]" onClick={(event) => event.stopPropagation()}>
         <ProjectMedia
           src={src}
           alt={alt}
@@ -488,16 +476,19 @@ export function ProjectLightbox({
     const contentElement = contentRef.current;
     if (contentElement) {
       contentElement.animate(
-        [{ transform: "translateY(50px)", opacity: 0 }, { transform: "translateY(0)", opacity: 1 }],
-        { duration: 500, easing: "cubic-bezier(0.22,1,0.36,1)", fill: "forwards" }
+        [
+          { transform: "translateY(50px)", opacity: 0 },
+          { transform: "translateY(0)", opacity: 1 },
+        ],
+        { duration: 500, easing: "cubic-bezier(0.22,1,0.36,1)", fill: "forwards" },
       );
     }
   }, [project.id]);
 
   // Lock scroll
   useEffect(() => {
-    const lenisStop = (window as any).__lenisStop as undefined | (() => void);
-    const lenisStart = (window as any).__lenisStart as undefined | (() => void);
+    const lenisStop = window.__lenisStop;
+    const lenisStart = window.__lenisStart;
 
     document.body.style.overflow = "hidden";
     lenisStop?.();
@@ -603,7 +594,7 @@ export function ProjectLightbox({
                 {project.blurb}
               </p>
 
-              {(project.location || project.duration) ? (
+              {project.location || project.duration ? (
                 <div className="flex flex-wrap gap-2">
                   {project.location ? (
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--pf-border)] bg-[var(--pf-panel)] px-3 py-1.5 font-sans text-[12px] text-[var(--pf-fg-soft)]">
@@ -630,7 +621,9 @@ export function ProjectLightbox({
                     className="inline-flex items-center gap-2 rounded-full border border-[var(--pf-border)] bg-transparent px-4 py-2.5 font-sans text-[12.5px] font-semibold text-[var(--pf-fg)] transition-colors duration-300 hover:bg-[var(--amber)] hover:text-[var(--pf-bg)]"
                   >
                     <Instagram className="h-4 w-4" />
-                    <span className="font-semibold text-[var(--pf-fg)]">@{getInstagramHandle(project.instagram)}</span>
+                    <span className="font-semibold text-[var(--pf-fg)]">
+                      @{getInstagramHandle(project.instagram)}
+                    </span>
                     <span className="mx-2 text-[var(--amber)]">|</span>
                     <span>View on Instagram ↗</span>
                   </a>
@@ -655,7 +648,9 @@ export function ProjectLightbox({
 
           {/* What we delivered + Stats strip */}
           <section className="mt-10 border-t border-[var(--pf-border)] pt-6">
-            <div className={`grid gap-6 ${project.stats?.length ? "lg:grid-cols-[0.85fr_1.15fr] lg:items-center" : "grid-cols-1"}`}>
+            <div
+              className={`grid gap-6 ${project.stats?.length ? "lg:grid-cols-[0.85fr_1.15fr] lg:items-center" : "grid-cols-1"}`}
+            >
               <div className="space-y-3">
                 <SectionLabel>What We Delivered</SectionLabel>
                 <ul className="space-y-2 pt-1">
@@ -664,7 +659,9 @@ export function ProjectLightbox({
                       key={highlight}
                       className="flex items-start gap-2 font-sans text-[13px] leading-relaxed text-[var(--pf-fg-soft)]"
                     >
-                      <span className="mt-0.5 text-[13px] font-bold leading-none text-[var(--amber)]">+</span>
+                      <span className="mt-0.5 text-[13px] font-bold leading-none text-[var(--amber)]">
+                        +
+                      </span>
                       <span>{highlight}</span>
                     </li>
                   ))}
@@ -679,8 +676,8 @@ export function ProjectLightbox({
                       className="px-4 py-6 sm:px-6 sm:py-8 text-center bg-[var(--pf-panel)] hover:bg-[rgba(212,175,55,0.07)] transition-colors duration-300 group"
                     >
                       <div className="font-heading text-[clamp(24px,3.5vw,38px)] font-black leading-none text-[var(--amber)] group-hover:scale-105 transition-transform duration-300">
-                         <AnimatedCounter value={stat.number} />
-                       </div>
+                        <AnimatedCounter value={stat.number} />
+                      </div>
                       <div className="mt-2 font-sans text-[9px] sm:text-[9.5px] uppercase tracking-[0.14em] text-[var(--pf-fg-mute)]">
                         {stat.label}
                       </div>
@@ -708,7 +705,9 @@ export function ProjectLightbox({
                       onClick={() => openGalleryLightbox(src)}
                       showPlayBadge
                       className={`group relative w-full cursor-zoom-in rounded-[8px] border border-transparent bg-[var(--pf-panel)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--amber)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.02),0_0_16px_rgba(245,166,35,0.22)] ${
-                        isFeatured ? "row-span-2 md:row-span-2 md:col-span-1 md:h-full" : "aspect-[4/3]"
+                        isFeatured
+                          ? "row-span-2 md:row-span-2 md:col-span-1 md:h-full"
+                          : "aspect-[4/3]"
                       }`}
                       mediaClassName="rounded-[8px] transition-transform duration-300 group-hover:scale-[1.02]"
                       fit="cover"
@@ -728,8 +727,18 @@ export function ProjectLightbox({
                     className="inline-flex items-center gap-2 rounded-full border border-[var(--amber)] bg-transparent px-4 py-2 font-sans text-[12.5px] font-semibold text-[var(--amber)] transition-colors duration-300 hover:bg-[var(--amber)] hover:text-[var(--pf-bg)]"
                   >
                     <span>{showFullGallery ? "Show Less" : "View Full Gallery"}</span>
-                    <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <path d="M4 4h7v7H4V4Zm9 0h7v7h-7V4ZM4 13h7v7H4v-7Zm9 0h7v7h-7v-7Z" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg
+                      className="h-3.5 w-3.5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        d="M4 4h7v7H4V4Zm9 0h7v7h-7V4ZM4 13h7v7H4v-7Zm9 0h7v7h-7v-7Z"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
                     </svg>
                   </button>
                 </div>
@@ -745,7 +754,9 @@ export function ProjectLightbox({
               <div className="relative">
                 <button
                   type="button"
-                  onClick={() => behindScenesRef.current?.scrollBy({ left: -300, behavior: "smooth" })}
+                  onClick={() =>
+                    behindScenesRef.current?.scrollBy({ left: -300, behavior: "smooth" })
+                  }
                   className="absolute left-1 top-1/2 z-10 -translate-y-1/2 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[var(--amber)] text-[var(--pf-bg)] shadow-lg transition-transform duration-300 hover:scale-105"
                   aria-label="Scroll behind the scenes left"
                 >
@@ -774,7 +785,9 @@ export function ProjectLightbox({
 
                 <button
                   type="button"
-                  onClick={() => behindScenesRef.current?.scrollBy({ left: 300, behavior: "smooth" })}
+                  onClick={() =>
+                    behindScenesRef.current?.scrollBy({ left: 300, behavior: "smooth" })
+                  }
                   className="absolute right-1 top-1/2 z-10 -translate-y-1/2 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[var(--amber)] text-[var(--pf-bg)] shadow-lg transition-transform duration-300 hover:scale-105"
                   aria-label="Scroll behind the scenes right"
                 >
@@ -785,7 +798,7 @@ export function ProjectLightbox({
           ) : null}
 
           {/* Impact Narrative & Testimony */}
-          {(project.impactText || project.impactStats?.length || project.testimonial) ? (
+          {project.impactText || project.impactStats?.length || project.testimonial ? (
             <section className="mt-10">
               <div className="grid grid-cols-1 gap-4 md:gap-5 lg:grid-cols-[0.75fr_1.25fr_0.8fr] lg:gap-6 lg:items-start">
                 {project.impactText ? (

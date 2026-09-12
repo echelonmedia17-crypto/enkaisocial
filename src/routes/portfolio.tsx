@@ -2,10 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, memo } from "react";
 import { motion } from "framer-motion";
 
-import {
-  ALL_PROJECTS_ENKAI,
-  type Project,
-} from "./projectdata";
+import { ALL_PROJECTS_ENKAI, type Project } from "./-projectdata";
 import { ProjectLightbox } from "@/components/enkai/ProjectLightbox";
 
 export const Route = createFileRoute("/portfolio")({
@@ -87,10 +84,14 @@ function PortfolioCard({
         />
         <div
           className="absolute inset-0"
-          style={{ background: "linear-gradient(180deg, transparent 30%, rgba(1,22,42,0.97) 100%)" }}
+          style={{
+            background: "linear-gradient(180deg, transparent 30%, rgba(1,22,42,0.97) 100%)",
+          }}
         />
         <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col gap-1.5">
-          <span className="font-ui text-[9px] tracking-[0.35em] uppercase text-gold/90">{item.category}</span>
+          <span className="font-ui text-[9px] tracking-[0.35em] uppercase text-gold/90">
+            {item.category}
+          </span>
           <h3 className="font-heading text-parchment leading-[1.12] text-lg">{item.name}</h3>
           <div className="flex items-center gap-2">
             <span className="font-ui text-[11px] text-parchment/60">{item.location}</span>
@@ -124,20 +125,32 @@ function PortfolioCard({
                   className="h-full w-full object-cover transition-transform duration-[500ms] ease-out group-hover:scale-[1.04]"
                   style={{ filter: "brightness(0.78)" }}
                 />
-                <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(1,34,60,0.10) 0%, rgba(1,34,60,0.40) 55%, rgba(1,34,60,0.92) 100%)" }} />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(1,34,60,0.10) 0%, rgba(1,34,60,0.40) 55%, rgba(1,34,60,0.92) 100%)",
+                  }}
+                />
               </motion.div>
             </div>
             <div className="w-[30%]">
               <div className="h-full p-8 flex flex-col justify-end overflow-hidden">
                 <div className="flex flex-col gap-4">
-                  <span className="font-ui text-[10px] tracking-[0.35em] uppercase text-gold/90">{item.category}</span>
-                  <h3 className="font-heading text-parchment leading-[1.12] text-3xl">{item.name}</h3>
+                  <span className="font-ui text-[10px] tracking-[0.35em] uppercase text-gold/90">
+                    {item.category}
+                  </span>
+                  <h3 className="font-heading text-parchment leading-[1.12] text-3xl">
+                    {item.name}
+                  </h3>
                   <div className="flex items-center gap-2">
                     <span className="font-ui text-[12px] text-parchment/60">{item.location}</span>
                     <span className="text-parchment/30 text-[10px]">●</span>
                     <span className="font-ui text-[12px] text-parchment/60">{item.year}</span>
                   </div>
-                  <p className="text-parchment/70 text-sm leading-[1.6] justify-pretty line-clamp-3">{item.blurb}</p>
+                  <p className="text-parchment/70 text-sm leading-[1.6] justify-pretty line-clamp-3">
+                    {item.blurb}
+                  </p>
                   <button className="ml-0 inline-flex items-center gap-2 text-parchment/80 text-xs tracking-[0.25em] uppercase font-ui hover:text-gold transition-colors duration-500">
                     <span className="h-0.5 w-14 bg-gold/30" />
                     <span>View Project →</span>
@@ -151,14 +164,20 @@ function PortfolioCard({
             <div className="w-[30%]">
               <div className="h-full p-8 flex flex-col justify-end overflow-hidden">
                 <div className="flex flex-col gap-4">
-                  <span className="font-ui text-[10px] tracking-[0.35em] uppercase text-gold/90">{item.category}</span>
-                  <h3 className="font-heading text-parchment leading-[1.12] text-3xl">{item.name}</h3>
+                  <span className="font-ui text-[10px] tracking-[0.35em] uppercase text-gold/90">
+                    {item.category}
+                  </span>
+                  <h3 className="font-heading text-parchment leading-[1.12] text-3xl">
+                    {item.name}
+                  </h3>
                   <div className="flex items-center gap-2">
                     <span className="font-ui text-[12px] text-parchment/60">{item.location}</span>
                     <span className="text-parchment/30 text-[10px]">●</span>
                     <span className="font-ui text-[12px] text-parchment/60">{item.year}</span>
                   </div>
-                  <p className="text-parchment/70 text-sm leading-[1.6] justify-pretty line-clamp-3">{item.blurb}</p>
+                  <p className="text-parchment/70 text-sm leading-[1.6] justify-pretty line-clamp-3">
+                    {item.blurb}
+                  </p>
                   <button className="ml-0 inline-flex items-center gap-2 text-parchment/80 text-xs tracking-[0.25em] uppercase font-ui hover:text-gold transition-colors duration-500">
                     <span className="h-0.5 w-14 bg-gold/30" />
                     <span>View Project →</span>
@@ -182,7 +201,13 @@ function PortfolioCard({
                   className="h-full w-full object-cover transition-transform duration-[500ms] ease-out group-hover:scale-[1.04]"
                   style={{ filter: "brightness(0.78)" }}
                 />
-                <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(1,34,60,0.10) 0%, rgba(1,34,60,0.40) 55%, rgba(1,34,60,0.92) 100%)" }} />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(1,34,60,0.10) 0%, rgba(1,34,60,0.40) 55%, rgba(1,34,60,0.92) 100%)",
+                  }}
+                />
               </motion.div>
             </div>
           </>
@@ -190,7 +215,10 @@ function PortfolioCard({
       </div>
 
       {/* Shadow */}
-      <div className="absolute inset-0 pointer-events-none" style={{ borderRadius: "20px", boxShadow: "0 28px 80px rgba(0,0,0,0.55)" }} />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ borderRadius: "20px", boxShadow: "0 28px 80px rgba(0,0,0,0.55)" }}
+      />
     </motion.div>
   );
 }
@@ -214,7 +242,7 @@ function Portfolio() {
 
   const closeLightbox = () => {
     setSelectedProject(null);
-    (window as any).__lenisStart?.();
+    window.__lenisStart?.();
     if (typeof window !== "undefined" && window.history.state?.projectModalOpen) {
       window.history.back();
     }
@@ -261,8 +289,7 @@ function Portfolio() {
         {/* Header */}
         <div className="flex flex-col items-center text-center">
           <h1 className="font-heading text-5xl md:text-7xl leading-[1.02] text-parchment max-w-4xl">
-            Every event we've been{" "}
-            <em className="italic text-parchment/60">inside.</em>
+            Every event we've been <em className="italic text-parchment/60">inside.</em>
           </h1>
         </div>
 

@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SOCIAL_LINKS } from "@/lib/socialLinks";
 
-
 const links = [
   { label: "Home", href: "#home", type: "anchor" as const },
   { label: "About", href: "/about", type: "route" as const },
@@ -53,10 +52,11 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled || menuOpen
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        scrolled || menuOpen
           ? "bg-navy/70 backdrop-blur-xl py-3 border-b border-gold/10"
           : "bg-transparent py-5"
-        }`}
+      }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
         <Link to="/" className="flex items-center gap-3 group" onClick={closeMenu}>
@@ -148,17 +148,13 @@ export function Navbar() {
               </a>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <a
-                href="mailto:hello@enkaisocial.in"
-                className="flex items-center gap-2"
-              >
+              <a href="mailto:hello@enkaisocial.in" className="flex items-center gap-2">
                 <Mail size={16} />
                 Mail
               </a>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-
 
         <button
           onClick={() => setMenuOpen((v) => !v)}
@@ -279,7 +275,6 @@ export function Navbar() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </motion.div>
-
             </nav>
           </motion.div>
         )}
