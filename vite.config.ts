@@ -9,7 +9,7 @@ import viteImagemin from "vite-plugin-imagemin";
 
 export default defineConfig({
   plugins: [
-    viteImagemin({
+    !process.env.VERCEL && viteImagemin({
       mozjpeg: { quality: 80 },
       optipng: { optimizationLevel: 5 },
       webp: { quality: 80 },
